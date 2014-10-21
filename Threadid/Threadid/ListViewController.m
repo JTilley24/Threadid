@@ -143,10 +143,6 @@
 		//otherwise the button intercepts the tap event
 		NSLog(@"Did select current item");
 	}
-	else
-	{
-		NSLog(@"Did select item number %i", index);
-	}
     [self performSegueWithIdentifier:@"ListCaroSegue" sender:self];
 }
 

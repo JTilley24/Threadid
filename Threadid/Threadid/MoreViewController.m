@@ -37,6 +37,16 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(IBAction)onClick:(id)sender;
+{
+    UIButton *button = sender;
+    if(button.tag == 2){
+        [self performSegueWithIdentifier:@"OpenStoreSegue" sender:self];
+    }else if (button.tag == 3){
+        [self performSegueWithIdentifier:@"MyStoreSegue" sender:self];
+    }
+}
+
 /*
 #pragma mark - Navigation
 

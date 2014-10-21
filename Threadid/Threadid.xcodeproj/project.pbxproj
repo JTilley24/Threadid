@@ -23,6 +23,9 @@
 		CB4E801019EF68AC00CF53E4 /* ThreadidTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4E800F19EF68AC00CF53E4 /* ThreadidTests.m */; };
 		CB4E801B19EF68CA00CF53E4 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4E801A19EF68CA00CF53E4 /* LoginViewController.m */; };
 		CB4E801D19EF6AF700CF53E4 /* threadid-login.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4E801C19EF6AF700CF53E4 /* threadid-login.png */; };
+		CB67AC9D19F20CF600F9613D /* MyStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB67AC9C19F20CF600F9613D /* MyStoreViewController.m */; };
+		CB67ACA019F2107C00F9613D /* MyStoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CB67AC9F19F2107C00F9613D /* MyStoreCell.m */; };
+		CB67ACA319F2196B00F9613D /* AddStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB67ACA219F2196B00F9613D /* AddStoreViewController.m */; };
 		CB92E73E19EF79AA006292CC /* CategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB92E73D19EF79AA006292CC /* CategoriesViewController.m */; };
 		CB92E74119EF79B6006292CC /* StoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB92E74019EF79B6006292CC /* StoresViewController.m */; };
 		CB92E74419EF79C2006292CC /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB92E74319EF79C2006292CC /* MoreViewController.m */; };
@@ -43,6 +46,8 @@
 		CB99145619F0B8D100E663A8 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB99145519F0B8D100E663A8 /* ListViewController.m */; };
 		CB99145919F0BB1B00E663A8 /* ListCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CB99145819F0BB1B00E663A8 /* ListCollectionCell.m */; };
 		CB99145C19F0CE5D00E663A8 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB99145B19F0CE5D00E663A8 /* DetailViewController.m */; };
+		CBB801FD19F6017D00E29A75 /* AddItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB801FC19F6017D00E29A75 /* AddItemViewController.m */; };
+		CBB8020019F6114900E29A75 /* AddSaleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB801FF19F6114900E29A75 /* AddSaleViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +82,12 @@
 		CB4E801919EF68CA00CF53E4 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		CB4E801A19EF68CA00CF53E4 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		CB4E801C19EF6AF700CF53E4 /* threadid-login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "threadid-login.png"; sourceTree = "<group>"; };
+		CB67AC9B19F20CF600F9613D /* MyStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyStoreViewController.h; sourceTree = "<group>"; };
+		CB67AC9C19F20CF600F9613D /* MyStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyStoreViewController.m; sourceTree = "<group>"; };
+		CB67AC9E19F2107C00F9613D /* MyStoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyStoreCell.h; sourceTree = "<group>"; };
+		CB67AC9F19F2107C00F9613D /* MyStoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyStoreCell.m; sourceTree = "<group>"; };
+		CB67ACA119F2196B00F9613D /* AddStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddStoreViewController.h; sourceTree = "<group>"; };
+		CB67ACA219F2196B00F9613D /* AddStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddStoreViewController.m; sourceTree = "<group>"; };
 		CB92E73C19EF79AA006292CC /* CategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewController.h; sourceTree = "<group>"; };
 		CB92E73D19EF79AA006292CC /* CategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesViewController.m; sourceTree = "<group>"; };
 		CB92E73F19EF79B6006292CC /* StoresViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoresViewController.h; sourceTree = "<group>"; };
@@ -107,6 +118,10 @@
 		CB99145819F0BB1B00E663A8 /* ListCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListCollectionCell.m; sourceTree = "<group>"; };
 		CB99145A19F0CE5D00E663A8 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		CB99145B19F0CE5D00E663A8 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		CBB801FB19F6017D00E29A75 /* AddItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddItemViewController.h; sourceTree = "<group>"; };
+		CBB801FC19F6017D00E29A75 /* AddItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddItemViewController.m; sourceTree = "<group>"; };
+		CBB801FE19F6114900E29A75 /* AddSaleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddSaleViewController.h; sourceTree = "<group>"; };
+		CBB801FF19F6114900E29A75 /* AddSaleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddSaleViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +197,14 @@
 				CB99145519F0B8D100E663A8 /* ListViewController.m */,
 				CB99145A19F0CE5D00E663A8 /* DetailViewController.h */,
 				CB99145B19F0CE5D00E663A8 /* DetailViewController.m */,
+				CB67AC9B19F20CF600F9613D /* MyStoreViewController.h */,
+				CB67AC9C19F20CF600F9613D /* MyStoreViewController.m */,
+				CB67ACA119F2196B00F9613D /* AddStoreViewController.h */,
+				CB67ACA219F2196B00F9613D /* AddStoreViewController.m */,
+				CBB801FB19F6017D00E29A75 /* AddItemViewController.h */,
+				CBB801FC19F6017D00E29A75 /* AddItemViewController.m */,
+				CBB801FE19F6114900E29A75 /* AddSaleViewController.h */,
+				CBB801FF19F6114900E29A75 /* AddSaleViewController.m */,
 				CB4E7FFC19EF68AB00CF53E4 /* Images.xcassets */,
 				CB4E7FE519EF68AA00CF53E4 /* Supporting Files */,
 				CB92E74519EF7CB8006292CC /* CatTableViewCell_iPhone.h */,
@@ -196,6 +219,8 @@
 				CB99144919F0A1D500E663A8 /* iCarousel.m */,
 				CB99145719F0BB1B00E663A8 /* ListCollectionCell.h */,
 				CB99145819F0BB1B00E663A8 /* ListCollectionCell.m */,
+				CB67AC9E19F2107C00F9613D /* MyStoreCell.h */,
+				CB67AC9F19F2107C00F9613D /* MyStoreCell.m */,
 			);
 			path = Threadid;
 			sourceTree = "<group>";
@@ -349,11 +374,16 @@
 			files = (
 				CB4E7FEF19EF68AA00CF53E4 /* AppDelegate.m in Sources */,
 				CB92E74419EF79C2006292CC /* MoreViewController.m in Sources */,
+				CB67AC9D19F20CF600F9613D /* MyStoreViewController.m in Sources */,
+				CBB8020019F6114900E29A75 /* AddSaleViewController.m in Sources */,
 				CB99145619F0B8D100E663A8 /* ListViewController.m in Sources */,
 				CB99145919F0BB1B00E663A8 /* ListCollectionCell.m in Sources */,
 				CB99145319F0B23000E663A8 /* StoresViewCell.m in Sources */,
 				CB92E74D19EF7CC8006292CC /* CatTableViewCell_iPad.m in Sources */,
 				CB99144A19F0A1D500E663A8 /* iCarousel.m in Sources */,
+				CB67ACA319F2196B00F9613D /* AddStoreViewController.m in Sources */,
+				CBB801FD19F6017D00E29A75 /* AddItemViewController.m in Sources */,
+				CB67ACA019F2107C00F9613D /* MyStoreCell.m in Sources */,
 				CB92E74819EF7CB8006292CC /* CatTableViewCell_iPhone.m in Sources */,
 				CB92E74119EF79B6006292CC /* StoresViewController.m in Sources */,
 				CB99145C19F0CE5D00E663A8 /* DetailViewController.m in Sources */,
