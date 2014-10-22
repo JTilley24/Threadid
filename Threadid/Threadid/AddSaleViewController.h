@@ -12,12 +12,20 @@
 {
     IBOutlet UIDatePicker *saleDatePicker;
     IBOutlet UIButton *dateButton;
+    NSString *dateString;
     IBOutlet UISegmentedControl *saleSegment;
+    IBOutlet UIPickerView *itemPicker;
+    IBOutlet UIToolbar *pickerToolbar;
     IBOutlet UIButton *saleButton1;
     IBOutlet UIButton *saleButton2;
     IBOutlet UIButton *saleButton3;
+    IBOutlet UIButton *itemButton;
+    NSArray *itemsArray;
+    NSString *selectedItem;
 }
 
+-(IBAction)onClick:(id)sender;
 -(IBAction)onChange:(id)sender;
+-(IBAction)onDateChanged:(id)sender;
 
 @end

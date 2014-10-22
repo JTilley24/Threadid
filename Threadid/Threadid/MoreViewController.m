@@ -40,10 +40,14 @@
 -(IBAction)onClick:(id)sender;
 {
     UIButton *button = sender;
-    if(button.tag == 2){
+    if(button.tag == 0){
+        [self performSegueWithIdentifier:@"CartSegue" sender:self];
+    }else if(button.tag == 2){
         [self performSegueWithIdentifier:@"OpenStoreSegue" sender:self];
     }else if (button.tag == 3){
         [self performSegueWithIdentifier:@"MyStoreSegue" sender:self];
+    }else if(button.tag == 4){
+        [self performSegueWithIdentifier:@"MoreSalesSegue" sender:self];
     }
 }
 

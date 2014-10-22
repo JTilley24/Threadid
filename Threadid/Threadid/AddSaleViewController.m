@@ -31,6 +31,22 @@
     saleButton2.titleLabel.textAlignment = NSTextAlignmentCenter;
     saleButton2.titleLabel.text = @"Buy One \n Get One";
     
+    itemsArray = @[@"Pink Knitted Handbag", @"Tuquiose Woven Charm Braclet", @"Knitted Baby Booties"];
+    
+    NSDate *current = [[NSDate alloc] init];
+    [saleDatePicker setMinimumDate:current];
+    saleDatePicker.timeZone = [NSTimeZone localTimeZone];
+    NSDate *pickerDate = saleDatePicker.date;
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    if(dateFormat != nil)
+    {
+        [dateFormat setDateStyle:NSDateFormatterMediumStyle];
+    }
+    NSString *dateText = [dateFormat stringFromDate:pickerDate];
+    NSString *newDate = [[NSString alloc] initWithFormat:@"%@", dateText];
+    [dateButton setTitle:newDate forState:UIControlStateNormal];
+    saleDatePicker.backgroundColor = [UIColor whiteColor];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,18 +62,55 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return 0;
+    return [itemsArray count];
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
 {
- 
-    return nil;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, pickerView.frame.size.width, 44)];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.text = [itemsArray objectAtIndex:row];
+    return label;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
+    if(itemPicker.hidden == NO){
+        selectedItem = [itemsArray objectAtIndex:row];
+        [itemButton setTitle:selectedItem forState:UIControlStateNormal];
+    }else if (saleDatePicker.hidden == NO){
+     
+    }
     
+}
+
+-(IBAction)onClick:(id)sender
+{
+    UIButton *button = sender;
+    if(button.tag == 0){
+        if(itemPicker.hidden == NO){
+            itemPicker.hidden = YES;
+        }else if (saleDatePicker.hidden == NO){
+            saleDatePicker.hidden = YES;
+        }
+        pickerToolbar.hidden = YES;
+    }else if(button.tag == 1){
+        if(itemPicker.hidden == YES){
+            itemPicker.hidden = NO;
+        }
+        if (saleDatePicker.hidden == NO){
+            saleDatePicker.hidden = YES;
+        }
+        pickerToolbar.hidden = NO;
+    }else if(button.tag == 2){
+        if(itemPicker.hidden == NO){
+            itemPicker.hidden = YES;
+        }
+        if (saleDatePicker.hidden == YES){
+            saleDatePicker.hidden = NO;
+        }
+        pickerToolbar.hidden = NO;
+    }
 }
 
 -(IBAction)onChange:(id)sender
@@ -76,6 +129,19 @@
         saleButton1.selected = NO;
         saleButton2.selected = NO;
     }
+}
+
+-(IBAction)onDateChanged:(id)sender
+{
+    NSDate *pickerDate = saleDatePicker.date;
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    if(dateFormat != nil)
+    {
+        [dateFormat setDateStyle:NSDateFormatterMediumStyle];
+    }
+    NSString *dateText = [dateFormat stringFromDate:pickerDate];
+    dateString = [[NSString alloc] initWithFormat:@"%@", dateText];
+    [dateButton setTitle:dateString forState:UIControlStateNormal];
 }
 /*
 #pragma mark - Navigation
