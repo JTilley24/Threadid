@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
 
-@interface AddItemViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, iCarouselDelegate, iCarouselDataSource>
+@interface AddItemViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, iCarouselDelegate, iCarouselDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
     IBOutlet UIPickerView *catPicker;
     IBOutlet UIToolbar *catPickerToolBar;
@@ -17,6 +17,7 @@
     IBOutlet UIStepper *quantityStep;
     IBOutlet UILabel *quantityLabel;
     IBOutlet iCarousel *picsCaro;
+    NSMutableArray *picsArray;
     NSArray *catArray;
     NSString *catString;
 }

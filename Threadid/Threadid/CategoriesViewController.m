@@ -84,7 +84,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"CatSegue" sender:self];
+    if(indexPath.row == 4){
+        [self performSegueWithIdentifier:@"SaleCatSegue" sender:self];
+    }else{
+        [self performSegueWithIdentifier:@"CatSegue" sender:self];
+    }
 }
 
 -(NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel

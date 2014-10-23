@@ -23,9 +23,26 @@
 		CB4E801019EF68AC00CF53E4 /* ThreadidTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4E800F19EF68AC00CF53E4 /* ThreadidTests.m */; };
 		CB4E801B19EF68CA00CF53E4 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB4E801A19EF68CA00CF53E4 /* LoginViewController.m */; };
 		CB4E801D19EF6AF700CF53E4 /* threadid-login.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4E801C19EF6AF700CF53E4 /* threadid-login.png */; };
+		CB4EB73F19F88080000C21CD /* star-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4EB73819F88080000C21CD /* star-icon.png */; };
+		CB4EB74019F88080000C21CD /* search-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4EB73919F88080000C21CD /* search-icon.png */; };
+		CB4EB74119F88080000C21CD /* starred-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4EB73A19F88080000C21CD /* starred-icon.png */; };
+		CB4EB74219F88080000C21CD /* add-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4EB73B19F88080000C21CD /* add-icon.png */; };
+		CB4EB74319F88080000C21CD /* cart-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4EB73C19F88080000C21CD /* cart-icon.png */; };
+		CB4EB74419F88080000C21CD /* check-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4EB73D19F88080000C21CD /* check-icon.png */; };
+		CB4EB74519F88080000C21CD /* camera-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4EB73E19F88080000C21CD /* camera-icon.png */; };
+		CB4EB74819F88585000C21CD /* home-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4EB74619F88585000C21CD /* home-icon.png */; };
+		CB4EB74919F88585000C21CD /* store-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4EB74719F88585000C21CD /* store-icon.png */; };
+		CB4EB74B19F88A06000C21CD /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4EB74A19F88A06000C21CD /* MobileCoreServices.framework */; };
+		CB4EB74D19F88B3B000C21CD /* default-pic.png in Resources */ = {isa = PBXBuildFile; fileRef = CB4EB74C19F88B3B000C21CD /* default-pic.png */; };
 		CB67AC9D19F20CF600F9613D /* MyStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB67AC9C19F20CF600F9613D /* MyStoreViewController.m */; };
 		CB67ACA019F2107C00F9613D /* MyStoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CB67AC9F19F2107C00F9613D /* MyStoreCell.m */; };
 		CB67ACA319F2196B00F9613D /* AddStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB67ACA219F2196B00F9613D /* AddStoreViewController.m */; };
+		CB7D66E119F7517200AFE94F /* StoreCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7D66E019F7517200AFE94F /* StoreCollectionCell.m */; };
+		CB7D66E419F751E100AFE94F /* StoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7D66E319F751E100AFE94F /* StoreViewController.m */; };
+		CB7D66E719F75BE800AFE94F /* SalesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7D66E619F75BE800AFE94F /* SalesViewController.m */; };
+		CB7D66EA19F75BF800AFE94F /* SalesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7D66E919F75BF800AFE94F /* SalesCell.m */; };
+		CB7D66ED19F7674D00AFE94F /* FavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7D66EC19F7674D00AFE94F /* FavoritesViewController.m */; };
+		CB7D66F019F767B600AFE94F /* FavsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7D66EF19F767B600AFE94F /* FavsCell.m */; };
 		CB92E73E19EF79AA006292CC /* CategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB92E73D19EF79AA006292CC /* CategoriesViewController.m */; };
 		CB92E74119EF79B6006292CC /* StoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB92E74019EF79B6006292CC /* StoresViewController.m */; };
 		CB92E74419EF79C2006292CC /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB92E74319EF79C2006292CC /* MoreViewController.m */; };
@@ -86,12 +103,35 @@
 		CB4E801919EF68CA00CF53E4 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		CB4E801A19EF68CA00CF53E4 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		CB4E801C19EF6AF700CF53E4 /* threadid-login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "threadid-login.png"; sourceTree = "<group>"; };
+		CB4EB73819F88080000C21CD /* star-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-icon.png"; sourceTree = "<group>"; };
+		CB4EB73919F88080000C21CD /* search-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-icon.png"; sourceTree = "<group>"; };
+		CB4EB73A19F88080000C21CD /* starred-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "starred-icon.png"; sourceTree = "<group>"; };
+		CB4EB73B19F88080000C21CD /* add-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-icon.png"; sourceTree = "<group>"; };
+		CB4EB73C19F88080000C21CD /* cart-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cart-icon.png"; sourceTree = "<group>"; };
+		CB4EB73D19F88080000C21CD /* check-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-icon.png"; sourceTree = "<group>"; };
+		CB4EB73E19F88080000C21CD /* camera-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon.png"; sourceTree = "<group>"; };
+		CB4EB74619F88585000C21CD /* home-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-icon.png"; sourceTree = "<group>"; };
+		CB4EB74719F88585000C21CD /* store-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "store-icon.png"; sourceTree = "<group>"; };
+		CB4EB74A19F88A06000C21CD /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		CB4EB74C19F88B3B000C21CD /* default-pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "default-pic.png"; path = "../../../default-pic.png"; sourceTree = "<group>"; };
 		CB67AC9B19F20CF600F9613D /* MyStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyStoreViewController.h; sourceTree = "<group>"; };
 		CB67AC9C19F20CF600F9613D /* MyStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyStoreViewController.m; sourceTree = "<group>"; };
 		CB67AC9E19F2107C00F9613D /* MyStoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyStoreCell.h; sourceTree = "<group>"; };
 		CB67AC9F19F2107C00F9613D /* MyStoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyStoreCell.m; sourceTree = "<group>"; };
 		CB67ACA119F2196B00F9613D /* AddStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddStoreViewController.h; sourceTree = "<group>"; };
 		CB67ACA219F2196B00F9613D /* AddStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddStoreViewController.m; sourceTree = "<group>"; };
+		CB7D66DF19F7517200AFE94F /* StoreCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreCollectionCell.h; sourceTree = "<group>"; };
+		CB7D66E019F7517200AFE94F /* StoreCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreCollectionCell.m; sourceTree = "<group>"; };
+		CB7D66E219F751E100AFE94F /* StoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreViewController.h; sourceTree = "<group>"; };
+		CB7D66E319F751E100AFE94F /* StoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreViewController.m; sourceTree = "<group>"; };
+		CB7D66E519F75BE800AFE94F /* SalesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalesViewController.h; sourceTree = "<group>"; };
+		CB7D66E619F75BE800AFE94F /* SalesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SalesViewController.m; sourceTree = "<group>"; };
+		CB7D66E819F75BF800AFE94F /* SalesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalesCell.h; sourceTree = "<group>"; };
+		CB7D66E919F75BF800AFE94F /* SalesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SalesCell.m; sourceTree = "<group>"; };
+		CB7D66EB19F7674D00AFE94F /* FavoritesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoritesViewController.h; sourceTree = "<group>"; };
+		CB7D66EC19F7674D00AFE94F /* FavoritesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoritesViewController.m; sourceTree = "<group>"; };
+		CB7D66EE19F767B600AFE94F /* FavsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavsCell.h; sourceTree = "<group>"; };
+		CB7D66EF19F767B600AFE94F /* FavsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavsCell.m; sourceTree = "<group>"; };
 		CB92E73C19EF79AA006292CC /* CategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewController.h; sourceTree = "<group>"; };
 		CB92E73D19EF79AA006292CC /* CategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesViewController.m; sourceTree = "<group>"; };
 		CB92E73F19EF79B6006292CC /* StoresViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoresViewController.h; sourceTree = "<group>"; };
@@ -141,6 +181,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB4EB74B19F88A06000C21CD /* MobileCoreServices.framework in Frameworks */,
 				CB4E7FE119EF68A900CF53E4 /* CoreGraphics.framework in Frameworks */,
 				CB4E7FE319EF68A900CF53E4 /* UIKit.framework in Frameworks */,
 				CB4E7FDF19EF68A900CF53E4 /* Foundation.framework in Frameworks */,
@@ -182,6 +223,7 @@
 		CB4E7FDD19EF68A900CF53E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CB4EB74A19F88A06000C21CD /* MobileCoreServices.framework */,
 				CB4E7FDE19EF68A900CF53E4 /* Foundation.framework */,
 				CB4E7FE019EF68A900CF53E4 /* CoreGraphics.framework */,
 				CB4E7FE219EF68A900CF53E4 /* UIKit.framework */,
@@ -207,6 +249,8 @@
 				CB92E74319EF79C2006292CC /* MoreViewController.m */,
 				CB99145419F0B8D100E663A8 /* ListViewController.h */,
 				CB99145519F0B8D100E663A8 /* ListViewController.m */,
+				CB7D66E219F751E100AFE94F /* StoreViewController.h */,
+				CB7D66E319F751E100AFE94F /* StoreViewController.m */,
 				CB99145A19F0CE5D00E663A8 /* DetailViewController.h */,
 				CB99145B19F0CE5D00E663A8 /* DetailViewController.m */,
 				CB67AC9B19F20CF600F9613D /* MyStoreViewController.h */,
@@ -221,6 +265,10 @@
 				CBAFE25619F7364400764737 /* CartViewController.m */,
 				CBAFE26119F73DF900764737 /* SalesHistoryViewController.h */,
 				CBAFE26219F73DF900764737 /* SalesHistoryViewController.m */,
+				CB7D66E519F75BE800AFE94F /* SalesViewController.h */,
+				CB7D66E619F75BE800AFE94F /* SalesViewController.m */,
+				CB7D66EB19F7674D00AFE94F /* FavoritesViewController.h */,
+				CB7D66EC19F7674D00AFE94F /* FavoritesViewController.m */,
 				CB4E7FFC19EF68AB00CF53E4 /* Images.xcassets */,
 				CB4E7FE519EF68AA00CF53E4 /* Supporting Files */,
 				CB92E74519EF7CB8006292CC /* CatTableViewCell_iPhone.h */,
@@ -235,12 +283,18 @@
 				CB99144919F0A1D500E663A8 /* iCarousel.m */,
 				CB99145719F0BB1B00E663A8 /* ListCollectionCell.h */,
 				CB99145819F0BB1B00E663A8 /* ListCollectionCell.m */,
+				CB7D66DF19F7517200AFE94F /* StoreCollectionCell.h */,
+				CB7D66E019F7517200AFE94F /* StoreCollectionCell.m */,
 				CB67AC9E19F2107C00F9613D /* MyStoreCell.h */,
 				CB67AC9F19F2107C00F9613D /* MyStoreCell.m */,
 				CBAFE25B19F736A600764737 /* CartCell.h */,
 				CBAFE25C19F736A600764737 /* CartCell.m */,
 				CBAFE25E19F73DD500764737 /* HistoryCell.h */,
 				CBAFE25F19F73DD500764737 /* HistoryCell.m */,
+				CB7D66E819F75BF800AFE94F /* SalesCell.h */,
+				CB7D66E919F75BF800AFE94F /* SalesCell.m */,
+				CB7D66EE19F767B600AFE94F /* FavsCell.h */,
+				CB7D66EF19F767B600AFE94F /* FavsCell.m */,
 			);
 			path = Threadid;
 			sourceTree = "<group>";
@@ -248,6 +302,16 @@
 		CB4E7FE519EF68AA00CF53E4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CB4EB74C19F88B3B000C21CD /* default-pic.png */,
+				CB4EB74619F88585000C21CD /* home-icon.png */,
+				CB4EB74719F88585000C21CD /* store-icon.png */,
+				CB4EB73819F88080000C21CD /* star-icon.png */,
+				CB4EB73919F88080000C21CD /* search-icon.png */,
+				CB4EB73A19F88080000C21CD /* starred-icon.png */,
+				CB4EB73B19F88080000C21CD /* add-icon.png */,
+				CB4EB73C19F88080000C21CD /* cart-icon.png */,
+				CB4EB73D19F88080000C21CD /* check-icon.png */,
+				CB4EB73E19F88080000C21CD /* camera-icon.png */,
 				CB99144B19F0A3C000E663A8 /* knighty.jpg */,
 				CB99144C19F0A3C000E663A8 /* bettys.jpg */,
 				CB99144D19F0A3C000E663A8 /* charms.jpg */,
@@ -359,21 +423,31 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB4EB74319F88080000C21CD /* cart-icon.png in Resources */,
+				CB4EB73F19F88080000C21CD /* star-icon.png in Resources */,
 				CB9913F119F0953400E663A8 /* Supplies.jpg in Resources */,
 				CB9913ED19F0953400E663A8 /* Sales.jpg in Resources */,
 				CB4E7FF519EF68AA00CF53E4 /* Main_iPad.storyboard in Resources */,
 				CB9913EE19F0953400E663A8 /* Knitted.jpg in Resources */,
 				CB4E801D19EF6AF700CF53E4 /* threadid-login.png in Resources */,
+				CB4EB74D19F88B3B000C21CD /* default-pic.png in Resources */,
 				CB4E7FFD19EF68AB00CF53E4 /* Images.xcassets in Resources */,
 				CB9913F319F0974900E663A8 /* HomeDecor.jpg in Resources */,
+				CB4EB74519F88080000C21CD /* camera-icon.png in Resources */,
 				CB92E74919EF7CB8006292CC /* CatTableViewCell_iPhone.xib in Resources */,
 				CB92E74E19EF7CC8006292CC /* CatTableViewCell_iPad.xib in Resources */,
+				CB4EB74919F88585000C21CD /* store-icon.png in Resources */,
+				CB4EB74119F88080000C21CD /* starred-icon.png in Resources */,
+				CB4EB74819F88585000C21CD /* home-icon.png in Resources */,
+				CB4EB74419F88080000C21CD /* check-icon.png in Resources */,
 				CB9913F019F0953400E663A8 /* Jewelry.jpg in Resources */,
 				CB99145019F0A3C000E663A8 /* charms.jpg in Resources */,
+				CB4EB74219F88080000C21CD /* add-icon.png in Resources */,
 				CB99144F19F0A3C000E663A8 /* bettys.jpg in Resources */,
 				CB99144E19F0A3C000E663A8 /* knighty.jpg in Resources */,
 				CB4E7FF219EF68AA00CF53E4 /* Main_iPhone.storyboard in Resources */,
 				CB4E7FE919EF68AA00CF53E4 /* InfoPlist.strings in Resources */,
+				CB4EB74019F88080000C21CD /* search-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,15 +479,21 @@
 				CB92E74D19EF7CC8006292CC /* CatTableViewCell_iPad.m in Sources */,
 				CB99144A19F0A1D500E663A8 /* iCarousel.m in Sources */,
 				CB67ACA319F2196B00F9613D /* AddStoreViewController.m in Sources */,
+				CB7D66F019F767B600AFE94F /* FavsCell.m in Sources */,
 				CBB801FD19F6017D00E29A75 /* AddItemViewController.m in Sources */,
+				CB7D66EA19F75BF800AFE94F /* SalesCell.m in Sources */,
+				CB7D66E719F75BE800AFE94F /* SalesViewController.m in Sources */,
 				CB67ACA019F2107C00F9613D /* MyStoreCell.m in Sources */,
 				CB92E74819EF7CB8006292CC /* CatTableViewCell_iPhone.m in Sources */,
 				CBAFE26019F73DD500764737 /* HistoryCell.m in Sources */,
 				CB92E74119EF79B6006292CC /* StoresViewController.m in Sources */,
 				CB99145C19F0CE5D00E663A8 /* DetailViewController.m in Sources */,
 				CB4E7FEB19EF68AA00CF53E4 /* main.m in Sources */,
+				CB7D66E419F751E100AFE94F /* StoreViewController.m in Sources */,
+				CB7D66ED19F7674D00AFE94F /* FavoritesViewController.m in Sources */,
 				CB92E73E19EF79AA006292CC /* CategoriesViewController.m in Sources */,
 				CB4E801B19EF68CA00CF53E4 /* LoginViewController.m in Sources */,
+				CB7D66E119F7517200AFE94F /* StoreCollectionCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

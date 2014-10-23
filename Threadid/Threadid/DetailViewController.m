@@ -70,11 +70,20 @@
     
     [view addSubview:iv];
     return view;
-
-    
 }
 
-
+-(IBAction)onClick:(id)sender
+{
+    UIButton *button = sender;
+    if(button.tag == 0){
+        UIAlertView *addCartAlert = [[UIAlertView alloc] initWithTitle:@"Add to Cart" message:@"Item has been add to cart." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [addCartAlert show];
+    }else if(button.tag == 1){
+        [self performSegueWithIdentifier:@"ItemStoreSegue" sender:self];
+    }else if(button.tag == 2){
+        [self performSegueWithIdentifier:@"ItemCartSegue" sender:self];
+    }
+}
 /*
 #pragma mark - Navigation
 

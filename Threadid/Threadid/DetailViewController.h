@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
 
-@interface DetailViewController : UIViewController <iCarouselDataSource, iCarouselDelegate>
+@interface DetailViewController : UIViewController <iCarouselDataSource, iCarouselDelegate, UIAlertViewDelegate>
 {
     IBOutlet iCarousel *itemImgCaro;
 }
+
+-(IBAction)onClick:(id)sender;
+
 @end

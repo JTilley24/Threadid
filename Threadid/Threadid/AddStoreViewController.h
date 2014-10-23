@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddStoreViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
+@interface AddStoreViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UIAlertViewDelegate>
 {
     IBOutlet UITextField *storeNameInput;
     IBOutlet UISwitch *artisanSwitch;
@@ -25,5 +25,6 @@
 
 -(IBAction)onClick:(id)sender;
 -(IBAction)onBarButtonClick:(id)sender;
+-(IBAction)onChanged:(id)sender;
 
 @end

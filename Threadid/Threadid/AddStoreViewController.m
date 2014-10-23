@@ -122,6 +122,23 @@
     }
 }
 
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    //If No Button is Selected
+    if([title isEqualToString:@"No"])
+    {
+        [artisanSwitch setOn:NO animated:YES];
+    }
+    //If Yes Button is Selected
+    else if ([title isEqualToString:@"Yes"])
+    {
+        [artisanSwitch setOn:YES animated:YES];
+    }
+}
+
+
 -(IBAction)onClick:(id)sender
 {
     UIButton *button = sender;
@@ -144,6 +161,14 @@
 -(IBAction)onBarButtonClick:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(IBAction)onChanged:(id)sender
+{
+    if([artisanSwitch isOn]){
+         UIAlertView *artisanAlert = [[UIAlertView alloc] initWithTitle:@"Artisan" message:@"This membership will result in a $1.99 monthly recurring charge. \n Are You Sure?" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Yes",@"No", nil];
+        [artisanAlert show];
+    }
 }
 
 

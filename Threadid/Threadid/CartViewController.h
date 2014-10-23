@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CartViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface CartViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 {
     IBOutlet UITableView *cartTable;
     IBOutlet UILabel *subLabel;
@@ -20,5 +20,7 @@
     float taxNum;
     float totalNum;
 }
+
+-(IBAction)onClick:(id)sender;
 
 @end

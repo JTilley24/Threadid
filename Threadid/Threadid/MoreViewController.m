@@ -27,8 +27,16 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
     self.title = @"More";
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIFont fontWithName:@"Helvetica" size:21],
+      NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,12 +50,18 @@
     UIButton *button = sender;
     if(button.tag == 0){
         [self performSegueWithIdentifier:@"CartSegue" sender:self];
+    }else if(button.tag == 1){
+        [self performSegueWithIdentifier:@"FavsSegue" sender:self];
     }else if(button.tag == 2){
         [self performSegueWithIdentifier:@"OpenStoreSegue" sender:self];
     }else if (button.tag == 3){
         [self performSegueWithIdentifier:@"MyStoreSegue" sender:self];
     }else if(button.tag == 4){
         [self performSegueWithIdentifier:@"MoreSalesSegue" sender:self];
+    }else if(button.tag == 5){
+        [self performSegueWithIdentifier:@"MoreStoreSegue" sender:self];
+    }else if(button.tag == 6){
+        [self performSegueWithIdentifier:@"SignOutSegue" sender:self];
     }
 }
 

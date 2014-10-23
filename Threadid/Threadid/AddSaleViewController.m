@@ -110,6 +110,8 @@
             saleDatePicker.hidden = NO;
         }
         pickerToolbar.hidden = NO;
+    }else if (button.tag == 3){
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
