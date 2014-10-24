@@ -31,8 +31,10 @@
     saleButton2.titleLabel.textAlignment = NSTextAlignmentCenter;
     saleButton2.titleLabel.text = @"Buy One \n Get One";
     
+    //Add Static Data
     itemsArray = @[@"Pink Knitted Handbag", @"Tuquiose Woven Charm Braclet", @"Knitted Baby Booties"];
     
+    //Get Current Date and Set to button
     NSDate *current = [[NSDate alloc] init];
     [saleDatePicker setMinimumDate:current];
     saleDatePicker.timeZone = [NSTimeZone localTimeZone];
@@ -55,16 +57,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+//Number of components in Picker
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
 }
 
+//Number of items in Picker
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     return [itemsArray count];
 }
 
+//Add Items to Picker
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, pickerView.frame.size.width, 44)];
@@ -73,6 +78,7 @@
     return label;
 }
 
+//Set selection to button title
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if(itemPicker.hidden == NO){
@@ -81,9 +87,14 @@
     }else if (saleDatePicker.hidden == NO){
      
     }
-    
 }
 
+-(BOOL) textFieldShouldReturn: (UITextField *) textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+//OnClick for item and date button and back navigation
 -(IBAction)onClick:(id)sender
 {
     UIButton *button = sender;
@@ -115,6 +126,7 @@
     }
 }
 
+//Toggle for Sale Type buttons
 -(IBAction)onChange:(id)sender
 {
     UIButton *button = sender;
@@ -133,6 +145,7 @@
     }
 }
 
+//Change button title to date
 -(IBAction)onDateChanged:(id)sender
 {
     NSDate *pickerDate = saleDatePicker.date;

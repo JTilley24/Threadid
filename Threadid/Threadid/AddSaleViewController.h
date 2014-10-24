@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddSaleViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
+@interface AddSaleViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate>
 {
     IBOutlet UIDatePicker *saleDatePicker;
     IBOutlet UIButton *dateButton;

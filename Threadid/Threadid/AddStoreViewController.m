@@ -28,8 +28,12 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    //Set Fonts and Colors
     fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana Bold"];
     colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
+    
+    //Determine if iPhone or iPad
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
         fontSize = 20;
     }else{
@@ -43,13 +47,13 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+//Number of components in Picker
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
 }
 
-
+//Number of items in Picker
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     if([selectedString isEqualToString:@"font"]){
@@ -62,6 +66,7 @@
     return 0;
 }
 
+//Add name, font color, or background color to item in Picker
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, pickerView.frame.size.width, 44)];
@@ -111,6 +116,7 @@
     return label;
 }
 
+//Set user selection
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if([selectedString isEqualToString:@"font"]){
@@ -122,7 +128,7 @@
     }
 }
 
-
+//Switch for Artisan
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
@@ -138,7 +144,12 @@
     }
 }
 
+-(BOOL) textFieldShouldReturn: (UITextField *) textField {
+    [textField resignFirstResponder];
+    return YES;
+}
 
+//OnClick for font, font color, and background color buttons
 -(IBAction)onClick:(id)sender
 {
     UIButton *button = sender;
@@ -158,11 +169,13 @@
     }
 }
 
+//Go back
 -(IBAction)onBarButtonClick:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+//Display Confirmation Alert
 -(IBAction)onChanged:(id)sender
 {
     if([artisanSwitch isOn]){

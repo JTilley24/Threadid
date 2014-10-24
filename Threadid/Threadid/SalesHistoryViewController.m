@@ -28,6 +28,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    //Set Static Data
     usersArray = @[@"Knitter5", @"SuperMom12"];
     itemsArray = @[@"Pink Knitted Handbag", @"Knitted Baby Booties"];
     dateArray = @[@"Oct 12, 2014", @"Oct 15, 2014"];
@@ -41,11 +43,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+//Number of rows for Table
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [usersArray count];
 }
 
+//Add username, item, date and total to Table
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     HistoryCell *cell = [historyTable dequeueReusableCellWithIdentifier:@"HistoryCell"];

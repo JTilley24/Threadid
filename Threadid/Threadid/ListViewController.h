@@ -16,6 +16,9 @@
     NSArray *itemPriceArray;
     IBOutlet UICollectionView *itemsCollection;
     IBOutlet iCarousel *itemCaro;
+    IBOutlet UISearchBar *itemSearch;
 }
+
+-(IBAction)onClick:(id)sender;
 
 @end

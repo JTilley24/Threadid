@@ -57,6 +57,12 @@
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIAlertView *itemAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:@"View Item", @"Edit Item", @"Delete Item", nil];
+    [itemAlert show];
+}
+
 -(IBAction)onClick:(id)sender
 {
     UIButton *button = sender;
@@ -73,6 +79,27 @@
 {
     [self performSegueWithIdentifier:@"EditStoreSegue" sender:self];
 }
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    //If View Button is Selected
+    if([title isEqualToString:@"View Item"])
+    {
+        [self performSegueWithIdentifier:@"MyItemSegue" sender:self];
+    }
+    //If Edit Button is Selected
+    else if ([title isEqualToString:@"Edit Item"])
+    {
+        [self performSegueWithIdentifier:@"AddItemSegue" sender:self];
+    }
+    
+    else if ([title isEqualToString:@"Delete Item"])
+    {
+        
+    }
+}
+
 
 /*
 #pragma mark - Navigation

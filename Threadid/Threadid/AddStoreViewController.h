@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddStoreViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UIAlertViewDelegate>
+@interface AddStoreViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UIAlertViewDelegate, UITextFieldDelegate>
 {
     IBOutlet UITextField *storeNameInput;
     IBOutlet UISwitch *artisanSwitch;

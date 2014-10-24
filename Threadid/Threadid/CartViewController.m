@@ -28,6 +28,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    //Set Static Data and Images
     itemImgArray = @[@"bettys.jpg", @"charms.jpg", @"knighty.jpg"];
     itemNameArray = @[@"Pink Knitted Handbag", @"Tuquiose Woven Charm Braclet", @"Knitted Baby Booties"];
     itemPriceArray = @[@"$44.99", @"$9.99", @"$14.99"];
@@ -41,6 +43,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    //Set Navigation Bar attributes
     self.title = @"My Cart";
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
     [self.navigationController.navigationBar setTitleTextAttributes:
@@ -55,11 +58,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+//Number of rows in Table
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [itemNameArray count];
 }
 
+//Add items data to Table's cell
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CartCell *cell = [cartTable dequeueReusableCellWithIdentifier:@"CartCell"];
@@ -71,18 +76,21 @@
     return cell;
 }
 
+//Delete Alert for selected item
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIAlertView *cartAlert = [[UIAlertView alloc] initWithTitle:@"Delete" message:@"Are You Sure?" delegate:self cancelButtonTitle:nil otherButtonTitles:@"YES", @"NO", nil];
     [cartAlert show];
 }
 
+//Checkout Alert for cart
 -(IBAction)onClick:(id)sender
 {
     UIAlertView *checkoutAlert = [[UIAlertView alloc] initWithTitle:@"Checkout" message:@"Checkout feature will be handled with third-party payment system. \n i.e PayPal" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [checkoutAlert show];
 }
 
+//Button click for Alert
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];

@@ -13,5 +13,9 @@
     NSArray *storeNameArray;
     NSArray *storeImgArray;
     IBOutlet UICollectionView *storesCollection;
+    IBOutlet UISearchBar *storeSearch;
 }
+
+-(IBAction)onClick:(id)sender;
+
 @end

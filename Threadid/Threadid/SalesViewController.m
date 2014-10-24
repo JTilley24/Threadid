@@ -28,6 +28,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+   
+    //Set Static Data and Images
     storeArray = @[@"Betty's Bags", @"Chelsea's Charms", @"Knitted Knighty"];
     imgArray = @[@"bettys.jpg", @"charms.jpg", @"knighty.jpg"];
     itemNameArray = @[@"Pink Knitted Handbag", @"Tuquiose Woven Charm Braclet", @"Knitted Baby Booties"];
@@ -43,11 +45,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+//Number of rows in Table
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [itemNameArray count];
 }
 
+//Add sale item Data and Image to Table
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SalesCell *cell = [salesTable dequeueReusableCellWithIdentifier:@"SalesCell"];
@@ -61,6 +65,7 @@
     return cell;
 }
 
+//Navigate to Item Details
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self performSegueWithIdentifier:@"SaleItemSegue" sender:self];

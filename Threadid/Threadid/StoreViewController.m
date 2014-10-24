@@ -28,24 +28,29 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    //Set Static Data and Images
     itemImgArray = @[@"bettys.jpg", @"charms.jpg", @"knighty.jpg"];
     itemNameArray = @[@"Pink Knitted Handbag", @"Tuquiose Woven Charm Braclet", @"Knitted Baby Booties"];
     itemPriceArray = @[@"$44.99", @"$9.99", @"$14.99"];
+    fav = false;
+    
+    //Change font size by iPhone or iPad
     if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
     {
-        fontSize = 20;
+        fontSize = 12;
     }else
     {
         fontSize = 15;
     }
+    
+    //Set Navigation Bar attributes
     self.title = @"Betty's Bags";
     [self.navigationController.navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
       [UIFont fontWithName:@"Noteworthy" size:21],
       NSFontAttributeName,[UIColor greenColor],NSForegroundColorAttributeName, nil]];
     [self.navigationController.navigationBar setBarTintColor:[UIColor orangeColor]];
-    fav = false;
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -54,6 +59,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+//Number of items in Collection
 -(NSInteger)collectionView:(UICollectionView *)collectionView
     numberOfItemsInSection:(NSInteger)section
 {
@@ -61,6 +67,7 @@
     return [itemNameArray count];
 }
 
+//Add image, name, and price for each item in Collection
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -78,11 +85,13 @@
     return cell;
 }
 
+//Select for items in Collection
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [self performSegueWithIdentifier:@"StoreSelectSegue" sender:self];
 }
 
+//Toggle Favorites Button
 -(IBAction)onClick:(id)sender
 {
     if(fav == false){

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyStoreViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface MyStoreViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate>
 {
     IBOutlet UICollectionView *itemsCollection;
     NSArray *itemImgArray;

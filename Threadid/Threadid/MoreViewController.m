@@ -31,6 +31,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    //Set Navigation Bar attributes
     self.title = @"More";
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
     [self.navigationController.navigationBar setTitleTextAttributes:
@@ -45,6 +46,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+//OnClick to navigate to corresponding view
 -(IBAction)onClick:(id)sender;
 {
     UIButton *button = sender;

@@ -28,14 +28,16 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    //Set Navigation Bar attributes
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    //Set Static Data and Images
     storeNameArray = @[@"Betty's Bags", @"Chelsea's Charms", @"Knitted Knighty", @"Betty's Bags", @"Chelsea's Charms", @"Knitted Knighty"];
     storeImgArray = @[@"bettys.jpg", @"charms.jpg", @"knighty.jpg", @"bettys.jpg", @"charms.jpg", @"knighty.jpg"];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+     //Set Navigation Bar attributes
     self.title = @"Stores";
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
     [self.navigationController.navigationBar setTitleTextAttributes:
@@ -51,6 +53,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+//Number of items in Collection
 -(NSInteger)collectionView:(UICollectionView *)collectionView
     numberOfItemsInSection:(NSInteger)section
 {
@@ -58,6 +61,7 @@
     return [storeNameArray count];
 }
 
+//Add image and name for each store to Collection
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -69,12 +73,21 @@
     return cell;
 }
 
+//Select store from Collection
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [self performSegueWithIdentifier:@"StoreSegue" sender:self];
 }
 
-
+//Toggle Search bar
+-(IBAction)onClick:(id)sender
+{
+    if(storeSearch.hidden == YES){
+        storeSearch.hidden = NO;
+    }else{
+        storeSearch.hidden = YES;
+    }
+}
 
 /*
 #pragma mark - Navigation

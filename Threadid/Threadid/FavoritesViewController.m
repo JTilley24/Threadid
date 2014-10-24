@@ -28,8 +28,11 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //Set Static Data and Images
     storeNameArray = @[@"Betty's Bags", @"Chelsea's Charms", @"Knitted Knighty"];
     storeImgArray = @[@"bettys.jpg", @"charms.jpg", @"knighty.jpg"];
+    
+    //Add Long Press to Collection
     UILongPressGestureRecognizer *favPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(deleteFavPress:)];
     favPress.minimumPressDuration = .5;
     favPress.delegate = self;
@@ -37,12 +40,25 @@
     [favsCollection addGestureRecognizer:favPress];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    //Set Navigation Bar attributes
+    self.title = @"Favorites";
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIFont fontWithName:@"Helvetica" size:21],
+      NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+//Number of items in Collection
 -(NSInteger)collectionView:(UICollectionView *)collectionView
     numberOfItemsInSection:(NSInteger)section
 {
@@ -50,6 +66,7 @@
     return [storeNameArray count];
 }
 
+//Add store name and image to Collection
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -61,11 +78,13 @@
     return cell;
 }
 
+//Navigate to Store View
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [self performSegueWithIdentifier:@"FavStoreSegue" sender:self];
 }
 
+//Long press to Delete selected item
 -(void)deleteFavPress:(UILongPressGestureRecognizer *)gesture
 {
     if(gesture.state != UIGestureRecognizerStateEnded){
@@ -82,6 +101,7 @@
     }
 }
 
+//Button click for Alert
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];

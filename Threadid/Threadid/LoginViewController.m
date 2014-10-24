@@ -36,12 +36,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+//OnClick for Login, Signup, and Cancel Buttons
 -(IBAction)onClick:(id)sender
 {
     UIButton *button = (UIButton*) sender;
     if(button.tag == 0){
         [self performSegueWithIdentifier:@"login-segue" sender:self];
     }else if (button.tag == 1){
+        //Toggle between Login and Signup
         if(loginButton.hidden == false){
             loginButton.hidden = true;
             emailText.hidden = false;
@@ -55,6 +57,11 @@
         cancelButton.hidden = true;
     }
 
+}
+
+-(BOOL) textFieldShouldReturn: (UITextField *) textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 /*

@@ -35,11 +35,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+//Number of items in Carousel
 -(NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
     return 3;
 }
 
+//Add Image to item in Carousel
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
     view = [[UIView alloc] init];
@@ -56,6 +58,7 @@
     }
     view.frame = rec;
     UIImageView *iv;
+    //Determine if iPhone or iPad
     if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
     {
         iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 150, 100)];
@@ -72,6 +75,7 @@
     return view;
 }
 
+//OnClick for Add to Cart Alert and navigation to Store or Cart
 -(IBAction)onClick:(id)sender
 {
     UIButton *button = sender;

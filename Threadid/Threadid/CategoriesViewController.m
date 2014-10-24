@@ -7,8 +7,7 @@
 //
 
 #import "CategoriesViewController.h"
-#import "CatTableViewCell_iPhone.h"
-#import "CatTableViewCell_iPad.h"
+#import "CatCell.h"
 
 @interface CategoriesViewController ()
 
@@ -29,25 +28,17 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //Set Navigation Bar attributes
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleBordered target:nil action:nil];
     
+    //Set Static Data and Images
     catsArray = @[@"Jewelry", @"Knitted", @"Home Decor", @"Supplies", @"Sales"];
     caroItems = @[@"Betty's Bags", @"Chelsea's Charms", @"Knitted Knighty"];
     caroImgs = @[@"bettys.jpg", @"charms.jpg", @"knighty.jpg"];
     featureCaro.type = iCarouselTypeCoverFlow2;
     [featureCaro reloadData];
     [featureCaro setCurrentItemIndex:1];
-    UINib *catCellNib;
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-        catCellNib = [UINib nibWithNibName:@"CatTableViewCell_iPhone" bundle:nil];
-    }else{
-        catCellNib = [UINib nibWithNibName:@"CatTableViewCell_iPad" bundle:nil];
-    }
-    if(catCellNib != nil){
-        [catTable registerNib:catCellNib forCellReuseIdentifier:@"CustomCell"];
-    }
-
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -60,28 +51,25 @@
     // Dispose of any resources that can be recreated.
 }
 
+//Number of Rows in Table
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [catsArray count];
 }
 
+//View for Table's Cell
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-        CatTableViewCell_iPhone *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomCell"];
-        cell.catText = [catsArray objectAtIndex:indexPath.row];
-        
-        [cell refreshCell];
-        return cell;
-    }else{
-        CatTableViewCell_iPad *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomCell"];
-        cell.catText = [catsArray objectAtIndex:indexPath.row];
-        [cell refreshCell];
-        return cell;
-    }
-    return nil;
+    CatCell *cell = [catTable dequeueReusableCellWithIdentifier:@"cat-cell" forIndexPath:indexPath];
+    cell.catLabel.text = [catsArray objectAtIndex:indexPath.row];
+    NSString *catImgString = [NSString stringWithFormat:@"%@.jpg", [catsArray objectAtIndex:indexPath.row]];
+    
+    cell.catImg.image = [UIImage imageNamed:[catImgString stringByReplacingOccurrencesOfString:@" " withString:@""]];
+    
+    return cell;
 }
 
+//Select row on Table
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.row == 4){
@@ -91,11 +79,13 @@
     }
 }
 
+//Number of items in Carousel
 -(NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
     return [caroItems count];
 }
 
+//Add Image, Name, and Price of each item to Carousel
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
     view = [[UIView alloc] init];
@@ -113,6 +103,7 @@
     view.frame = rec;
     UIImageView *iv;
     UILabel *caroLabel;
+    //Determine iPhone or iPad
     if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
     {
         iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 150, 100)];
@@ -135,13 +126,12 @@
     return view;
 }
 
+//Select item in Carousel
 - (void)carousel:(iCarousel *)_carousel didSelectItemAtIndex:(NSInteger)index
 {
 	if (index == featureCaro.currentItemIndex)
 	{
-		//note, this will only ever happen if useButtons == NO
-		//otherwise the button intercepts the tap event
-		NSLog(@"Did select current item");
+    
 	}
     [self performSegueWithIdentifier:@"CatCaroSegue" sender:self];
 }

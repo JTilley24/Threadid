@@ -28,8 +28,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    [self setTitle:@"Jewelry"];
+   
+    //Set Static Data and Images
     itemImgArray = @[@"bettys.jpg", @"charms.jpg", @"knighty.jpg"];
     itemNameArray = @[@"Pink Knitted Handbag", @"Tuquiose Woven Charm Braclet", @"Knitted Baby Booties"];
     itemPriceArray = @[@"$44.99", @"$9.99", @"$14.99"];
@@ -40,7 +40,13 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    //Set Navigation Bar attributes
     self.title = @"Jewelry";
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIFont fontWithName:@"Helvetica" size:21],
+      NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -54,6 +60,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+//Number of items in Collection
 -(NSInteger)collectionView:(UICollectionView *)collectionView
     numberOfItemsInSection:(NSInteger)section
 {
@@ -61,6 +68,7 @@
     return [itemNameArray count];
 }
 
+//Add image, name, and price for each item in Collection
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -73,17 +81,19 @@
     return cell;
 }
 
+//Select for items in Collection
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [self performSegueWithIdentifier:@"ListCaroSegue" sender:self];
 }
 
-
+//Number of items in Carousel
 -(NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
     return [itemNameArray count];
 }
 
+//Add image, name, and price to each item in Carousel
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
     view = [[UIView alloc] init];
@@ -102,6 +112,7 @@
     UIImageView *iv;
     UILabel *nameLabel;
     UILabel *priceLabel;
+    //Determine if iPhone or iPad
     if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
     {
         iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 150, 100)];
@@ -135,15 +146,24 @@
     return view;
 
 }
+//Select for item in Carousel
 - (void)carousel:(iCarousel *)_carousel didSelectItemAtIndex:(NSInteger)index
 {
 	if (index == itemCaro.currentItemIndex)
 	{
-		//note, this will only ever happen if useButtons == NO
-		//otherwise the button intercepts the tap event
-		NSLog(@"Did select current item");
+
 	}
     [self performSegueWithIdentifier:@"ListCaroSegue" sender:self];
+}
+
+//Toggle Search Bar
+-(IBAction)onClick:(id)sender
+{
+    if(itemSearch.hidden == YES){
+        itemSearch.hidden = NO;
+    }else{
+        itemSearch.hidden = YES;
+    }
 }
 
 /*

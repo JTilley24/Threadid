@@ -17,5 +17,4 @@
 @property (nonatomic, strong) IBOutlet UILabel *itemQuantityLabel;
 @property (nonatomic, strong) IBOutlet UILabel *storeLabel;
 @property (nonatomic, strong) IBOutlet UILabel *itemPriceLabel;
-@property (nonatomic, strong) IBOutlet UIButton *itemDeleteButton;
 @end
