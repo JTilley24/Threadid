@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface LoginViewController : UIViewController <UITextFieldDelegate>
 {
+    IBOutlet UITextField *userText;
+    IBOutlet UITextField *passText;
     IBOutlet UITextField *emailText;
     IBOutlet UIButton *loginButton;
     IBOutlet UIButton *signUpButton;

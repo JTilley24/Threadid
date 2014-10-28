@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface MyStoreViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate>
 {
@@ -14,7 +15,8 @@
     NSArray *itemImgArray;
     NSArray *itemNameArray;
     NSArray *itemPriceArray;
-
+    PFObject *storeObject;
+    NSMutableArray *itemsArray;
 }
 
 -(IBAction)onClick:(id)sender;

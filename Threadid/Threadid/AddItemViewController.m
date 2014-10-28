@@ -29,6 +29,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    PFUser *current = [PFUser currentUser];
+    PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
+    [storeQuery whereKey:@"User" equalTo:current];
+    [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(error == nil){
+            storeObject = [objects objectAtIndex:0];
+        }
+    }];
+    
     //Set Selection data
     catArray = @[@"Jewelry", @"Knitted", @"Home Decor", @"Supplies"];
     self.title = @"Add Item";
@@ -158,6 +167,45 @@
     return YES;
 }
 
+-(void)saveToParse
+{
+    PFObject *itemObj = [PFObject objectWithClassName:@"Item"];
+    itemObj[@"Name"] = itemNameInput.text;
+    itemObj[@"Price"] = itemPriceInput.text;
+    itemObj[@"User"] = [PFUser currentUser];
+    itemObj[@"Store"] = storeObject;
+    itemObj[@"Category"] = catString;
+    itemObj[@"Quantity"] = quantityLabel.text;
+    itemObj[@"Description"] = descriptView.text;
+    NSMutableArray *photosArray = [[NSMutableArray alloc] init];
+    for(int i = 0; i < [picsArray count]; i++){
+        UIImage *image = [picsArray objectAtIndex:i];
+        
+        NSString *imageName = [NSString stringWithFormat:@"%@%d.png", itemNameInput.text, i];
+        imageName = [imageName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+        NSData *imageData = UIImageJPEGRepresentation(image, 0.05f);
+        PFFile *imageFile = [PFFile fileWithName:imageName data:imageData];
+        [photosArray addObject:imageFile];
+    }
+    itemObj[@"Photos"] = photosArray;
+    [self showLoading];
+    [itemObj saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if(succeeded){
+            [loadingView hide:YES];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }];
+    
+}
+
+-(void)showLoading
+{
+    loadingView = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    loadingView.mode = MBProgressHUDModeIndeterminate;
+    loadingView.labelText = @"Saving";
+    [loadingView show: YES];
+}
+
 //OnClick for camera, category, and save button
 -(IBAction)onClick:(id)sender
 {
@@ -181,7 +229,8 @@
         catPickerToolBar.hidden = YES;
         [descriptView endEditing:YES];
     }else if(button.tag == 3){
-        [self.navigationController popViewControllerAnimated:YES];
+        [self saveToParse];
+        //[self.navigationController popViewControllerAnimated:YES];
     }
 }
 

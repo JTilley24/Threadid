@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
+#import <Parse/Parse.h>
+#import "MBProgressHUD.h"
 
 @interface AddItemViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, iCarouselDelegate, iCarouselDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIScrollViewDelegate, UITextViewDelegate>
 {
     IBOutlet UIPickerView *catPicker;
+    IBOutlet UITextField *itemNameInput;
+    IBOutlet UITextField *itemPriceInput;
     IBOutlet UIToolbar *catPickerToolBar;
     IBOutlet UIButton *catButton;
     IBOutlet UIStepper *quantityStep;
@@ -22,6 +26,8 @@
     NSMutableArray *picsArray;
     NSArray *catArray;
     NSString *catString;
+    PFObject *storeObject;
+    MBProgressHUD *loadingView;
 }
 
 -(IBAction)onClick:(id)sender;

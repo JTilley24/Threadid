@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
+#import "MBProgressHUD.h"
 
 @interface AddStoreViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UIAlertViewDelegate, UITextFieldDelegate>
 {
@@ -16,11 +18,13 @@
     NSArray *fontArray;
     NSArray *colorArray;
     int fontSize;
+    MBProgressHUD *loadingView;
+    PFObject *storeObject;
 }
 
 @property (nonatomic, strong)NSString *selectedFont;
-@property (nonatomic, strong)UIColor *selectedFontColor;
-@property (nonatomic, strong)UIColor *selectedBGColor;
+@property (nonatomic, strong)NSString *selectedFontColor;
+@property (nonatomic, strong)NSString *selectedBGColor;
 @property (nonatomic, strong)NSString *selectedString;
 
 -(IBAction)onClick:(id)sender;

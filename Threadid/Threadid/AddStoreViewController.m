@@ -29,6 +29,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    PFUser *current = [PFUser currentUser];
+    PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
+    [storeQuery whereKey:@"User" equalTo:current];
+    [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(error == nil){
+            storeObject = [objects objectAtIndex:0];
+            if(storeObject != nil){
+                [self editStore];
+            }
+        }
+    }];
+    
+    
     //Set Fonts and Colors
     fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana Bold"];
     colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
@@ -76,10 +89,10 @@
         label.textAlignment = NSTextAlignmentCenter;
         label.text = fontString;
         if(selectedBGColor != nil){
-            label.backgroundColor = selectedBGColor;
+            label.backgroundColor = [colorArray objectAtIndex:selectedBGColor.intValue];
         }
         if(selectedFontColor != nil){
-            label.textColor = selectedFontColor;
+            label.textColor = [colorArray objectAtIndex:selectedFontColor.intValue];
         }
     }else if ([selectedString isEqualToString:@"fontcolor"]){
         if(selectedFont != nil){
@@ -94,7 +107,7 @@
         }
         label.textColor = [colorArray objectAtIndex:row];
         if(selectedBGColor != nil){
-            label.backgroundColor = selectedBGColor;
+            label.backgroundColor = [colorArray objectAtIndex:selectedBGColor.intValue];
         }
     }else if ([selectedString isEqualToString:@"bgcolor"]){
         if(selectedFont != nil){
@@ -109,7 +122,7 @@
         }
         label.backgroundColor = [colorArray objectAtIndex:row];
         if(selectedFontColor != nil){
-            label.textColor = selectedFontColor;
+            label.textColor = [colorArray objectAtIndex:selectedFontColor.intValue];
         }
 
     }
@@ -122,9 +135,9 @@
     if([selectedString isEqualToString:@"font"]){
         selectedFont = [fontArray objectAtIndex:row];
     }else if([selectedString isEqualToString:@"fontcolor"]){
-        selectedFontColor = [colorArray objectAtIndex:row];
+        selectedFontColor = [NSString stringWithFormat:@"%ld", (long)row];
     }else if ([selectedString isEqualToString:@"bgcolor"]){
-        selectedBGColor = [colorArray objectAtIndex:row];
+        selectedBGColor = [NSString stringWithFormat:@"%ld", (long)row];
     }
 }
 
@@ -144,6 +157,94 @@
     }
 }
 
+-(void)editStore
+{
+    storeNameInput.text = storeObject[@"Name"];
+    if(![storeObject[@"BGColor"] isEqualToString:@"NA"]){
+        selectedBGColor = storeObject[@"BGColor"];
+    }
+    if (![storeObject[@"FontColor"] isEqualToString:@"NA"]) {
+        selectedFontColor = storeObject[@"FontColor"];
+    }
+    selectedFont = storeObject[@"Font"];
+    BOOL artisan = [storeObject[@"Artisan"] boolValue];
+    if(artisan){
+        [artisanSwitch setOn:YES];
+    }
+    selectedString = @"font";
+    [storePicker reloadAllComponents];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSUInteger index = [fontArray indexOfObject:selectedFont];
+        [storePicker selectRow:index inComponent:0 animated:YES];
+    });
+}
+
+-(void)saveToParse
+{
+    if([self inputValidate]){
+        PFObject *storeObj;
+        if(storeObject == nil){
+            storeObj = [PFObject objectWithClassName:@"Store"];
+        }else
+        {
+            storeObj = storeObject;
+        }
+        PFUser *current = [PFUser currentUser];
+        storeObj[@"Name"] = storeNameInput.text;
+        if([artisanSwitch isOn]){
+            storeObj[@"Artisan"] = @YES;
+        }else{
+            storeObj[@"Artisan"] = @NO;
+        }
+        
+        storeObj[@"User"] = current;
+
+        if(selectedFont != nil){
+            storeObj[@"Font"] = selectedFont;
+        }else{
+            storeObj[@"Font"] = @"Helvetica";
+        }
+        if(selectedFontColor != nil){
+            storeObj[@"FontColor"] = selectedFontColor;
+        }else{
+             storeObj[@"FontColor"] = @"NA";
+        }
+        if(selectedBGColor != nil){
+            storeObj[@"BGColor"] = selectedBGColor;
+        }else{
+            storeObj[@"BGColor"] = @"NA";
+        }
+        [self showLoading];
+        [storeObj saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [loadingView hide: YES];
+            if(succeeded){
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                
+            }
+        }];
+    }else{
+        UIAlertView *valiAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please Enter a Store Name." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [valiAlert show];
+    }
+}
+
+-(void)showLoading
+{
+    loadingView = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    loadingView.mode = MBProgressHUDModeIndeterminate;
+    loadingView.labelText = @"Saving";
+    [loadingView show: YES];
+}
+
+-(BOOL)inputValidate
+{
+    if((storeNameInput.text == nil) || [storeNameInput.text isEqualToString:@""]){
+        return NO;
+    }
+    return YES;
+}
+
 -(BOOL) textFieldShouldReturn: (UITextField *) textField {
     [textField resignFirstResponder];
     return YES;
@@ -158,21 +259,31 @@
     {
         selectedString = @"font";
         [storePicker reloadAllComponents];
+        if(selectedFont !=nil){
+            NSUInteger index = [fontArray indexOfObject:selectedFont];
+            [storePicker selectedRowInComponent:index];
+        }
     }else if (button.tag == 1)
     {
         selectedString = @"fontcolor";
         [storePicker reloadAllComponents];
+        if(selectedFontColor != nil){
+            [storePicker selectedRowInComponent:[selectedFontColor intValue]];
+        }
     }else if (button.tag == 2)
     {
         selectedString = @"bgcolor";
         [storePicker reloadAllComponents];
+        if(selectedBGColor != nil){
+            [storePicker selectedRowInComponent:[selectedBGColor intValue]];
+        }
     }
 }
 
 //Go back
 -(IBAction)onBarButtonClick:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self saveToParse];
 }
 
 //Display Confirmation Alert

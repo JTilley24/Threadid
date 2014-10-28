@@ -92,7 +92,9 @@
                         <outlet property="cancelButton" destination="LGi-Qb-jcz" id="Bk8-nL-8Q9"/>
                         <outlet property="emailText" destination="QKf-Ji-7tY" id="evs-F6-L5x"/>
                         <outlet property="loginButton" destination="xFv-Fh-9mh" id="P4c-N7-rz9"/>
+                        <outlet property="passText" destination="ExR-l8-nec" id="XCf-cd-dEh"/>
                         <outlet property="signUpButton" destination="x7s-xj-DFJ" id="JVD-Og-JJf"/>
+                        <outlet property="userText" destination="UyD-oy-Rmz" id="Vlm-oW-K7E"/>
                         <segue destination="49e-Tb-3d3" kind="modal" identifier="login-segue" id="v5Y-nG-Tuf"/>
                     </connections>
                 </viewController>
@@ -1223,6 +1225,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </navigationItem>
                     <connections>
                         <outlet property="artisanSwitch" destination="UpR-pR-NZy" id="A9i-O6-EKG"/>
+                        <outlet property="storeNameInput" destination="vqb-84-Nat" id="JKu-KN-7l4"/>
                         <outlet property="storePicker" destination="Gkj-Ib-vr8" id="nW4-KU-dqK"/>
                     </connections>
                 </viewController>
@@ -1708,6 +1711,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="catPicker" destination="uSf-ne-71c" id="WMk-bo-Iqb"/>
                         <outlet property="catPickerToolBar" destination="duS-T1-xXf" id="aa0-c5-FvU"/>
                         <outlet property="descriptView" destination="VQe-Zi-xdZ" id="t92-tT-SM2"/>
+                        <outlet property="itemNameInput" destination="PUs-ZJ-nhN" id="HoL-Xz-l0X"/>
+                        <outlet property="itemPriceInput" destination="Tjs-Ku-LYT" id="iZ6-Kq-GKs"/>
                         <outlet property="picsCaro" destination="q3m-O1-EDU" id="nfJ-lZ-0Wp"/>
                         <outlet property="quantityLabel" destination="RjJ-16-KbM" id="lG3-ML-LZc"/>
                         <outlet property="quantityStep" destination="qYv-j2-oC0" id="P0y-t7-mJa"/>
