@@ -19,13 +19,13 @@
     NSArray *colorArray;
     int fontSize;
     MBProgressHUD *loadingView;
-    PFObject *storeObject;
 }
 
 @property (nonatomic, strong)NSString *selectedFont;
 @property (nonatomic, strong)NSString *selectedFontColor;
 @property (nonatomic, strong)NSString *selectedBGColor;
 @property (nonatomic, strong)NSString *selectedString;
+@property (nonatomic, strong)PFObject *storeObject;
 
 -(IBAction)onClick:(id)sender;
 -(IBAction)onBarButtonClick:(id)sender;

@@ -8,6 +8,11 @@
 
 #import "MyStoreViewController.h"
 #import "MyStoreCell.h"
+#import "AddStoreViewController.h"
+#import "DetailViewController.h"
+#import "AddItemViewController.h"
+#import "AddSaleViewController.h"
+
 @interface MyStoreViewController ()
 
 @end
@@ -33,13 +38,27 @@
     [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(error == nil){
             storeObject = [objects objectAtIndex:0];
-            [self getStoreItems];
+            self.title = storeObject[@"Name"];
+            if(storeObject[@"Items"] != nil){
+                [self getStoreItems];
+            }
         }
     }];
     itemsArray = [[NSMutableArray alloc] init];
-    itemImgArray = @[@"bettys.jpg", @"charms.jpg", @"knighty.jpg"];
-    itemNameArray = @[@"Pink Knitted Handbag", @"Tuquiose Woven Charm Braclet", @"Knitted Baby Booties"];
-    itemPriceArray = @[@"$44.99", @"$9.99", @"$14.99"];
+    
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIFont fontWithName:@"Helvetica" size:21],
+      NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
+
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    if(storeObject != nil){
+        [self getStoreItems];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,6 +93,7 @@
 {
     UIAlertView *itemAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:@"View Item", @"Edit Item", @"Delete Item", nil];
     [itemAlert show];
+    selectedItem = indexPath.row;
 }
 
 -(void)getStoreItems
@@ -83,7 +103,28 @@
     [itemQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(!error){
             itemsArray = (NSMutableArray*) objects;
+            if(storeObject[@"Items"] != itemsArray){
+                storeObject[@"Items"] = itemsArray;
+                [storeObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                }];
+            }
             [itemsCollection reloadData];
+        }
+    }];
+}
+
+-(void)deleteItem
+{
+    PFObject *item = [itemsArray objectAtIndex:selectedItem];
+    [itemsArray removeObjectAtIndex:selectedItem];
+    [item deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if(succeeded){
+            storeObject[@"Items"] = itemsArray;
+            [storeObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    [itemsCollection reloadData];
+                }
+            }];
         }
     }];
 }
@@ -94,7 +135,10 @@
     if(button.tag == 0){
         [self performSegueWithIdentifier:@"StoreSalesSegue" sender:self];
     }else if(button.tag == 1){
-        [self performSegueWithIdentifier:@"AddSaleSegue" sender:self];
+        AddSaleViewController *addSale = [self.storyboard instantiateViewControllerWithIdentifier:@"AddSale"];
+        [addSale setStoreObj:storeObject];
+        [self.navigationController pushViewController:addSale animated:YES];
+
     }else if (button.tag == 2){
         [self performSegueWithIdentifier:@"AddItemSegue" sender:self];
     }
@@ -102,7 +146,9 @@
 
 -(IBAction)onBarButtonClick:(id)sender
 {
-    [self performSegueWithIdentifier:@"EditStoreSegue" sender:self];
+    AddStoreViewController *addStore = [self.storyboard instantiateViewControllerWithIdentifier:@"AddStore"];
+    [addStore setStoreObject:storeObject];
+    [self.navigationController pushViewController:addStore animated:YES];
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -111,17 +157,22 @@
     //If View Button is Selected
     if([title isEqualToString:@"View Item"])
     {
-        [self performSegueWithIdentifier:@"MyItemSegue" sender:self];
+            DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
+            [detailView setItemObj:[itemsArray objectAtIndex:selectedItem]];
+            [self.navigationController pushViewController:detailView animated:YES];
+        
     }
     //If Edit Button is Selected
     else if ([title isEqualToString:@"Edit Item"])
     {
-        [self performSegueWithIdentifier:@"AddItemSegue" sender:self];
+        AddItemViewController *editItemView = [self.storyboard instantiateViewControllerWithIdentifier:@"AddItem"];
+        [editItemView setEditObject:[itemsArray objectAtIndex:selectedItem]];
+        [self.navigationController pushViewController:editItemView animated:YES];
     }
     
     else if ([title isEqualToString:@"Delete Item"])
     {
-        
+        [self deleteItem];
     }
 }
 

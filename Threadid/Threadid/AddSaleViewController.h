@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface AddSaleViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate>
 {
@@ -20,9 +21,15 @@
     IBOutlet UIButton *saleButton2;
     IBOutlet UIButton *saleButton3;
     IBOutlet UIButton *itemButton;
+    IBOutlet UITextField *salePriceInput;
     NSArray *itemsArray;
     NSString *selectedItem;
+    int selectedIndex;
+    int typeint;
 }
+
+@property (nonatomic, strong)PFObject *storeObj;
+@property (nonatomic, strong)PFObject *editObj;
 
 -(IBAction)onClick:(id)sender;
 -(IBAction)onChange:(id)sender;

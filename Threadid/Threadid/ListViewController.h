@@ -8,16 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
+#import <Parse/Parse.h>
 
 @interface ListViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, iCarouselDataSource, iCarouselDelegate>
 {
     NSArray *itemImgArray;
     NSArray *itemNameArray;
     NSArray *itemPriceArray;
+    NSArray *itemsArray;
+    NSArray *fontArray;
+    NSArray *colorArray;
+    int fontSize;
     IBOutlet UICollectionView *itemsCollection;
     IBOutlet iCarousel *itemCaro;
     IBOutlet UISearchBar *itemSearch;
 }
+@property (nonatomic, strong)NSString *catString;
 
 -(IBAction)onClick:(id)sender;
 

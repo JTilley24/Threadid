@@ -8,13 +8,21 @@
 
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
+#import "CategoriesViewController.h"
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [Parse setApplicationId:@"K3uYwV1KDXtetQ6aIW7An1sLaw8CzqW0NcSvds3J"
                   clientKey:@"7QpIY1rtIMip90UTHeHmhbrg5U7ZKCxtDKCn5FdU"];
-    
+    PFUser *current = [PFUser currentUser];
+    if(current != nil){
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+        UIViewController *tabview = [storyboard instantiateViewControllerWithIdentifier:@"TabCont"];
+        [self.window makeKeyAndVisible];
+        [self.window.rootViewController presentViewController:tabview animated:NO completion:nil];
+    }
+
     // Override point for customization after application launch.
     return YES;
 }

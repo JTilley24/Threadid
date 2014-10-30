@@ -13,7 +13,7 @@
 @end
 
 @implementation DetailViewController
-
+@synthesize itemObj;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -27,6 +27,31 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //Set Fonts and Colors
+    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana Bold"];
+    colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    itemObj = [itemObj fetchIfNeeded];
+    photosArray = itemObj[@"Photos"];
+    storeObj = [itemObj[@"Store"] fetchIfNeeded];
+    [itemImgCaro setType:iCarouselTypeCoverFlow];
+    [itemImgCaro reloadData];
+    [itemImgCaro scrollToItemAtIndex:1 animated:YES];
+    [self setItemData];
+    UIColor *fontColor = [colorArray objectAtIndex:[storeObj[@"FontColor"] intValue]];
+    UIColor *bgColor = [colorArray objectAtIndex:[storeObj[@"BGColor"] intValue]];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIFont fontWithName:storeObj[@"Font"] size:21],
+      NSFontAttributeName,fontColor,NSForegroundColorAttributeName, nil]];
+    [self.navigationController.navigationBar setBarTintColor:bgColor];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+ 
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,7 +63,7 @@
 //Number of items in Carousel
 -(NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
-    return 3;
+    return [photosArray count];
 }
 
 //Add Image to item in Carousel
@@ -68,11 +93,25 @@
         iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, 250)];
             }
     
-    iv.image=[UIImage imageNamed:@"bettys.jpg"];
+    PFFile *imageFile = [itemObj[@"Photos"] objectAtIndex:index];
+    NSData *imageData = [imageFile getData];
+    UIImage *image = [UIImage imageWithData:imageData];
+    
+    iv.image=image;
     iv.contentMode = UIViewContentModeScaleToFill;
     
     [view addSubview:iv];
     return view;
+}
+
+-(void)setItemData
+{
+    itemNameLabel.text = itemObj[@"Name"];
+    itemPriceLabel.text = [NSString stringWithFormat:@"$%@", itemObj[@"Price"]];
+    itemQuantityLabel.text = itemObj[@"Quantity"];
+    itemDesciption.text = itemObj[@"Description"];
+    storeButton.titleLabel.text = storeObj[@"Name"];
+    storeButton.titleLabel.textAlignment = NSTextAlignmentCenter;
 }
 
 //OnClick for Add to Cart Alert and navigation to Store or Cart

@@ -13,7 +13,7 @@
 @end
 
 @implementation AddStoreViewController
-@synthesize selectedFont, selectedFontColor, selectedBGColor, selectedString;
+@synthesize selectedFont, selectedFontColor, selectedBGColor, selectedString, storeObject;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,19 +29,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    PFUser *current = [PFUser currentUser];
-    PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
-    [storeQuery whereKey:@"User" equalTo:current];
-    [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if(error == nil){
-            storeObject = [objects objectAtIndex:0];
-            if(storeObject != nil){
-                [self editStore];
-            }
-        }
-    }];
-    
-    
     //Set Fonts and Colors
     fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana Bold"];
     colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
@@ -51,6 +38,13 @@
         fontSize = 20;
     }else{
         fontSize = 25;
+    }
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    if(storeObject != nil){
+        [self editStore];
     }
 }
 
@@ -173,10 +167,8 @@
     }
     selectedString = @"font";
     [storePicker reloadAllComponents];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSUInteger index = [fontArray indexOfObject:selectedFont];
-        [storePicker selectRow:index inComponent:0 animated:YES];
-    });
+    NSUInteger index = [fontArray indexOfObject:selectedFont];
+    [storePicker selectRow:index inComponent:0 animated:YES];
 }
 
 -(void)saveToParse
@@ -261,21 +253,21 @@
         [storePicker reloadAllComponents];
         if(selectedFont !=nil){
             NSUInteger index = [fontArray indexOfObject:selectedFont];
-            [storePicker selectedRowInComponent:index];
+            [storePicker selectRow:index inComponent:0 animated:YES];
         }
     }else if (button.tag == 1)
     {
         selectedString = @"fontcolor";
         [storePicker reloadAllComponents];
         if(selectedFontColor != nil){
-            [storePicker selectedRowInComponent:[selectedFontColor intValue]];
+            [storePicker selectRow:[selectedFontColor intValue] inComponent:0 animated:YES];
         }
     }else if (button.tag == 2)
     {
         selectedString = @"bgcolor";
         [storePicker reloadAllComponents];
         if(selectedBGColor != nil){
-            [storePicker selectedRowInComponent:[selectedBGColor intValue]];
+            [storePicker selectRow:[selectedBGColor intValue] inComponent:0 animated:YES];
         }
     }
 }

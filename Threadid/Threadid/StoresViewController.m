@@ -8,6 +8,7 @@
 
 #import "StoresViewController.h"
 #import "StoresViewCell.h"
+#import "StoreViewController.h"
 
 @interface StoresViewController ()
 
@@ -30,9 +31,17 @@
     // Do any additional setup after loading the view.
     //Set Navigation Bar attributes
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    //Set Static Data and Images
-    storeNameArray = @[@"Betty's Bags", @"Chelsea's Charms", @"Knitted Knighty", @"Betty's Bags", @"Chelsea's Charms", @"Knitted Knighty"];
-    storeImgArray = @[@"bettys.jpg", @"charms.jpg", @"knighty.jpg", @"bettys.jpg", @"charms.jpg", @"knighty.jpg"];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Store"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(error == nil){
+            storesArray = objects;
+            [storesCollection reloadData];
+        }
+    }];
+    //Set Fonts and Colors
+    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana Bold"];
+    colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -58,7 +67,7 @@
     numberOfItemsInSection:(NSInteger)section
 {
     
-    return [storeNameArray count];
+    return [storesArray count];
 }
 
 //Add image and name for each store to Collection
@@ -66,17 +75,27 @@
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     StoresViewCell *cell = [storesCollection dequeueReusableCellWithReuseIdentifier:@"StoresCell" forIndexPath:indexPath];
-    
-    cell.storeImageView.image = [UIImage imageNamed:[storeImgArray objectAtIndex:indexPath.row]];
-    cell.storeNameLabel.text = [storeNameArray objectAtIndex:indexPath.row];
-    
+    PFObject *object = [storesArray objectAtIndex:indexPath.row];
+    //PFObject *itemObj = [object[@"Items"] objectAtIndex:0];
+    NSArray *itemArray = object[@"Items"];
+    PFObject *itemObj = [[itemArray objectAtIndex:0] fetchIfNeeded];
+    PFFile *imageFile = [itemObj[@"Photos"] objectAtIndex:0];
+    NSData *imageData = [imageFile getData];
+    UIImage *image = [UIImage imageWithData:imageData];
+    cell.storeImageView.image = image;
+    cell.storeNameLabel.text = object[@"Name"];
+    cell.storeNameLabel.backgroundColor = [colorArray objectAtIndex:[object[@"BGColor"] intValue]];
+    cell.storeNameLabel.textColor = [colorArray objectAtIndex:[object[@"FontColor"] intValue]];
+    cell.storeNameLabel.font = [UIFont fontWithName:object[@"Font"] size:15.0f];
     return cell;
 }
 
 //Select store from Collection
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"StoreSegue" sender:self];
+    StoreViewController *storeView = [self.storyboard instantiateViewControllerWithIdentifier:@"StoreView"];
+    [storeView setStoreObj:[storesArray objectAtIndex:indexPath.row]];
+    [self.navigationController pushViewController:storeView animated:YES];
 }
 
 //Toggle Search bar

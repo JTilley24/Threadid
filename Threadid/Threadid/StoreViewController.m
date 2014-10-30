@@ -8,13 +8,14 @@
 
 #import "StoreViewController.h"
 #import "StoreCollectionCell.h"
+#import "DetailViewController.h"
 
 @interface StoreViewController ()
 
 @end
 
 @implementation StoreViewController
-
+@synthesize storeObj;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -28,12 +29,12 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    //Set Static Data and Images
-    itemImgArray = @[@"bettys.jpg", @"charms.jpg", @"knighty.jpg"];
-    itemNameArray = @[@"Pink Knitted Handbag", @"Tuquiose Woven Charm Braclet", @"Knitted Baby Booties"];
-    itemPriceArray = @[@"$44.99", @"$9.99", @"$14.99"];
+
     fav = false;
+    
+    //Set Fonts and Colors
+    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana Bold"];
+    colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
     
     //Change font size by iPhone or iPad
     if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
@@ -43,14 +44,23 @@
     {
         fontSize = 15;
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    itemsArray = storeObj[@"Items"];
+    fontColor = [colorArray objectAtIndex:[storeObj[@"FontColor"] intValue]];
+    bgColor = [colorArray objectAtIndex:[storeObj[@"BGColor"] intValue]];
     
     //Set Navigation Bar attributes
-    self.title = @"Betty's Bags";
+    self.title = storeObj[@"Name"];
     [self.navigationController.navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIFont fontWithName:@"Noteworthy" size:21],
-      NSFontAttributeName,[UIColor greenColor],NSForegroundColorAttributeName, nil]];
-    [self.navigationController.navigationBar setBarTintColor:[UIColor orangeColor]];
+      [UIFont fontWithName:storeObj[@"Font"] size:21],
+      NSFontAttributeName,fontColor,NSForegroundColorAttributeName, nil]];
+    [self.navigationController.navigationBar setBarTintColor:bgColor];
+    [itemsCollections reloadData];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,7 +74,7 @@
     numberOfItemsInSection:(NSInteger)section
 {
     
-    return [itemNameArray count];
+    return [itemsArray count];
 }
 
 //Add image, name, and price for each item in Collection
@@ -72,23 +82,28 @@
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     StoreCollectionCell *cell = [itemsCollections dequeueReusableCellWithReuseIdentifier:@"StoreCollectionCell" forIndexPath:indexPath];
-    
-    cell.itemImg.image = [UIImage imageNamed:[itemImgArray objectAtIndex:indexPath.row]];
-    cell.itemNameLabel.text = [itemNameArray objectAtIndex:indexPath.row];
-    cell.itemNameLabel.font = [UIFont fontWithName:@"Noteworthy" size:fontSize];
-    [cell.itemNameLabel setTextColor:[UIColor greenColor]];
-    cell.itemPriceLabel.text = [itemPriceArray objectAtIndex:indexPath.row];
-    cell.itemPriceLabel.font = [UIFont fontWithName:@"Noteworthy" size:fontSize];
-    [cell.itemPriceLabel setTextColor:[UIColor greenColor]];
-    [cell.itemPriceLabel setBackgroundColor:[UIColor orangeColor]];
-    [cell setBackgroundColor:[UIColor orangeColor]];
+    PFObject *item = [[itemsArray objectAtIndex:indexPath.row] fetchIfNeeded];
+    PFFile *imageFile = [item[@"Photos"] objectAtIndex:0];
+    NSData *imageData = [imageFile getData];
+    UIImage *image = [UIImage imageWithData:imageData];
+    cell.itemImg.image = image;
+    cell.itemNameLabel.text = item[@"Name"];
+    cell.itemPriceLabel.text = item[@"Price"];
+    cell.itemNameLabel.font = [UIFont fontWithName:storeObj[@"Font"] size:fontSize];
+    [cell.itemNameLabel setTextColor:fontColor];
+    cell.itemPriceLabel.font = [UIFont fontWithName:storeObj[@"Font"] size:fontSize];
+    [cell.itemPriceLabel setTextColor:fontColor];
+    [cell.itemPriceLabel setBackgroundColor:bgColor];
+    [cell setBackgroundColor:bgColor];
     return cell;
 }
 
 //Select for items in Collection
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"StoreSelectSegue" sender:self];
+    DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
+    [detailView setItemObj:[itemsArray objectAtIndex:indexPath.row]];
+    [self.navigationController pushViewController:detailView animated:YES];
 }
 
 //Toggle Favorites Button

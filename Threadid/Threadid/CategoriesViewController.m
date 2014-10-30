@@ -8,6 +8,7 @@
 
 #import "CategoriesViewController.h"
 #import "CatCell.h"
+#import "ListViewController.h"
 
 @interface CategoriesViewController ()
 
@@ -75,7 +76,9 @@
     if(indexPath.row == 4){
         [self performSegueWithIdentifier:@"SaleCatSegue" sender:self];
     }else{
-        [self performSegueWithIdentifier:@"CatSegue" sender:self];
+        ListViewController *listView = [self.storyboard instantiateViewControllerWithIdentifier:@"ListView"];
+        [listView setCatString:[catsArray objectAtIndex:indexPath.row]];
+        [self.navigationController pushViewController:listView animated:YES];
     }
 }
 

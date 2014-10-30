@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface StoreViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 {
@@ -14,10 +15,16 @@
     NSArray *itemImgArray;
     NSArray *itemNameArray;
     NSArray *itemPriceArray;
+    NSArray *fontArray;
+    NSArray *colorArray;
+    NSArray *itemsArray;
+    UIColor *fontColor;
+    UIColor *bgColor;
     IBOutlet UIBarButtonItem *favButton;
     int fontSize;
     BOOL fav;
 }
+@property (nonatomic, strong) PFObject *storeObj;
 
 -(IBAction)onClick:(id)sender;
 

@@ -105,7 +105,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabCont" id="49e-Tb-3d3" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="1Z4-Mb-nR0"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
@@ -148,7 +148,7 @@
         <!--Categories View Controller - Threadid-->
         <scene sceneID="b1S-Wu-2YZ">
             <objects>
-                <viewController title="Threadid" id="Fas-5j-U7l" customClass="CategoriesViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CatView" title="Threadid" id="Fas-5j-U7l" customClass="CategoriesViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NHM-JY-VOX"/>
                         <viewControllerLayoutGuide type="bottom" id="3e9-EH-wsB"/>
@@ -230,7 +230,7 @@
         <!--Detail View Controller-->
         <scene sceneID="Kbb-Jl-c4C">
             <objects>
-                <viewController id="dpo-Kg-3zG" customClass="DetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailView" id="dpo-Kg-3zG" customClass="DetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Qmj-9A-JM2"/>
                         <viewControllerLayoutGuide type="bottom" id="ZWm-db-bhx"/>
@@ -244,7 +244,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="dpo-Kg-3zG" id="dT5-6J-Fzu"/>
+                                    <outlet property="dataSource" destination="dpo-Kg-3zG" id="eCL-nJ-b1P"/>
                                     <outlet property="delegate" destination="dpo-Kg-3zG" id="eRq-uB-d0z"/>
                                 </connections>
                             </view>
@@ -321,18 +321,24 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="itemDesciption" destination="yOg-a7-ZfI" id="KuP-8h-ePZ"/>
+                        <outlet property="itemImgCaro" destination="zN6-4a-uWY" id="l9O-pC-ENF"/>
+                        <outlet property="itemNameLabel" destination="Nii-z1-znP" id="VrD-gh-Pnc"/>
+                        <outlet property="itemPriceLabel" destination="RhW-eB-hwc" id="zId-ic-T7y"/>
+                        <outlet property="itemQuantityLabel" destination="tXI-Ie-zby" id="sV0-Hx-7Vo"/>
+                        <outlet property="storeButton" destination="w2m-aC-Xvc" id="ozr-xP-dC6"/>
                         <segue destination="jNN-79-46w" kind="push" identifier="ItemStoreSegue" id="4CU-DU-OXM"/>
                         <segue destination="AaR-cy-LoI" kind="push" identifier="ItemCartSegue" id="LJV-Df-MOT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AH2-3Z-4I8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1802" y="-3394"/>
+            <point key="canvasLocation" x="1810" y="-3358"/>
         </scene>
         <!--List View Controller - Jewelry-->
         <scene sceneID="9SG-eJ-jrK">
             <objects>
-                <viewController title="Jewelry" automaticallyAdjustsScrollViewInsets="NO" id="RlS-P0-DmD" customClass="ListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ListView" title="Jewelry" automaticallyAdjustsScrollViewInsets="NO" id="RlS-P0-DmD" customClass="ListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DX9-5n-tf9"/>
                         <viewControllerLayoutGuide type="bottom" id="pe9-BB-ebE"/>
@@ -541,7 +547,7 @@
         <!--Store View Controller-->
         <scene sceneID="heV-48-aeg">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="jNN-79-46w" customClass="StoreViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StoreView" automaticallyAdjustsScrollViewInsets="NO" id="jNN-79-46w" customClass="StoreViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ETL-ky-VeB"/>
                         <viewControllerLayoutGuide type="bottom" id="hfc-K2-4jk"/>
@@ -746,7 +752,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="JustinT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g65-Oc-StZ">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g65-Oc-StZ">
                                 <rect key="frame" x="0.0" y="67" width="768" height="93"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.93516820789999999" green="0.46953499040000002" blue="0.48281651310000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -754,7 +760,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tilley's Trinkets" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lsb-kF-058">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No Store" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lsb-kF-058">
                                 <rect key="frame" x="0.0" y="465" width="768" height="93"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.93516820789999999" green="0.46953499040000002" blue="0.48281651310000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -798,7 +804,7 @@
                                     <action selector="onClick:" destination="aT2-w8-rsa" eventType="touchUpInside" id="Lq3-Ov-ohF"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6dg-7Y-qpL">
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6dg-7Y-qpL">
                                 <rect key="frame" x="0.0" y="596" width="768" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -810,7 +816,7 @@
                                     <action selector="onClick:" destination="aT2-w8-rsa" eventType="touchUpInside" id="IhQ-dn-QBc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bsS-Fx-naA">
+                            <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bsS-Fx-naA">
                                 <rect key="frame" x="0.0" y="674" width="768" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -822,7 +828,7 @@
                                     <action selector="onClick:" destination="aT2-w8-rsa" eventType="touchUpInside" id="O4g-o1-gla"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4p-dJ-XBa">
+                            <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4p-dJ-XBa">
                                 <rect key="frame" x="0.0" y="752" width="768" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -850,6 +856,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="EbH-PD-AQg"/>
                     <connections>
+                        <outlet property="historyButton" destination="bsS-Fx-naA" id="Qcj-bK-MUz"/>
+                        <outlet property="myStoreButton" destination="6dg-7Y-qpL" id="tNa-IT-lx9"/>
+                        <outlet property="storeNameLabel" destination="lsb-kF-058" id="qhH-bB-hg6"/>
+                        <outlet property="userNameLabel" destination="g65-Oc-StZ" id="iXO-gS-qnC"/>
+                        <outlet property="viewStoreButton" destination="J4p-dJ-XBa" id="4LU-k4-ZJP"/>
                         <segue destination="mKm-kV-6iD" kind="push" identifier="OpenStoreSegue" id="NyK-57-7JM"/>
                         <segue destination="zAn-4o-jtC" kind="push" identifier="MyStoreSegue" id="wqy-Z4-PEa"/>
                         <segue destination="AaR-cy-LoI" kind="push" identifier="CartSegue" id="7gG-H0-k2R"/>
@@ -866,7 +877,7 @@
         <!--Add Sale View Controller-->
         <scene sceneID="USf-zR-DYo">
             <objects>
-                <viewController id="mL7-5s-8fr" customClass="AddSaleViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddSale" id="mL7-5s-8fr" customClass="AddSaleViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="q23-Ho-Zuc"/>
                         <viewControllerLayoutGuide type="bottom" id="a9x-Hr-yEM"/>
@@ -1050,6 +1061,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="saleButton2" destination="P4l-WP-Jhq" id="6Wb-uE-tFI"/>
                         <outlet property="saleButton3" destination="8EB-sI-c6O" id="AX1-Nu-4bL"/>
                         <outlet property="saleDatePicker" destination="aGY-vp-lec" id="z2J-Ph-yML"/>
+                        <outlet property="salePriceInput" destination="Vd7-Qi-RZV" id="Xl1-oE-9vx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lZY-uF-R11" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1128,7 +1140,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <!--Add Store View Controller-->
         <scene sceneID="M5G-HO-sxL">
             <objects>
-                <viewController id="mKm-kV-6iD" customClass="AddStoreViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddStore" id="mKm-kV-6iD" customClass="AddStoreViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lCk-eH-InG"/>
                         <viewControllerLayoutGuide type="bottom" id="OrW-Md-11E"/>
@@ -1557,7 +1569,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <!--Add Item View Controller-->
         <scene sceneID="8WV-n4-mKY">
             <objects>
-                <viewController id="Aa0-Lj-LnN" customClass="AddItemViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddItem" id="Aa0-Lj-LnN" customClass="AddItemViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tRK-H2-dsQ"/>
                         <viewControllerLayoutGuide type="bottom" id="q2r-Vb-Suh"/>
@@ -1740,10 +1752,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="X2U-uz-tym"/>
-        <segue reference="LJV-Df-MOT"/>
+        <segue reference="NyK-57-7JM"/>
+        <segue reference="6FX-WF-NJx"/>
+        <segue reference="qIy-9j-ID1"/>
         <segue reference="4CU-DU-OXM"/>
-        <segue reference="4vi-1P-kCn"/>
-        <segue reference="bMB-DW-It7"/>
+        <segue reference="LJV-Df-MOT"/>
     </inferredMetricsTieBreakers>
 </document>

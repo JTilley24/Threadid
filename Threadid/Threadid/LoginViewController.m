@@ -7,7 +7,7 @@
 //
 
 #import "LoginViewController.h"
-
+#import "CategoriesViewController.h"
 @interface LoginViewController ()
 
 @end
@@ -27,15 +27,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-}
--(void)viewDidAppear:(BOOL)animated
-{
-    PFUser *current = [PFUser currentUser];
-    if(current != nil){
-        [self performSegueWithIdentifier:@"login-segue" sender:self];
-    }
-
+   
 }
 
 - (void)didReceiveMemoryWarning

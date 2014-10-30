@@ -27,6 +27,15 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    current = [PFUser currentUser];
+    PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
+    [storeQuery whereKey:@"User" equalTo:current];
+    [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(error == nil){
+            storeObj = [objects objectAtIndex:0];
+        }
+        [self loadUserData];
+    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -44,6 +53,24 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)loadUserData
+{
+    userNameLabel.text = current[@"username"];
+    if(storeObj != nil){
+        storeNameLabel.text = storeObj[@"Name"];
+        [myStoreButton setEnabled:YES];
+        [viewStoreButton setEnabled:YES];
+        [historyButton setEnabled:YES];
+        [openStoreButton setEnabled:NO];
+    }else{
+        storeNameLabel.text = @"No Store";
+        [myStoreButton setEnabled:NO];
+        [viewStoreButton setEnabled:NO];
+        [historyButton setEnabled:NO];
+        [openStoreButton setEnabled:YES];
+    }
 }
 
 //OnClick to navigate to corresponding view

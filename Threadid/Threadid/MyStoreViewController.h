@@ -17,6 +17,7 @@
     NSArray *itemPriceArray;
     PFObject *storeObject;
     NSMutableArray *itemsArray;
+    int selectedItem;
 }
 
 -(IBAction)onClick:(id)sender;

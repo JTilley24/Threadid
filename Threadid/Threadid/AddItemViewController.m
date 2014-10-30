@@ -14,7 +14,7 @@
 @end
 
 @implementation AddItemViewController
-
+@synthesize storeObj, editObject;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -40,9 +40,24 @@
     
     //Set Selection data
     catArray = @[@"Jewelry", @"Knitted", @"Home Decor", @"Supplies"];
-    self.title = @"Add Item";
+    
     picsArray = [[NSMutableArray alloc] init];
     [itemScroll setContentSize:CGSizeMake(320, 480)];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.title = @"Add Item";
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIFont fontWithName:@"Helvetica" size:21],
+      NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
+
+    if(editObject != nil){
+        editObject = [editObject fetchIfNeeded];
+        [self editItem];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -169,33 +184,59 @@
 
 -(void)saveToParse
 {
-    PFObject *itemObj = [PFObject objectWithClassName:@"Item"];
-    itemObj[@"Name"] = itemNameInput.text;
-    itemObj[@"Price"] = itemPriceInput.text;
-    itemObj[@"User"] = [PFUser currentUser];
-    itemObj[@"Store"] = storeObject;
-    itemObj[@"Category"] = catString;
-    itemObj[@"Quantity"] = quantityLabel.text;
-    itemObj[@"Description"] = descriptView.text;
-    NSMutableArray *photosArray = [[NSMutableArray alloc] init];
-    for(int i = 0; i < [picsArray count]; i++){
-        UIImage *image = [picsArray objectAtIndex:i];
-        
-        NSString *imageName = [NSString stringWithFormat:@"%@%d.png", itemNameInput.text, i];
-        imageName = [imageName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-        NSData *imageData = UIImageJPEGRepresentation(image, 0.05f);
-        PFFile *imageFile = [PFFile fileWithName:imageName data:imageData];
-        [photosArray addObject:imageFile];
-    }
-    itemObj[@"Photos"] = photosArray;
-    [self showLoading];
-    [itemObj saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if(succeeded){
-            [loadingView hide:YES];
-            [self.navigationController popViewControllerAnimated:YES];
+    if(editObject != nil){
+        editObject[@"Name"] = itemNameInput.text;
+        editObject[@"Price"] = itemPriceInput.text;
+        editObject[@"User"] = [PFUser currentUser];
+        editObject[@"Store"] = storeObject;
+        editObject[@"Category"] = catString;
+        editObject[@"Quantity"] = quantityLabel.text;
+        editObject[@"Description"] = descriptView.text;
+        NSMutableArray *photosArray = [[NSMutableArray alloc] init];
+        for(int i = 0; i < [picsArray count]; i++){
+            UIImage *image = [picsArray objectAtIndex:i];
+            
+            NSString *imageName = [NSString stringWithFormat:@"%@%d.png", itemNameInput.text, i];
+            imageName = [imageName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+            NSData *imageData = UIImageJPEGRepresentation(image, 0.05f);
+            PFFile *imageFile = [PFFile fileWithName:imageName data:imageData];
+            [photosArray addObject:imageFile];
         }
-    }];
-    
+        editObject[@"Photos"] = photosArray;
+        [self showLoading];
+        [editObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if(succeeded){
+                [loadingView hide:YES];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }];
+    }else{
+        PFObject *itemObj = [PFObject objectWithClassName:@"Item"];
+        itemObj[@"Name"] = itemNameInput.text;
+        itemObj[@"Price"] = itemPriceInput.text;
+        itemObj[@"User"] = [PFUser currentUser];
+        itemObj[@"Store"] = storeObject;
+        itemObj[@"Category"] = catString;
+        itemObj[@"Quantity"] = quantityLabel.text;
+        itemObj[@"Description"] = descriptView.text;
+        NSMutableArray *photosArray = [[NSMutableArray alloc] init];
+        for(int i = 0; i < [picsArray count]; i++){
+            UIImage *image = [picsArray objectAtIndex:i];
+            
+            NSString *imageName = [NSString stringWithFormat:@"%@%d.png", itemNameInput.text, i];
+            imageName = [imageName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+            NSData *imageData = UIImageJPEGRepresentation(image, 0.05f);
+            PFFile *imageFile = [PFFile fileWithName:imageName data:imageData];
+            [photosArray addObject:imageFile];
+        }
+        itemObj[@"Photos"] = photosArray;
+        [self showLoading];
+        [itemObj saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if(succeeded){
+                [self addToStore:itemObj];
+            }
+        }];
+    }
 }
 
 -(void)showLoading
@@ -204,6 +245,36 @@
     loadingView.mode = MBProgressHUDModeIndeterminate;
     loadingView.labelText = @"Saving";
     [loadingView show: YES];
+}
+
+-(void)addToStore: (PFObject *)object
+{
+    NSMutableArray *tempArray = [storeObj[@"Items"] mutableCopy];
+    [tempArray addObject:object];
+    [storeObj saveInBackground];
+    [loadingView hide:YES];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)editItem
+{
+    itemNameInput.text = editObject[@"Name"];
+    itemPriceInput.text = editObject[@"Price"];
+    [quantityStep setValue:[editObject[@"Quantity"] doubleValue]];
+    quantityLabel.text = editObject[@"Quantity"];
+    catString = editObject[@"Category"];
+    [catButton setTitle:catString forState:UIControlStateNormal];
+    descriptView.text = editObject[@"Description"];
+    NSMutableArray *tempArray = [[NSMutableArray alloc] init];
+    NSArray *editPhotos = editObject[@"Photos"];
+    for (int i = 0; i < [editPhotos count]; i++) {
+        PFFile *imageFile = [editPhotos objectAtIndex:i];
+        NSData *imageData = [imageFile getData];
+        UIImage *image = [UIImage imageWithData:imageData];
+        [tempArray addObject:image];
+    }
+    picsArray = tempArray;
+    [picsCaro reloadData];
 }
 
 //OnClick for camera, category, and save button
@@ -230,7 +301,6 @@
         [descriptView endEditing:YES];
     }else if(button.tag == 3){
         [self saveToParse];
-        //[self.navigationController popViewControllerAnimated:YES];
     }
 }
 

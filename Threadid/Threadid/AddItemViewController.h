@@ -29,7 +29,8 @@
     PFObject *storeObject;
     MBProgressHUD *loadingView;
 }
-
+@property (nonatomic, strong)PFObject *storeObj;
+@property (nonatomic, strong)PFObject *editObject;
 -(IBAction)onClick:(id)sender;
 -(IBAction)onChanged:(id)sender;
 

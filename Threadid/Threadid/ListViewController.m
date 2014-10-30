@@ -8,13 +8,14 @@
 
 #import "ListViewController.h"
 #import "ListCollectionCell.h"
+#import "DetailViewController.h"
 
 @interface ListViewController ()
 
 @end
 
 @implementation ListViewController
-
+@synthesize catString;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -29,19 +30,42 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
    
+    //Set Fonts and Colors
+    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana Bold"];
+    colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
+
+    //Change font size by iPhone or iPad
+    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
+    {
+        fontSize = 12;
+    }else
+    {
+        fontSize = 15;
+    }
+    
     //Set Static Data and Images
     itemImgArray = @[@"bettys.jpg", @"charms.jpg", @"knighty.jpg"];
     itemNameArray = @[@"Pink Knitted Handbag", @"Tuquiose Woven Charm Braclet", @"Knitted Baby Booties"];
     itemPriceArray = @[@"$44.99", @"$9.99", @"$14.99"];
-    itemCaro.type = iCarouselTypeCoverFlow2;
-    [itemCaro reloadData];
-    [itemCaro setCurrentItemIndex:1];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    PFQuery *query = [PFQuery queryWithClassName:@"Item"];
+    [query whereKey:@"Category" equalTo:catString];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(error == nil){
+            itemsArray = objects;
+            [itemsCollection reloadData];
+        }
+    }];
+    itemCaro.type = iCarouselTypeCoverFlow2;
+    [itemCaro reloadData];
+    [itemCaro scrollToItemAtIndex:1 animated:YES];
+    
     //Set Navigation Bar attributes
-    self.title = @"Jewelry";
+    self.title = catString;
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
     [self.navigationController.navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
@@ -65,7 +89,7 @@
     numberOfItemsInSection:(NSInteger)section
 {
     
-    return [itemNameArray count];
+    return [itemsArray count];
 }
 
 //Add image, name, and price for each item in Collection
@@ -73,10 +97,23 @@
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ListCollectionCell *cell = [itemsCollection dequeueReusableCellWithReuseIdentifier:@"ListCell" forIndexPath:indexPath];
-    
-    cell.itemImgView.image = [UIImage imageNamed:[itemImgArray objectAtIndex:indexPath.row]];
-    cell.itemNameLabel.text = [itemNameArray objectAtIndex:indexPath.row];
-    cell.itemPriceLabel.text = [itemPriceArray objectAtIndex:indexPath.row];
+    PFObject *item = [[itemsArray objectAtIndex:indexPath.row] fetchIfNeeded];
+    PFObject *storeObj = [item[@"Store"] fetchIfNeeded];
+    UIColor *fontColor = [colorArray objectAtIndex:[storeObj[@"FontColor"] intValue]];
+    UIColor *bgColor = [colorArray objectAtIndex:[storeObj[@"BGColor"] intValue]];
+
+    PFFile *imageFile = [item[@"Photos"] objectAtIndex:0];
+    NSData *imageData = [imageFile getData];
+    UIImage *image = [UIImage imageWithData:imageData];
+    cell.itemImgView.image = image;
+    cell.itemNameLabel.text = item[@"Name"];
+    cell.itemPriceLabel.text = item[@"Price"];
+    cell.itemNameLabel.font = [UIFont fontWithName:storeObj[@"Font"] size:fontSize];
+    [cell.itemNameLabel setTextColor:fontColor];
+    cell.itemPriceLabel.font = [UIFont fontWithName:storeObj[@"Font"] size:fontSize];
+    [cell.itemPriceLabel setTextColor:fontColor];
+    [cell.itemPriceLabel setBackgroundColor:bgColor];
+    [cell setBackgroundColor:bgColor];
     
     return cell;
 }
@@ -84,7 +121,9 @@
 //Select for items in Collection
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"ListCaroSegue" sender:self];
+    DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
+    [detailView setItemObj:[itemsArray objectAtIndex:indexPath.row]];
+    [self.navigationController pushViewController:detailView animated:YES];
 }
 
 //Number of items in Carousel

@@ -13,6 +13,7 @@
 @end
 
 @implementation AddSaleViewController
+@synthesize storeObj, editObj;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,9 +32,6 @@
     saleButton2.titleLabel.textAlignment = NSTextAlignmentCenter;
     saleButton2.titleLabel.text = @"Buy One \n Get One";
     
-    //Add Static Data
-    itemsArray = @[@"Pink Knitted Handbag", @"Tuquiose Woven Charm Braclet", @"Knitted Baby Booties"];
-    
     //Get Current Date and Set to button
     NSDate *current = [[NSDate alloc] init];
     [saleDatePicker setMinimumDate:current];
@@ -51,6 +49,15 @@
     
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    itemsArray = storeObj[@"Items"];
+    editObj = [storeObj[@"Sale"] fetchIfNeeded];
+    if (editObj != nil) {
+        [self editSale];
+    }
+    
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -74,7 +81,8 @@
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, pickerView.frame.size.width, 44)];
     label.textAlignment = NSTextAlignmentCenter;
-    label.text = [itemsArray objectAtIndex:row];
+    PFObject *item = [[itemsArray objectAtIndex:row] fetchIfNeeded];
+    label.text = item[@"Name"];
     return label;
 }
 
@@ -82,7 +90,9 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if(itemPicker.hidden == NO){
-        selectedItem = [itemsArray objectAtIndex:row];
+        PFObject *item = [[itemsArray objectAtIndex:row] fetchIfNeeded];
+        selectedItem = item[@"Name"];
+        selectedIndex = row;
         [itemButton setTitle:selectedItem forState:UIControlStateNormal];
     }else if (saleDatePicker.hidden == NO){
      
@@ -92,6 +102,84 @@
 -(BOOL) textFieldShouldReturn: (UITextField *) textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+-(void)saveToParse
+{
+    if(editObj != nil){
+        if(editObj[@"Item"] != [itemsArray objectAtIndex:selectedIndex]){
+            PFObject *tempItem = [editObj[@"Item"] fetchIfNeeded];
+            [tempItem removeObjectForKey:@"Sale"];
+            [tempItem saveInBackground];
+        }
+        editObj[@"Item"] = [itemsArray objectAtIndex:selectedIndex];
+        editObj[@"Store"] = storeObj;
+        editObj[@"Type"] = [NSString stringWithFormat:@"%d", typeint];
+        editObj[@"Price"] = salePriceInput.text;
+        editObj[@"Date"] = dateString;
+        [editObj saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if(succeeded){
+                storeObj[@"Sale"] = editObj;
+                [storeObj saveInBackground];
+                PFObject *item = [[itemsArray objectAtIndex:selectedIndex] fetchIfNeeded];
+                item[@"Sale"] = editObj;
+                [item saveInBackground];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }];
+    }else{
+        PFObject *sale = [PFObject objectWithClassName:@"Sale"];
+        sale[@"Item"] = [itemsArray objectAtIndex:selectedIndex];
+        sale[@"Store"] = storeObj;
+        sale[@"Type"] = [NSString stringWithFormat:@"%d", typeint];
+        sale[@"Price"] = salePriceInput.text;
+        sale[@"Date"] = dateString;
+        [sale saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if(succeeded){
+                storeObj[@"Sale"] = sale;
+                [storeObj saveInBackground];
+                PFObject *item = [[itemsArray objectAtIndex:selectedIndex] fetchIfNeeded];
+                item[@"Sale"] = sale;
+                [item saveInBackground];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }];
+    }
+}
+
+-(void)editSale
+{
+    for(int i = 0; i < [itemsArray count]; i++){
+        PFObject *tempItem = [[itemsArray objectAtIndex:i] fetchIfNeeded];
+        PFObject *editItem = [editObj[@"Item"] fetchIfNeeded];
+        if([tempItem[@"Name"] isEqualToString:editItem[@"Name"]]){
+            selectedIndex = i;
+            selectedItem = editItem[@"Name"];
+            [itemButton setTitle:selectedItem forState:UIControlStateNormal];
+        }
+    }
+    
+    salePriceInput.text = editObj[@"Price"];
+    int editType = [editObj[@"Type"] intValue];
+    if(editType == 1){
+        saleButton1.selected = YES;
+        saleButton2.selected = NO;
+        saleButton3.selected = NO;
+        typeint = 1;
+    }else if (editType == 2){
+        saleButton2.selected = YES;
+        saleButton1.selected = NO;
+        saleButton3.selected = NO;
+        typeint = 2;
+    }else if(editType == 3){
+        saleButton3.selected = YES;
+        saleButton1.selected = NO;
+        saleButton2.selected = NO;
+        typeint = 3;
+    }
+    NSString *editDate = editObj[@"Date"];
+    dateString = editDate;
+    [dateButton setTitle:editDate forState:UIControlStateNormal];
 }
 
 //OnClick for item and date button and back navigation
@@ -122,7 +210,7 @@
         }
         pickerToolbar.hidden = NO;
     }else if (button.tag == 3){
-        [self.navigationController popViewControllerAnimated:YES];
+        [self saveToParse];
     }
 }
 
@@ -134,14 +222,17 @@
         saleButton1.selected = YES;
         saleButton2.selected = NO;
         saleButton3.selected = NO;
+        typeint = 1;
     }else if (button.tag == 1){
         saleButton2.selected = YES;
         saleButton1.selected = NO;
         saleButton3.selected = NO;
+        typeint = 2;
     }else if(button.tag == 2){
         saleButton3.selected = YES;
         saleButton1.selected = NO;
         saleButton2.selected = NO;
+        typeint = 3;
     }
 }
 

@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface StoresViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 {
-    NSArray *storeNameArray;
-    NSArray *storeImgArray;
+    NSArray *storesArray;
+    NSArray *fontArray;
+    NSArray *colorArray;
     IBOutlet UICollectionView *storesCollection;
     IBOutlet UISearchBar *storeSearch;
 }

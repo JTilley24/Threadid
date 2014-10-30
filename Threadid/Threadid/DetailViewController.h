@@ -8,11 +8,23 @@
 
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
+#import <Parse/Parse.h>
 
 @interface DetailViewController : UIViewController <iCarouselDataSource, iCarouselDelegate, UIAlertViewDelegate>
 {
     IBOutlet iCarousel *itemImgCaro;
+    IBOutlet UILabel *itemNameLabel;
+    IBOutlet UILabel *itemPriceLabel;
+    IBOutlet UILabel *itemQuantityLabel;
+    IBOutlet UILabel *itemDesciption;
+    IBOutlet UIButton *storeButton;
+    NSArray *photosArray;
+    NSArray *fontArray;
+    NSArray *colorArray;
+    PFObject *storeObj;
 }
+
+@property (nonatomic, strong)PFObject *itemObj;
 
 -(IBAction)onClick:(id)sender;
 
