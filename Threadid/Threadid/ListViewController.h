@@ -12,9 +12,6 @@
 
 @interface ListViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, iCarouselDataSource, iCarouselDelegate>
 {
-    NSArray *itemImgArray;
-    NSArray *itemNameArray;
-    NSArray *itemPriceArray;
     NSArray *itemsArray;
     NSArray *fontArray;
     NSArray *colorArray;

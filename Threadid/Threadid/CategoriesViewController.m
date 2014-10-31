@@ -9,6 +9,7 @@
 #import "CategoriesViewController.h"
 #import "CatCell.h"
 #import "ListViewController.h"
+#import "StoreViewController.h"
 
 @interface CategoriesViewController ()
 
@@ -33,10 +34,10 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleBordered target:nil action:nil];
     
+    
+    
     //Set Static Data and Images
     catsArray = @[@"Jewelry", @"Knitted", @"Home Decor", @"Supplies", @"Sales"];
-    caroItems = @[@"Betty's Bags", @"Chelsea's Charms", @"Knitted Knighty"];
-    caroImgs = @[@"bettys.jpg", @"charms.jpg", @"knighty.jpg"];
     featureCaro.type = iCarouselTypeCoverFlow2;
     [featureCaro reloadData];
     [featureCaro setCurrentItemIndex:1];
@@ -44,6 +45,20 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.title = @"Threadid";
+    //Get Data from Parse
+    storeArray = [[NSMutableArray alloc] init];
+    PFQuery *query = [PFQuery queryWithClassName:@"Store"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(error == nil){
+            for (int i = 0; i < [objects count]; i++) {
+                PFObject *store = [objects objectAtIndex:i];
+                if([store[@"Items"] count] != 0){
+                    [storeArray addObject:store];
+                }
+            }
+            [featureCaro reloadData];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,6 +88,7 @@
 //Select row on Table
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //Open Sales or Items List by Category
     if(indexPath.row == 4){
         [self performSegueWithIdentifier:@"SaleCatSegue" sender:self];
     }else{
@@ -85,7 +101,7 @@
 //Number of items in Carousel
 -(NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
-    return [caroItems count];
+    return [storeArray count];
 }
 
 //Add Image, Name, and Price of each item to Carousel
@@ -117,11 +133,15 @@
         caroLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, view.frame.size.height, 300, 50)];
         [caroLabel setFont:[UIFont systemFontOfSize:25]];
     }
-    NSString *temp= [NSString stringWithFormat:@"%@.jpg", [caroImgs objectAtIndex:index]];
-    iv.image=[UIImage imageNamed:temp];
-    iv.contentMode = UIViewContentModeScaleToFill;
     
-    caroLabel.text = [caroItems objectAtIndex:index];
+    PFObject *store = [[storeArray objectAtIndex:index] fetchIfNeeded];
+    caroLabel.text = store[@"Name"];
+    PFObject *item = [[store[@"Items"] objectAtIndex:0] fetchIfNeeded];
+    PFFile *imageFile = [item[@"Photos"] objectAtIndex:0];
+    NSData *imageData = [imageFile getData];
+    UIImage *image = [UIImage imageWithData:imageData];
+    iv.image = image;
+    iv.contentMode = UIViewContentModeScaleToFill;
     
     [caroLabel setTextAlignment:NSTextAlignmentCenter];
     [view addSubview:iv];
@@ -134,9 +154,10 @@
 {
 	if (index == featureCaro.currentItemIndex)
 	{
-    
+        StoreViewController *storeView = [self.storyboard instantiateViewControllerWithIdentifier:@"StoreView"];
+        [storeView setStoreObj:[storeArray objectAtIndex:index]];
+        [self.navigationController pushViewController:storeView animated:YES];
 	}
-    [self performSegueWithIdentifier:@"CatCaroSegue" sender:self];
 }
 
 

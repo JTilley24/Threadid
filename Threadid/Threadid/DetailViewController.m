@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#import "StoreViewController.h"
 
 @interface DetailViewController ()
 
@@ -27,12 +28,14 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     //Set Fonts and Colors
     fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana Bold"];
     colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    //Get Data from Parse
     itemObj = [itemObj fetchIfNeeded];
     photosArray = itemObj[@"Photos"];
     storeObj = [itemObj[@"Store"] fetchIfNeeded];
@@ -47,11 +50,6 @@
       [UIFont fontWithName:storeObj[@"Font"] size:21],
       NSFontAttributeName,fontColor,NSForegroundColorAttributeName, nil]];
     [self.navigationController.navigationBar setBarTintColor:bgColor];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
- 
 }
 
 - (void)didReceiveMemoryWarning
@@ -104,13 +102,15 @@
     return view;
 }
 
+//Set Item's Data to View
 -(void)setItemData
 {
     itemNameLabel.text = itemObj[@"Name"];
+    
     itemPriceLabel.text = [NSString stringWithFormat:@"$%@", itemObj[@"Price"]];
     itemQuantityLabel.text = itemObj[@"Quantity"];
     itemDesciption.text = itemObj[@"Description"];
-    storeButton.titleLabel.text = storeObj[@"Name"];
+    [storeButton setTitle:storeObj[@"Name"] forState:UIControlStateNormal];
     storeButton.titleLabel.textAlignment = NSTextAlignmentCenter;
 }
 
@@ -122,7 +122,9 @@
         UIAlertView *addCartAlert = [[UIAlertView alloc] initWithTitle:@"Add to Cart" message:@"Item has been add to cart." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [addCartAlert show];
     }else if(button.tag == 1){
-        [self performSegueWithIdentifier:@"ItemStoreSegue" sender:self];
+        StoreViewController *storeView = [self.storyboard instantiateViewControllerWithIdentifier:@"StoreView"];
+        [storeView setStoreObj:storeObj];
+        [self.navigationController pushViewController:storeView animated:YES];
     }else if(button.tag == 2){
         [self performSegueWithIdentifier:@"ItemCartSegue" sender:self];
     }

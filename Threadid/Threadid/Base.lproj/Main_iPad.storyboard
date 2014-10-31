@@ -21,7 +21,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardAppearance="alert"/>
                                 <connections>
                                     <outlet property="delegate" destination="6x1-tP-Lov" id="uNT-vU-tdh"/>
                                 </connections>
@@ -31,7 +31,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="6x1-tP-Lov" id="1D8-Ns-PxV"/>
                                 </connections>
@@ -253,7 +253,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Betty's Handbags">
+                                <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -858,6 +858,7 @@
                     <connections>
                         <outlet property="historyButton" destination="bsS-Fx-naA" id="Qcj-bK-MUz"/>
                         <outlet property="myStoreButton" destination="6dg-7Y-qpL" id="tNa-IT-lx9"/>
+                        <outlet property="openStoreButton" destination="ATP-5c-YvK" id="SDo-xJ-tqI"/>
                         <outlet property="storeNameLabel" destination="lsb-kF-058" id="qhH-bB-hg6"/>
                         <outlet property="userNameLabel" destination="g65-Oc-StZ" id="iXO-gS-qnC"/>
                         <outlet property="viewStoreButton" destination="J4p-dJ-XBa" id="4LU-k4-ZJP"/>
@@ -922,7 +923,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                                 <connections>
                                     <outlet property="delegate" destination="mL7-5s-8fr" id="met-Q0-Jcu"/>
                                 </connections>
@@ -1161,7 +1162,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                 <connections>
                                     <outlet property="delegate" destination="mKm-kV-6iD" id="qdo-bq-DiR"/>
                                 </connections>
@@ -1613,7 +1614,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                 <connections>
                                     <outlet property="delegate" destination="Aa0-Lj-LnN" id="gPa-JU-Iaq"/>
                                 </connections>
@@ -1752,9 +1753,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="NyK-57-7JM"/>
-        <segue reference="6FX-WF-NJx"/>
-        <segue reference="qIy-9j-ID1"/>
+        <segue reference="4vi-1P-kCn"/>
+        <segue reference="bMB-DW-It7"/>
+        <segue reference="3Ue-CT-bqE"/>
         <segue reference="4CU-DU-OXM"/>
         <segue reference="LJV-Df-MOT"/>
     </inferredMetricsTieBreakers>

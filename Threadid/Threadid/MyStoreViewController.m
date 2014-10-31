@@ -33,8 +33,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     PFUser *current = [PFUser currentUser];
-    PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
-    [storeQuery whereKey:@"User" equalTo:current];
+    storeObject = [current[@"Store"] fetchIfNeeded];
+    self.title = storeObject[@"Name"];
+    if(storeObject[@"Items"] != nil){
+        [self getStoreItems];
+    }
+    //PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
+    /*[storeQuery whereKey:@"User" equalTo:current];
     [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(error == nil){
             storeObject = [objects objectAtIndex:0];
@@ -43,14 +48,11 @@
                 [self getStoreItems];
             }
         }
-    }];
+    }];*/
+    
     itemsArray = [[NSMutableArray alloc] init];
     
-    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
-    [self.navigationController.navigationBar setTitleTextAttributes:
-     [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIFont fontWithName:@"Helvetica" size:21],
-      NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
+    
 
 }
 
@@ -59,6 +61,13 @@
     if(storeObject != nil){
         [self getStoreItems];
     }
+    
+    //Set Navigation Bar attributes
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIFont fontWithName:@"Helvetica" size:21],
+      NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,6 +76,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+//Number of items in Collection
 -(NSInteger)collectionView:(UICollectionView *)collectionView
     numberOfItemsInSection:(NSInteger)section
 {
@@ -74,6 +84,7 @@
     return [itemsArray count];
 }
 
+//Add Item's Data in Collection
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -89,6 +100,7 @@
     return cell;
 }
 
+//Open Menu for View, Edit, and Delete
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UIAlertView *itemAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:@"View Item", @"Edit Item", @"Delete Item", nil];
@@ -96,6 +108,7 @@
     selectedItem = indexPath.row;
 }
 
+//Get Items for Stores
 -(void)getStoreItems
 {
     PFQuery *itemQuery = [PFQuery queryWithClassName:@"Item"];
@@ -113,6 +126,7 @@
     }];
 }
 
+//Delete Item
 -(void)deleteItem
 {
     PFObject *item = [itemsArray objectAtIndex:selectedItem];
@@ -129,6 +143,7 @@
     }];
 }
 
+//Open Sales History, Sales, and Add Item
 -(IBAction)onClick:(id)sender
 {
     UIButton *button = sender;
@@ -144,6 +159,7 @@
     }
 }
 
+//Edit Store
 -(IBAction)onBarButtonClick:(id)sender
 {
     AddStoreViewController *addStore = [self.storyboard instantiateViewControllerWithIdentifier:@"AddStore"];
@@ -151,6 +167,7 @@
     [self.navigationController pushViewController:addStore animated:YES];
 }
 
+//Options of View, Edit, and Delete
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];

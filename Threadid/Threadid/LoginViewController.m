@@ -42,6 +42,7 @@
     
     UIButton *button = (UIButton*) sender;
     if(button.tag == 0){
+        //Validate and Login User
         BOOL validate = true;
         NSString *userName = userText.text;
         NSString *password = passText.text;
@@ -57,13 +58,17 @@
                  if(user){
                      [self performSegueWithIdentifier:@"login-segue" sender:self];
                  }else{
-                     NSLog(@"Error");
+                     UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Username and/or Password are incorrect. Please try again." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                     [loginAlert show];
                  }
              }];
         }else{
             NSLog(@"Login not inputted");
+            UIAlertView *inputAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please enter Username and Password." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [inputAlert show];
         }
     }else if (button.tag == 1){
+        //Toggle to Signup or Create New Account
         if(loginButton.hidden == false){
             loginButton.hidden = true;
             emailText.hidden = false;
@@ -116,26 +121,6 @@
         emailText.hidden = true;
         cancelButton.hidden = true;
     }
-
-    
-   /* UIButton *button = (UIButton*) sender;
-    if(button.tag == 0){
-        [self performSegueWithIdentifier:@"login-segue" sender:self];
-    }else if (button.tag == 1){
-        //Toggle between Login and Signup
-        if(loginButton.hidden == false){
-            loginButton.hidden = true;
-            emailText.hidden = false;
-            cancelButton.hidden = false;
-        }else{
-            [self performSegueWithIdentifier:@"login-segue" sender:self];
-        }
-    }else if (button.tag == 2){
-        loginButton.hidden = false;
-        emailText.hidden = true;
-        cancelButton.hidden = true;
-    }*/
-
 }
 
 //Validate Password

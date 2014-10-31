@@ -41,25 +41,22 @@
     }else
     {
         fontSize = 15;
-    }
-    
-    //Set Static Data and Images
-    itemImgArray = @[@"bettys.jpg", @"charms.jpg", @"knighty.jpg"];
-    itemNameArray = @[@"Pink Knitted Handbag", @"Tuquiose Woven Charm Braclet", @"Knitted Baby Booties"];
-    itemPriceArray = @[@"$44.99", @"$9.99", @"$14.99"];
-    
+    }    
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    //Get Items in Category
     PFQuery *query = [PFQuery queryWithClassName:@"Item"];
     [query whereKey:@"Category" equalTo:catString];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(error == nil){
             itemsArray = objects;
             [itemsCollection reloadData];
+            [itemCaro reloadData];
         }
     }];
+    
     itemCaro.type = iCarouselTypeCoverFlow2;
     [itemCaro reloadData];
     [itemCaro scrollToItemAtIndex:1 animated:YES];
@@ -129,7 +126,7 @@
 //Number of items in Carousel
 -(NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
-    return [itemNameArray count];
+    return [itemsArray count];
 }
 
 //Add image, name, and price to each item in Carousel
@@ -172,11 +169,16 @@
         [priceLabel setBackgroundColor:[UIColor whiteColor]];
     }
     
-    iv.image=[UIImage imageNamed:[itemImgArray objectAtIndex:index]];
+    PFObject *item = [[itemsArray objectAtIndex:index] fetchIfNeeded];
+    PFFile *imageFile = [item[@"Photos"] objectAtIndex:0];
+    NSData *imageData = [imageFile getData];
+    UIImage *image = [UIImage imageWithData:imageData];
+    
+    iv.image=image;
     iv.contentMode = UIViewContentModeScaleToFill;
     
-    nameLabel.text = [itemNameArray objectAtIndex:index];
-    priceLabel.text = [itemPriceArray objectAtIndex:index];
+    nameLabel.text = item[@"Name"];
+    priceLabel.text = item[@"Price"];
     
     [nameLabel setTextAlignment:NSTextAlignmentCenter];
     [view addSubview:iv];
@@ -190,9 +192,10 @@
 {
 	if (index == itemCaro.currentItemIndex)
 	{
-
+        DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
+        [detailView setItemObj:[itemsArray objectAtIndex:index]];
+        [self.navigationController pushViewController:detailView animated:YES];
 	}
-    [self performSegueWithIdentifier:@"ListCaroSegue" sender:self];
 }
 
 //Toggle Search Bar

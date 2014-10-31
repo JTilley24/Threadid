@@ -7,6 +7,7 @@
 //
 
 #import "MoreViewController.h"
+#import "StoreViewController.h"
 
 @interface MoreViewController ()
 
@@ -27,6 +28,11 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    //Get User's Store Data
     current = [PFUser currentUser];
     PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
     [storeQuery whereKey:@"User" equalTo:current];
@@ -36,10 +42,7 @@
         }
         [self loadUserData];
     }];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
+    
     //Set Navigation Bar attributes
     self.title = @"More";
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
@@ -55,6 +58,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+//Display User and Store Data
 -(void)loadUserData
 {
     userNameLabel.text = current[@"username"];
@@ -88,8 +92,11 @@
     }else if(button.tag == 4){
         [self performSegueWithIdentifier:@"MoreSalesSegue" sender:self];
     }else if(button.tag == 5){
-        [self performSegueWithIdentifier:@"MoreStoreSegue" sender:self];
+        StoreViewController *storeView = [self.storyboard instantiateViewControllerWithIdentifier:@"StoreView"];
+        [storeView setStoreObj:storeObj];
+        [self.navigationController pushViewController:storeView animated:YES];
     }else if(button.tag == 6){
+        [PFUser logOut];
         [self performSegueWithIdentifier:@"SignOutSegue" sender:self];
     }
 }

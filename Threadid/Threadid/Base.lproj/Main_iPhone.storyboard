@@ -118,7 +118,7 @@
         <!--Categories View Controller-->
         <scene sceneID="OGq-PD-OJt">
             <objects>
-                <viewController id="TRb-5M-eN4" customClass="CategoriesViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CatView" id="TRb-5M-eN4" customClass="CategoriesViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pVC-0p-Y8f"/>
                         <viewControllerLayoutGuide type="bottom" id="4RK-2f-J20"/>
@@ -200,7 +200,7 @@
         <!--List View Controller-->
         <scene sceneID="t5B-AS-zDR">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="g00-br-Eiy" customClass="ListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ListView" automaticallyAdjustsScrollViewInsets="NO" id="g00-br-Eiy" customClass="ListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EXS-XR-gMx"/>
                         <viewControllerLayoutGuide type="bottom" id="imB-O1-PYW"/>
@@ -307,7 +307,7 @@
         <!--Detail View Controller-->
         <scene sceneID="Zzp-Eg-9sh">
             <objects>
-                <viewController id="VgQ-iJ-k9d" customClass="DetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailView" id="VgQ-iJ-k9d" customClass="DetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3lJ-AP-v6X"/>
                         <viewControllerLayoutGuide type="bottom" id="qcs-If-P1p"/>
@@ -394,7 +394,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="itemDesciption" destination="WFw-44-ilr" id="F5s-gQ-dtf"/>
                         <outlet property="itemImgCaro" destination="uCW-jg-1uf" id="QCA-F4-rCP"/>
+                        <outlet property="itemNameLabel" destination="JpE-Z2-vYZ" id="jJp-DT-ca7"/>
+                        <outlet property="itemPriceLabel" destination="MSf-rT-4mQ" id="hxv-Zx-Db9"/>
+                        <outlet property="itemQuantityLabel" destination="6OI-K6-359" id="ZPS-VI-eKm"/>
+                        <outlet property="storeButton" destination="jgc-as-eIb" id="P05-oN-ES5"/>
                         <segue destination="C4t-4A-yMD" kind="push" identifier="ItemStoreSegue" id="t8V-x8-KHo"/>
                         <segue destination="PyJ-fk-S7y" kind="push" identifier="ItemCartSegue" id="wEA-eu-VWp"/>
                     </connections>
@@ -420,7 +425,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                 <connections>
                                     <outlet property="delegate" destination="UC0-uh-aeU" id="hul-xo-xvP"/>
                                 </connections>
@@ -430,7 +435,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="UC0-uh-aeU" id="T6C-aw-w4V"/>
                                 </connections>
@@ -491,7 +496,9 @@
                         <outlet property="cancelButton" destination="CLE-Od-1Qz" id="eT8-vQ-UNN"/>
                         <outlet property="emailText" destination="GRD-OS-LmG" id="9Ky-p7-1PS"/>
                         <outlet property="loginButton" destination="GCc-qG-e1e" id="aRp-5E-SDj"/>
+                        <outlet property="passText" destination="QFM-qh-Inb" id="xra-1N-3gY"/>
                         <outlet property="signUpButton" destination="A6r-Lh-otx" id="NL4-eh-0NR"/>
+                        <outlet property="userText" destination="Dok-Hy-vgL" id="9HO-da-2vL"/>
                         <segue destination="8YX-ce-x5E" kind="modal" identifier="login-segue" id="KcU-Td-E52"/>
                     </connections>
                 </viewController>
@@ -502,7 +509,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
             <objects>
-                <tabBarController id="8YX-ce-x5E" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabCont" id="8YX-ce-x5E" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="p8f-gv-UrD"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="JQR-rB-NYL">
@@ -626,7 +633,7 @@
         <!--Store View Controller-->
         <scene sceneID="ehl-FR-70s">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="C4t-4A-yMD" customClass="StoreViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StoreView" automaticallyAdjustsScrollViewInsets="NO" id="C4t-4A-yMD" customClass="StoreViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pWW-zK-okE"/>
                         <viewControllerLayoutGuide type="bottom" id="BYu-3B-mDt"/>
@@ -836,6 +843,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="AcC-dJ-Me6"/>
                     <connections>
+                        <outlet property="historyButton" destination="BeC-YD-pU1" id="kE7-db-IWl"/>
+                        <outlet property="myStoreButton" destination="hfg-MB-TdR" id="AE9-BQ-hd9"/>
+                        <outlet property="openStoreButton" destination="fq1-q1-crd" id="06v-On-IVO"/>
+                        <outlet property="storeNameLabel" destination="2eH-si-gEv" id="RSg-4y-Hmp"/>
+                        <outlet property="userNameLabel" destination="Eto-Vh-HPH" id="lb1-93-pNJ"/>
+                        <outlet property="viewStoreButton" destination="1TK-q8-xll" id="Cd6-Vw-oLN"/>
                         <segue destination="lGL-WO-BQt" kind="push" identifier="MyStoreSegue" id="Dc6-Hc-RhW"/>
                         <segue destination="318-bh-KO1" kind="push" identifier="OpenStoreSegue" id="LCU-Aa-75M"/>
                         <segue destination="PyJ-fk-S7y" kind="push" identifier="CartSegue" id="2Dp-Kl-uPt"/>
@@ -1176,7 +1189,7 @@
         <!--Add Sale View Controller-->
         <scene sceneID="XHa-RO-5N5">
             <objects>
-                <viewController id="iTk-KM-iCz" customClass="AddSaleViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddSale" id="iTk-KM-iCz" customClass="AddSaleViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="E7t-5b-a4M"/>
                         <viewControllerLayoutGuide type="bottom" id="zFX-X4-BgT"/>
@@ -1357,6 +1370,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="saleButton2" destination="LTJ-cI-hFD" id="X0v-4Q-7BN"/>
                         <outlet property="saleButton3" destination="jkP-iG-7rI" id="mgh-N0-E99"/>
                         <outlet property="saleDatePicker" destination="Fgs-Sf-BaE" id="KzM-R9-ct4"/>
+                        <outlet property="salePriceInput" destination="iHJ-xc-n7j" id="jpo-S6-blz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bnd-9V-sQK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1366,7 +1380,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <!--Add Item View Controller-->
         <scene sceneID="y8p-E9-2ek">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="z9X-aY-hLM" customClass="AddItemViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddItem" automaticallyAdjustsScrollViewInsets="NO" id="z9X-aY-hLM" customClass="AddItemViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iOs-SR-98h"/>
                         <viewControllerLayoutGuide type="bottom" id="93e-VS-lyX"/>
@@ -1391,7 +1405,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                         <connections>
                                             <outlet property="delegate" destination="z9X-aY-hLM" id="cWo-3j-RLP"/>
                                         </connections>
@@ -1529,6 +1543,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="catPicker" destination="Qdp-zD-Ehp" id="Hao-cY-u7N"/>
                         <outlet property="catPickerToolBar" destination="05p-Ka-rzX" id="Kvt-9r-x7S"/>
                         <outlet property="descriptView" destination="fjs-nQ-FZJ" id="xXn-Xb-Z6L"/>
+                        <outlet property="itemNameInput" destination="G97-se-uWo" id="OfP-mY-Ith"/>
+                        <outlet property="itemPriceInput" destination="1Yg-Pb-rhc" id="5q1-CO-9dZ"/>
                         <outlet property="itemScroll" destination="gWX-x2-cda" id="eKG-tf-4oI"/>
                         <outlet property="picsCaro" destination="RKm-vD-L2J" id="pSa-L7-KHX"/>
                         <outlet property="quantityLabel" destination="AG8-HF-ELN" id="bb2-wV-L7S"/>
@@ -1611,7 +1627,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <!--Add Store View Controller-->
         <scene sceneID="Zmv-Pv-MCl">
             <objects>
-                <viewController id="318-bh-KO1" customClass="AddStoreViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddStore" id="318-bh-KO1" customClass="AddStoreViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1g8-kG-4fr"/>
                         <viewControllerLayoutGuide type="bottom" id="r22-s1-KQQ"/>
@@ -1730,10 +1746,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="f3I-Az-AQt"/>
-        <segue reference="3ds-zP-0hV"/>
-        <segue reference="wEA-eu-VWp"/>
+        <segue reference="JMi-47-VVw"/>
         <segue reference="t8V-x8-KHo"/>
-        <segue reference="LCU-Aa-75M"/>
+        <segue reference="wEA-eu-VWp"/>
+        <segue reference="Nsy-wq-DZo"/>
+        <segue reference="OJo-mH-Glw"/>
     </inferredMetricsTieBreakers>
 </document>

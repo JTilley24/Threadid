@@ -43,6 +43,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    //Check for Editing
     if(storeObject != nil){
         [self editStore];
     }
@@ -151,6 +152,7 @@
     }
 }
 
+//Display Store Data for Edit
 -(void)editStore
 {
     storeNameInput.text = storeObject[@"Name"];
@@ -171,6 +173,7 @@
     [storePicker selectRow:index inComponent:0 animated:YES];
 }
 
+//Save Data to Parse
 -(void)saveToParse
 {
     if([self inputValidate]){
@@ -210,6 +213,10 @@
         [storeObj saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [loadingView hide: YES];
             if(succeeded){
+                if(current[@"Store"] == nil){
+                    current[@"Store"] = storeObj;
+                    [current saveInBackground];
+                }
                 [self.navigationController popViewControllerAnimated:YES];
             }else{
                 
@@ -221,6 +228,7 @@
     }
 }
 
+//Show Loading View
 -(void)showLoading
 {
     loadingView = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -229,6 +237,7 @@
     [loadingView show: YES];
 }
 
+//Validation
 -(BOOL)inputValidate
 {
     if((storeNameInput.text == nil) || [storeNameInput.text isEqualToString:@""]){

@@ -30,13 +30,14 @@
     // Do any additional setup after loading the view.
     
     PFUser *current = [PFUser currentUser];
-    PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
+    storeObject = [current[@"Store"] fetchIfNeeded];
+   /* PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
     [storeQuery whereKey:@"User" equalTo:current];
     [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(error == nil){
             storeObject = [objects objectAtIndex:0];
         }
-    }];
+    }];*/
     
     //Set Selection data
     catArray = @[@"Jewelry", @"Knitted", @"Home Decor", @"Supplies"];
@@ -47,13 +48,15 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    //Set Navigation Bar attributes
     self.title = @"Add Item";
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
     [self.navigationController.navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
       [UIFont fontWithName:@"Helvetica" size:21],
       NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
-
+    
+    //Check if Editing
     if(editObject != nil){
         editObject = [editObject fetchIfNeeded];
         [self editItem];
@@ -182,6 +185,7 @@
     return YES;
 }
 
+//Save Item to Parse
 -(void)saveToParse
 {
     if(editObject != nil){
@@ -239,6 +243,7 @@
     }
 }
 
+//Show Loading
 -(void)showLoading
 {
     loadingView = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -247,6 +252,7 @@
     [loadingView show: YES];
 }
 
+//Add Item to Store
 -(void)addToStore: (PFObject *)object
 {
     NSMutableArray *tempArray = [storeObj[@"Items"] mutableCopy];
@@ -256,6 +262,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+//Set Item's Data for Editing
 -(void)editItem
 {
     itemNameInput.text = editObject[@"Name"];

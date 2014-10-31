@@ -44,13 +44,14 @@
     }
     NSString *dateText = [dateFormat stringFromDate:pickerDate];
     NSString *newDate = [[NSString alloc] initWithFormat:@"%@", dateText];
+    dateString = newDate;
     [dateButton setTitle:newDate forState:UIControlStateNormal];
     saleDatePicker.backgroundColor = [UIColor whiteColor];
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    //Check if Editing
     itemsArray = storeObj[@"Items"];
     editObj = [storeObj[@"Sale"] fetchIfNeeded];
     if (editObj != nil) {
@@ -92,7 +93,7 @@
     if(itemPicker.hidden == NO){
         PFObject *item = [[itemsArray objectAtIndex:row] fetchIfNeeded];
         selectedItem = item[@"Name"];
-        selectedIndex = row;
+        selectedIndex = (int)row;
         [itemButton setTitle:selectedItem forState:UIControlStateNormal];
     }else if (saleDatePicker.hidden == NO){
      
@@ -104,10 +105,11 @@
     return YES;
 }
 
+//Save sale to Parse
 -(void)saveToParse
 {
     if(editObj != nil){
-        if(editObj[@"Item"] != [itemsArray objectAtIndex:selectedIndex]){
+        if(editObj[@"Item"] != [itemsArray objectAtIndex:selectedIndex--]){
             PFObject *tempItem = [editObj[@"Item"] fetchIfNeeded];
             [tempItem removeObjectForKey:@"Sale"];
             [tempItem saveInBackground];
@@ -147,6 +149,7 @@
     }
 }
 
+//Display Sales Data to View
 -(void)editSale
 {
     for(int i = 0; i < [itemsArray count]; i++){
@@ -182,6 +185,22 @@
     [dateButton setTitle:editDate forState:UIControlStateNormal];
 }
 
+//Validate Inputs
+-(BOOL)validateInputs
+{
+    BOOL validate = true;
+    if(selectedItem == nil){
+        validate = false;
+    }
+    if(typeint == 0){
+        validate = false;
+    }
+    if([salePriceInput.text isEqualToString:@" "]){
+        validate = false;
+    }
+    return validate;
+}
+
 //OnClick for item and date button and back navigation
 -(IBAction)onClick:(id)sender
 {
@@ -189,6 +208,11 @@
     if(button.tag == 0){
         if(itemPicker.hidden == NO){
             itemPicker.hidden = YES;
+            if([itemsArray count] != 0){
+                selectedItem = [itemsArray objectAtIndex:[itemPicker selectedRowInComponent:0]][@"Name"];
+                selectedIndex = [itemPicker selectedRowInComponent:0];
+                [itemButton setTitle:selectedItem forState:UIControlStateNormal];
+            }
         }else if (saleDatePicker.hidden == NO){
             saleDatePicker.hidden = YES;
         }
@@ -210,7 +234,13 @@
         }
         pickerToolbar.hidden = NO;
     }else if (button.tag == 3){
-        [self saveToParse];
+        if([self validateInputs]){
+            [self saveToParse];
+        }else{
+            UIAlertView *validateAlert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please properly enter all information and try again." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [validateAlert show];
+        }
+
     }
 }
 

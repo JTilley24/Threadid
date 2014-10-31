@@ -11,7 +11,7 @@
 
 @interface StoresViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 {
-    NSArray *storesArray;
+    NSMutableArray *storesArray;
     NSArray *fontArray;
     NSArray *colorArray;
     IBOutlet UICollectionView *storesCollection;

@@ -8,6 +8,7 @@
 
 #import "SalesViewController.h"
 #import "SalesCell.h"
+#import "DetailViewController.h"
 
 @interface SalesViewController ()
 
@@ -29,14 +30,44 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
    
+    salesArray = [[NSMutableArray alloc] init];
+    
+    //Get Current Sale Items
+    PFQuery *query = [PFQuery queryWithClassName:@"Sale"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(error == nil){
+            for (int i = 0; i < [objects count]; i++) {
+                PFObject *tempObj = [objects objectAtIndex:i];
+                NSString *dateString = tempObj[@"Date"];
+                NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+                if(dateFormat != nil)
+                {
+                    [dateFormat setDateStyle:NSDateFormatterMediumStyle];
+                }
+                NSDate *itemDate = [dateFormat dateFromString:dateString];
+                NSDate *current = [[NSDate alloc] init];
+                if([itemDate laterDate:current] == itemDate){
+                    [salesArray addObject:tempObj];
+                    
+                }
+            }
+            [salesTable reloadData];
+        }
+    }];
+    
     //Set Static Data and Images
-    storeArray = @[@"Betty's Bags", @"Chelsea's Charms", @"Knitted Knighty"];
-    imgArray = @[@"bettys.jpg", @"charms.jpg", @"knighty.jpg"];
-    itemNameArray = @[@"Pink Knitted Handbag", @"Tuquiose Woven Charm Braclet", @"Knitted Baby Booties"];
-    itemPriceArray = @[@"$24.99", @"$9.99", @"$7.99"];
     saleTypeArray = @[@"On Sale", @"Buy One, Get One", @"Clearence"];
-    dateArray = @[@"Oct 26, 2014", @"Oct 28, 2014", @"Nov 3, 2014"];
     self.title = @"Sales and Discounts";
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    //Set Navigation Bar attributed
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIFont fontWithName:@"Helvetica" size:21],
+      NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,27 +79,40 @@
 //Number of rows in Table
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [itemNameArray count];
+    return [salesArray count];
 }
 
 //Add sale item Data and Image to Table
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SalesCell *cell = [salesTable dequeueReusableCellWithIdentifier:@"SalesCell"];
-    cell.saleItemImg.image = [UIImage imageNamed:[imgArray objectAtIndex:indexPath.row]];
-    cell.itemNameLabel.text = [itemNameArray objectAtIndex:indexPath.row];
-    cell.itemPriceLabel.text = [itemPriceArray objectAtIndex:indexPath.row];
-    cell.storeLabel.text = [storeArray objectAtIndex:indexPath.row];
-    cell.saleTypeLabel.text = [saleTypeArray objectAtIndex:indexPath.row];
-    cell.saleDateLabel.text = [dateArray objectAtIndex:indexPath.row];
-    
+    PFObject *saleObj = [[salesArray objectAtIndex:indexPath.row] fetchIfNeeded];
+    PFObject *itemObj = [saleObj[@"Item"] fetchIfNeeded];
+    PFObject *storeObj = [itemObj[@"Store"] fetchIfNeeded];
+    cell.itemNameLabel.text = itemObj[@"Name"];
+    cell.itemPriceLabel.text = saleObj[@"Price"];
+    cell.storeLabel.text = storeObj[@"Name"];
+    int typeInt = [saleObj[@"Type"] intValue] - 1;
+    cell.saleTypeLabel.text = [saleTypeArray objectAtIndex:typeInt];
+    cell.saleDateLabel.text = saleObj[@"Date"];
+    PFFile *imageFile = [itemObj[@"Photos"] objectAtIndex:0];
+    NSData *imageData = [imageFile getData];
+    UIImage *image = [UIImage imageWithData:imageData];
+    cell.saleItemImg.image = image;
+
     return cell;
 }
 
 //Navigate to Item Details
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"SaleItemSegue" sender:self];
+    
+    
+    PFObject *selectedSale = [[salesArray objectAtIndex:indexPath.row] fetchIfNeeded];
+    PFObject *itemObject = [selectedSale[@"Item"] fetchIfNeeded];
+    DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
+    [detailView setItemObj:itemObject];
+    [self.navigationController pushViewController:detailView animated:YES];
 }
 
 /*
