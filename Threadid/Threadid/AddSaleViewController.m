@@ -210,7 +210,7 @@
             itemPicker.hidden = YES;
             if([itemsArray count] != 0){
                 selectedItem = [itemsArray objectAtIndex:[itemPicker selectedRowInComponent:0]][@"Name"];
-                selectedIndex = [itemPicker selectedRowInComponent:0];
+                selectedIndex = (int)[itemPicker selectedRowInComponent:0];
                 [itemButton setTitle:selectedItem forState:UIControlStateNormal];
             }
         }else if (saleDatePicker.hidden == NO){

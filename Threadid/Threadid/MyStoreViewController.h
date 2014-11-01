@@ -12,9 +12,6 @@
 @interface MyStoreViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate>
 {
     IBOutlet UICollectionView *itemsCollection;
-    NSArray *itemImgArray;
-    NSArray *itemNameArray;
-    NSArray *itemPriceArray;
     PFObject *storeObject;
     NSMutableArray *itemsArray;
     int selectedItem;

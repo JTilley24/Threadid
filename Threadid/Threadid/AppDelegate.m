@@ -15,6 +15,7 @@
 {
     [Parse setApplicationId:@"K3uYwV1KDXtetQ6aIW7An1sLaw8CzqW0NcSvds3J"
                   clientKey:@"7QpIY1rtIMip90UTHeHmhbrg5U7ZKCxtDKCn5FdU"];
+    //Check if current user logged in
     PFUser *current = [PFUser currentUser];
     if(current != nil){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];

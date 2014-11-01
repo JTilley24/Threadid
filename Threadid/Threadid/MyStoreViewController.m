@@ -38,22 +38,8 @@
     if(storeObject[@"Items"] != nil){
         [self getStoreItems];
     }
-    //PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
-    /*[storeQuery whereKey:@"User" equalTo:current];
-    [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if(error == nil){
-            storeObject = [objects objectAtIndex:0];
-            self.title = storeObject[@"Name"];
-            if(storeObject[@"Items"] != nil){
-                [self getStoreItems];
-            }
-        }
-    }];*/
     
     itemsArray = [[NSMutableArray alloc] init];
-    
-    
-
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -105,7 +91,7 @@
 {
     UIAlertView *itemAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:@"View Item", @"Edit Item", @"Delete Item", nil];
     [itemAlert show];
-    selectedItem = indexPath.row;
+    selectedItem = (int)indexPath.row;
 }
 
 //Get Items for Stores

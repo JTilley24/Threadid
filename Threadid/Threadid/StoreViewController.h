@@ -12,9 +12,6 @@
 @interface StoreViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 {
     IBOutlet UICollectionView *itemsCollections;
-    NSArray *itemImgArray;
-    NSArray *itemNameArray;
-    NSArray *itemPriceArray;
     NSArray *fontArray;
     NSArray *colorArray;
     NSArray *itemsArray;

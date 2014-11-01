@@ -30,20 +30,16 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    //Set Navigation Bar attributes
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleBordered target:nil action:nil];
     
-    
-    
-    //Set Static Data and Images
+    //Set Categories and Carousel
     catsArray = @[@"Jewelry", @"Knitted", @"Home Decor", @"Supplies", @"Sales"];
     featureCaro.type = iCarouselTypeCoverFlow2;
-    [featureCaro reloadData];
-    [featureCaro setCurrentItemIndex:1];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    //Set Navigation Bar attributes
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleBordered target:nil action:nil];
     self.title = @"Threadid";
     //Get Data from Parse
     storeArray = [[NSMutableArray alloc] init];
@@ -57,6 +53,9 @@
                 }
             }
             [featureCaro reloadData];
+            if([objects count] != 0){
+                [featureCaro setCurrentItemIndex:1];
+            }
         }
     }];
 }

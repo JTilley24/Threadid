@@ -13,12 +13,7 @@
 {
     IBOutlet UITableView *salesTable;
     NSMutableArray *salesArray;
-    NSArray *imgArray;
-    NSArray *itemNameArray;
-    NSArray *storeArray;
-    NSArray *itemPriceArray;
     NSArray *saleTypeArray;
-    NSArray *dateArray;
 }
 
 @end

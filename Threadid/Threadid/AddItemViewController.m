@@ -29,15 +29,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    //Get User and Store Objects
     PFUser *current = [PFUser currentUser];
     storeObject = [current[@"Store"] fetchIfNeeded];
-   /* PFQuery *storeQuery = [PFQuery queryWithClassName:@"Store"];
-    [storeQuery whereKey:@"User" equalTo:current];
-    [storeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if(error == nil){
-            storeObject = [objects objectAtIndex:0];
-        }
-    }];*/
     
     //Set Selection data
     catArray = @[@"Jewelry", @"Knitted", @"Home Decor", @"Supplies"];

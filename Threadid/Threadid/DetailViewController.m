@@ -43,6 +43,8 @@
     [itemImgCaro reloadData];
     [itemImgCaro scrollToItemAtIndex:1 animated:YES];
     [self setItemData];
+    
+    //Set Navigation Bar attributes
     UIColor *fontColor = [colorArray objectAtIndex:[storeObj[@"FontColor"] intValue]];
     UIColor *bgColor = [colorArray objectAtIndex:[storeObj[@"BGColor"] intValue]];
     [self.navigationController.navigationBar setTitleTextAttributes:

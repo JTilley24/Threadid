@@ -15,7 +15,5 @@
     NSArray *catsArray;
     IBOutlet iCarousel *featureCaro;
     NSMutableArray *storeArray;
-    NSArray *caroItems;
-    NSArray *caroImgs;
 }
 @end
