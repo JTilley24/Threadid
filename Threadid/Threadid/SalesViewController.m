@@ -106,8 +106,6 @@
 //Navigate to Item Details
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
     PFObject *selectedSale = [[salesArray objectAtIndex:indexPath.row] fetchIfNeeded];
     PFObject *itemObject = [selectedSale[@"Item"] fetchIfNeeded];
     DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];

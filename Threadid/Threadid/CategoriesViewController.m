@@ -40,6 +40,11 @@
     //Set Navigation Bar attributes
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIFont fontWithName:@"Helvetica" size:21],
+      NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
     self.title = @"Threadid";
     //Get Data from Parse
     storeArray = [[NSMutableArray alloc] init];

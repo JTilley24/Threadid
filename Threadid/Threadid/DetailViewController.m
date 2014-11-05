@@ -43,6 +43,7 @@
     [itemImgCaro reloadData];
     [itemImgCaro scrollToItemAtIndex:1 animated:YES];
     [self setItemData];
+    current = [PFUser currentUser];
     
     //Set Navigation Bar attributes
     UIColor *fontColor = [colorArray objectAtIndex:[storeObj[@"FontColor"] intValue]];
@@ -123,6 +124,39 @@
     if(button.tag == 0){
         UIAlertView *addCartAlert = [[UIAlertView alloc] initWithTitle:@"Add to Cart" message:@"Item has been add to cart." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [addCartAlert show];
+        NSMutableArray *cartArray = [current[@"Cart"] mutableCopy];
+        BOOL duplicateItem = false;
+        if ([cartArray count] != 0) {
+            for (int i = 0; i < [cartArray count]; i++) {
+                NSMutableDictionary *object = [[cartArray objectAtIndex:i] mutableCopy];
+                PFObject *item = [[object objectForKey:@"Item"] fetchIfNeeded];
+                if([item[@"Name"] isEqualToString:itemObj[@"Name"]]){
+                    duplicateItem = true;
+                    int quantity = [[object objectForKey:@"Quantity"] intValue];
+                    quantity++;
+                    [object setObject:[NSString stringWithFormat:@"%d", quantity] forKey:@"Quantity"];
+                    [cartArray setObject:object atIndexedSubscript:i];
+                    current[@"Cart"] = cartArray;
+                    [current saveInBackground];
+                }
+            }
+            if(duplicateItem == false){
+                NSMutableDictionary *object = [[NSMutableDictionary alloc] init];
+                [object setObject:itemObj forKey:@"Item"];
+                [object setObject:@"1" forKey:@"Quantity"];
+                [cartArray addObject:object];
+                current[@"Cart"] = cartArray;
+                [current saveInBackground];
+            }
+        }else{
+            cartArray = [[NSMutableArray alloc] init];
+            NSMutableDictionary *object = [[NSMutableDictionary alloc] init];
+            [object setObject:itemObj forKey:@"Item"];
+            [object setObject:@"1" forKey:@"Quantity"];
+            [cartArray addObject:object];
+            current[@"Cart"] = cartArray;
+            [current saveInBackground];
+        }
     }else if(button.tag == 1){
         StoreViewController *storeView = [self.storyboard instantiateViewControllerWithIdentifier:@"StoreView"];
         [storeView setStoreObj:storeObj];

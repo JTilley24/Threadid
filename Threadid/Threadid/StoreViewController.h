@@ -12,6 +12,7 @@
 @interface StoreViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 {
     IBOutlet UICollectionView *itemsCollections;
+    PFUser *current;
     NSArray *fontArray;
     NSArray *colorArray;
     NSArray *itemsArray;
@@ -20,6 +21,7 @@
     IBOutlet UIBarButtonItem *favButton;
     int fontSize;
     BOOL fav;
+    NSMutableArray *favsArray;
 }
 @property (nonatomic, strong) PFObject *storeObj;
 

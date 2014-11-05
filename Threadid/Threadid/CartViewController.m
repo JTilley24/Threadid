@@ -28,17 +28,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    //Set Static Data and Images
-    itemImgArray = @[@"bettys.jpg", @"charms.jpg", @"knighty.jpg"];
-    itemNameArray = @[@"Pink Knitted Handbag", @"Tuquiose Woven Charm Braclet", @"Knitted Baby Booties"];
-    itemPriceArray = @[@"$44.99", @"$9.99", @"$14.99"];
-    itemStoreArray = @[@"Betty's Bags", @"Chelsea's Charms", @"Knitted Knighty"];
-    totalNum = 74.52;
-    taxNum = 4.55;
-    totalLabel.text = [NSString stringWithFormat:@"$%.02f", totalNum];
-    subLabel.text = [NSString stringWithFormat:@"$%.02f", taxNum];
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -50,6 +39,76 @@
      [NSDictionary dictionaryWithObjectsAndKeys:
       [UIFont fontWithName:@"Helvetica" size:21],
       NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
+    
+    
+    current = [PFUser currentUser];
+    cartArray = current[@"Cart"];
+    
+    [cartTable reloadData];
+    [self getPriceData];
+}
+
+
+-(void)getPriceData
+{
+    totalNum = 0;
+    for (int i = 0; i < [cartArray count]; i++) {
+        NSDictionary *object = [cartArray objectAtIndex:i];
+        PFObject *item = [[object objectForKey:@"Item"] fetchIfNeeded];
+        float price = [item[@"Price"] floatValue];
+        float quantity = [[object objectForKey:@"Quantity"] floatValue];
+        float endPrice = price * quantity;
+        totalNum = totalNum + endPrice;
+    }
+    taxNum = totalNum * 0.065f;
+    [subLabel setText:[NSString stringWithFormat:@"%.02f", taxNum]];
+    [totalLabel setText:[NSString stringWithFormat:@"%.02f", totalNum + taxNum]];
+}
+
+-(void)saveCheckoutData
+{
+    salesArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [cartArray count]; i++) {
+        NSDictionary *object = [cartArray objectAtIndex:i];
+        PFObject *item = [[object objectForKey:@"Item"] fetchIfNeeded];
+        PFObject *store = [item[@"Store"] fetchIfNeeded];
+        BOOL newStore = true;
+        for (int j = 0; j < [salesArray count]; j++) {
+            PFObject *tempStore = [salesArray objectAtIndex:j];
+            if([tempStore[@"Name"] isEqualToString:store[@"Name"]])
+            {
+                storeObj = tempStore;
+                newStore = false;
+            }
+        }
+        if(newStore){
+            storeObj = store;
+        }
+        NSMutableArray *historyArray = storeObj[@"History"];
+        if([historyArray count] == 0 || historyArray == nil){
+            historyArray = [[NSMutableArray alloc] init];
+        }
+        NSMutableDictionary *sale = [[NSMutableDictionary alloc] init];
+        [sale setObject:item forKey:@"Item"];
+        [sale setObject:current forKey:@"User"];
+        NSDate *date = [[NSDate alloc] init];
+        [sale setObject:date forKey:@"Date"];
+        float price = [item[@"Price"] floatValue];
+        float quantity = [[object objectForKey:@"Quantity"] floatValue];
+        float endPrice = price * quantity;
+        float tax = endPrice * 0.065f;
+        NSString *totalString = [NSString stringWithFormat:@"%.02f", endPrice + tax];
+        [sale setObject:totalString forKey:@"Total"];
+        [historyArray addObject:sale];
+        storeObj[@"History"] = historyArray;
+        [salesArray addObject:storeObj];
+    }
+    [PFObject saveAll:salesArray];
+    [cartArray removeAllObjects];
+    current[@"Cart"] = cartArray;
+    [current saveInBackground];
+    [cartTable reloadData];
+    [self getPriceData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,18 +120,25 @@
 //Number of rows in Table
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [itemNameArray count];
+    return [cartArray count];
 }
 
 //Add items data to Table's cell
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CartCell *cell = [cartTable dequeueReusableCellWithIdentifier:@"CartCell"];
-    cell.itemImg.image = [UIImage imageNamed:[itemImgArray objectAtIndex:indexPath.row]];
-    cell.itemNameLabel.text = [itemNameArray objectAtIndex:indexPath.row];
-    cell.itemPriceLabel.text = [itemPriceArray objectAtIndex:indexPath.row];
-    cell.itemQuantityLabel.text = @"1";
-    cell.storeLabel.text = [itemStoreArray objectAtIndex:indexPath.row];
+    NSDictionary *object = [cartArray objectAtIndex:indexPath.row];
+    PFObject *item = [[object objectForKey:@"Item"] fetchIfNeeded];
+    PFObject *store = [item[@"Store"] fetchIfNeeded];
+    PFFile *imageFile = [item[@"Photos"] objectAtIndex:0];
+    NSData *imageData = [imageFile getData];
+    UIImage *image = [UIImage imageWithData:imageData];
+    cell.itemImg.image = image;
+    cell.itemNameLabel.text = item[@"Name"];
+    cell.itemPriceLabel.text = item[@"Price"];
+    cell.itemQuantityLabel.text = [object objectForKey:@"Quantity"];
+    cell.storeLabel.text = store[@"Name"];
+    
     return cell;
 }
 
@@ -81,6 +147,7 @@
 {
     UIAlertView *cartAlert = [[UIAlertView alloc] initWithTitle:@"Delete" message:@"Are You Sure?" delegate:self cancelButtonTitle:nil otherButtonTitles:@"YES", @"NO", nil];
     [cartAlert show];
+    selectedIndex = indexPath.row;
 }
 
 //Checkout Alert for cart
@@ -88,21 +155,25 @@
 {
     UIAlertView *checkoutAlert = [[UIAlertView alloc] initWithTitle:@"Checkout" message:@"Checkout feature will be handled with third-party payment system. \n i.e PayPal" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [checkoutAlert show];
+    
+    [self saveCheckoutData];
 }
 
 //Button click for Alert
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
-    //If No Button is Selected
-    if([title isEqualToString:@"No"])
-    {
-       
-    }
     //If Yes Button is Selected
-    else if ([title isEqualToString:@"Yes"])
+    if ([title isEqualToString:@"YES"])
     {
-        
+        [cartArray removeObjectAtIndex:selectedIndex];
+        current[@"Cart"] = cartArray;
+        [current saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if(succeeded){
+                [cartTable reloadData];
+                [self getPriceData];
+            }
+        }];
     }
 }
 

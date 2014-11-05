@@ -8,6 +8,7 @@
 
 #import "FavoritesViewController.h"
 #import "FavsCell.h"
+#import "StoreViewController.h"
 
 @interface FavoritesViewController ()
 
@@ -28,9 +29,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    //Set Static Data and Images
-    storeNameArray = @[@"Betty's Bags", @"Chelsea's Charms", @"Knitted Knighty"];
-    storeImgArray = @[@"bettys.jpg", @"charms.jpg", @"knighty.jpg"];
+    
+    colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
     
     //Add Long Press to Collection
     UILongPressGestureRecognizer *favPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(deleteFavPress:)];
@@ -49,6 +49,11 @@
      [NSDictionary dictionaryWithObjectsAndKeys:
       [UIFont fontWithName:@"Helvetica" size:21],
       NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
+    
+    current = [PFUser currentUser];
+    
+    favsArray = current[@"Favorites"];
+    [favsCollection reloadData];
 }
 
 
@@ -63,7 +68,7 @@
     numberOfItemsInSection:(NSInteger)section
 {
     
-    return [storeNameArray count];
+    return [favsArray count];
 }
 
 //Add store name and image to Collection
@@ -72,8 +77,17 @@
 {
     FavsCell *cell = [favsCollection dequeueReusableCellWithReuseIdentifier:@"FavsCell" forIndexPath:indexPath];
     
-    cell.storeImageView.image = [UIImage imageNamed:[storeImgArray objectAtIndex:indexPath.row]];
-    cell.storeNameLabel.text = [storeNameArray objectAtIndex:indexPath.row];
+    PFObject *object = [[favsArray objectAtIndex:indexPath.row] fetchIfNeeded];
+    NSArray *itemArray = object[@"Items"];
+    PFObject *itemObj = [[itemArray objectAtIndex:0] fetchIfNeeded];
+    PFFile *imageFile = [itemObj[@"Photos"] objectAtIndex:0];
+    NSData *imageData = [imageFile getData];
+    UIImage *image = [UIImage imageWithData:imageData];
+    cell.storeImageView.image = image;
+    cell.storeNameLabel.text = object[@"Name"];
+    cell.storeNameLabel.backgroundColor = [colorArray objectAtIndex:[object[@"BGColor"] intValue]];
+    cell.storeNameLabel.textColor = [colorArray objectAtIndex:[object[@"FontColor"] intValue]];
+    cell.storeNameLabel.font = [UIFont fontWithName:object[@"Font"] size:15.0f];
     
     return cell;
 }
@@ -81,7 +95,9 @@
 //Navigate to Store View
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"FavStoreSegue" sender:self];
+    StoreViewController *storeView = [self.storyboard instantiateViewControllerWithIdentifier:@"StoreView"];
+    [storeView setStoreObj:[favsArray objectAtIndex:indexPath.row]];
+    [self.navigationController pushViewController:storeView animated:YES];
 }
 
 //Long press to Delete selected item
@@ -96,6 +112,7 @@
     if(index == nil){
         
     }else{
+        selectedObj = [favsArray objectAtIndex:index.row];
         UIAlertView *favAlert = [[UIAlertView alloc] initWithTitle:@"Delete" message:@"Are You Sure?" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Yes", @"No", nil];
         [favAlert show];
     }
@@ -105,15 +122,25 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
-    //If No Button is Selected
-    if([title isEqualToString:@"No"])
-    {
-        
-    }
     //If Yes Button is Selected
-    else if ([title isEqualToString:@"Yes"])
+    if ([title isEqualToString:@"Yes"])
     {
-        
+        favsArray = current[@"Favorites"];
+        if([favsArray count] != 0){
+            for (int i = 0; i < [favsArray count]; i++) {
+                PFObject *favObject = [[favsArray objectAtIndex:i] fetchIfNeeded];
+                if([favObject[@"Name"] isEqualToString:selectedObj[@"Name"]]){
+                    [favsArray removeObjectAtIndex:i];
+                    current[@"Favorites"] = favsArray;
+                    [current saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if(succeeded){
+                            [favsCollection reloadData];
+                        }
+                    }];
+                    
+                }
+            }
+        }
     }
 }
 

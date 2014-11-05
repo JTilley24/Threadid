@@ -613,6 +613,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="4FI-CU-2jV">
                         <barButtonItem key="rightBarButtonItem" image="star-icon.png" id="eWr-E3-Vrp">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="onClick:" destination="jNN-79-46w" id="34p-Hk-ePk"/>
                             </connections>
@@ -1264,7 +1265,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CartCell" rowHeight="100" id="Jlo-xi-kzp" customClass="CartCell">
-                                        <rect key="frame" x="0.0" y="86" width="768" height="100"/>
+                                        <rect key="frame" x="0.0" y="22" width="768" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jlo-xi-kzp" id="HAl-en-BoP">
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="99"/>
@@ -1753,10 +1754,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="4vi-1P-kCn"/>
         <segue reference="bMB-DW-It7"/>
-        <segue reference="3Ue-CT-bqE"/>
+        <segue reference="4vi-1P-kCn"/>
         <segue reference="4CU-DU-OXM"/>
+        <segue reference="2NW-O8-d1d"/>
         <segue reference="LJV-Df-MOT"/>
     </inferredMetricsTieBreakers>
 </document>

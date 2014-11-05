@@ -7,18 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface CartViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 {
     IBOutlet UITableView *cartTable;
     IBOutlet UILabel *subLabel;
     IBOutlet UILabel *totalLabel;
-    NSArray *itemImgArray;
-    NSArray *itemNameArray;
-    NSArray *itemPriceArray;
-    NSArray *itemStoreArray;
+    NSMutableArray *cartArray;
+    PFUser *current;
     float taxNum;
     float totalNum;
+    int selectedIndex;
+    PFObject *storeObj;
+    NSMutableArray *salesArray;
 }
 
 -(IBAction)onClick:(id)sender;

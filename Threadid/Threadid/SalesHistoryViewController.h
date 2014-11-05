@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface SalesHistoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 {
     IBOutlet UITableView *historyTable;
-    NSArray *usersArray;
-    NSArray *itemsArray;
-    NSArray *dateArray;
-    NSArray *totalArray;
+    NSArray *historyArray;
+    PFUser *current;
+    PFObject *storeObj;
 }
 
 @end

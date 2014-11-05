@@ -29,12 +29,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    //Set Static Data
-    usersArray = @[@"Knitter5", @"SuperMom12"];
-    itemsArray = @[@"Pink Knitted Handbag", @"Knitted Baby Booties"];
-    dateArray = @[@"Oct 12, 2014", @"Oct 15, 2014"];
-    totalArray = @[@"$47.91", @"$15.96"];
     self.title = @"Sales History";
+    current = [PFUser currentUser];
+    storeObj = [current[@"Store"] fetchIfNeeded];
+    historyArray = storeObj[@"History"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,17 +44,29 @@
 //Number of rows for Table
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [usersArray count];
+    return [historyArray count];
 }
 
 //Add username, item, date and total to Table
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     HistoryCell *cell = [historyTable dequeueReusableCellWithIdentifier:@"HistoryCell"];
-    cell.userNameLabel.text = [usersArray objectAtIndex:indexPath.row];
-    cell.itemLabel.text = [itemsArray objectAtIndex:indexPath.row];
-    cell.dateLabel.text = [dateArray objectAtIndex:indexPath.row];
-    cell.totalLabel.text = [totalArray objectAtIndex:indexPath.row];
+    NSDictionary *sale = [historyArray objectAtIndex:indexPath.row];
+    PFObject *item = [[sale objectForKey:@"Item"] fetchIfNeeded];
+    PFObject *user = [[sale objectForKey:@"User"] fetchIfNeeded];
+    NSDate *date = [sale objectForKey:@"Date"];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    if(dateFormat != nil)
+    {
+        [dateFormat setDateStyle:NSDateFormatterMediumStyle];
+    }
+    NSString *dateText = [dateFormat stringFromDate:date];
+    NSString *newDate = [[NSString alloc] initWithFormat:@"%@", dateText];
+    
+    cell.userNameLabel.text = user[@"username"];
+    cell.itemLabel.text = item[@"Name"];
+    cell.dateLabel.text = newDate;
+    cell.totalLabel.text = [sale objectForKey:@"Total"];
     
     return cell;
 }

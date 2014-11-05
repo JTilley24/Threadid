@@ -50,6 +50,7 @@
      [NSDictionary dictionaryWithObjectsAndKeys:
       [UIFont fontWithName:@"Helvetica" size:21],
       NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
 - (void)didReceiveMemoryWarning

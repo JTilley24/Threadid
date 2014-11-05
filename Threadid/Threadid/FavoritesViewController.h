@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <Parse/Parse.h>
 @interface FavoritesViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate, UIGestureRecognizerDelegate>
 {
     IBOutlet UICollectionView *favsCollection;
+    NSMutableArray *favsArray;
+    PFUser *current;
+    NSArray *colorArray;
+    PFObject *selectedObj;
     NSArray *storeNameArray;
     NSArray *storeImgArray;
 }

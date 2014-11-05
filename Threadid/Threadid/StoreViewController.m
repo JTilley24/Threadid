@@ -52,6 +52,20 @@
     fontColor = [colorArray objectAtIndex:[storeObj[@"FontColor"] intValue]];
     bgColor = [colorArray objectAtIndex:[storeObj[@"BGColor"] intValue]];
     
+    current = [PFUser currentUser];
+    
+    favsArray = current[@"Favorites"];
+    if([favsArray count] != 0){
+        for (int i = 0; i < [favsArray count]; i++) {
+            PFObject *favObject = [[favsArray objectAtIndex:i] fetchIfNeeded];
+            if([favObject[@"Name"] isEqualToString:storeObj[@"Name"]]){
+                fav = true;
+                favButton.image = [UIImage imageNamed:@"starred-icon.png"];
+            }
+        }
+    }else{
+        favsArray = [[NSMutableArray alloc] init];
+    }
     //Set Navigation Bar attributes
     self.title = storeObj[@"Name"];
     [self.navigationController.navigationBar setTitleTextAttributes:
@@ -112,9 +126,23 @@
     if(fav == false){
         favButton.image = [UIImage imageNamed:@"starred-icon.png"];
         fav = true;
+        [favsArray addObject:storeObj];
+        current[@"Favorites"] = favsArray;
+        [current saveInBackground];
     }else{
         favButton.image = [UIImage imageNamed:@"star-icon.png"];
         fav = false;
+        favsArray = current[@"Favorites"];
+        if([favsArray count] != 0){
+            for (int i = 0; i < [favsArray count]; i++) {
+                PFObject *favObject = [[favsArray objectAtIndex:i] fetchIfNeeded];
+                if([favObject[@"Name"] isEqualToString:storeObj[@"Name"]]){
+                    [favsArray removeObjectAtIndex:i];
+                    current[@"Favorites"] = favsArray;
+                    [current saveInBackground];
+                }
+            }
+        }
     }
 }
 /*
