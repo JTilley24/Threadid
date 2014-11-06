@@ -48,14 +48,13 @@
     [self getPriceData];
 }
 
-
+//Calculate Price Data
 -(void)getPriceData
 {
     totalNum = 0;
     for (int i = 0; i < [cartArray count]; i++) {
         NSDictionary *object = [cartArray objectAtIndex:i];
-        PFObject *item = [[object objectForKey:@"Item"] fetchIfNeeded];
-        float price = [item[@"Price"] floatValue];
+        float price = [[object objectForKey:@"Price"] floatValue];
         float quantity = [[object objectForKey:@"Quantity"] floatValue];
         float endPrice = price * quantity;
         totalNum = totalNum + endPrice;
@@ -65,6 +64,7 @@
     [totalLabel setText:[NSString stringWithFormat:@"%.02f", totalNum + taxNum]];
 }
 
+//Save Checkout Data to Store's Sales History
 -(void)saveCheckoutData
 {
     salesArray = [[NSMutableArray alloc] init];
@@ -93,7 +93,7 @@
         [sale setObject:current forKey:@"User"];
         NSDate *date = [[NSDate alloc] init];
         [sale setObject:date forKey:@"Date"];
-        float price = [item[@"Price"] floatValue];
+        float price = [[object objectForKey:@"Price"]floatValue];
         float quantity = [[object objectForKey:@"Quantity"] floatValue];
         float endPrice = price * quantity;
         float tax = endPrice * 0.065f;
@@ -135,7 +135,7 @@
     UIImage *image = [UIImage imageWithData:imageData];
     cell.itemImg.image = image;
     cell.itemNameLabel.text = item[@"Name"];
-    cell.itemPriceLabel.text = item[@"Price"];
+    cell.itemPriceLabel.text = [object objectForKey:@"Price"];
     cell.itemQuantityLabel.text = [object objectForKey:@"Quantity"];
     cell.storeLabel.text = store[@"Name"];
     
@@ -147,7 +147,7 @@
 {
     UIAlertView *cartAlert = [[UIAlertView alloc] initWithTitle:@"Delete" message:@"Are You Sure?" delegate:self cancelButtonTitle:nil otherButtonTitles:@"YES", @"NO", nil];
     [cartAlert show];
-    selectedIndex = indexPath.row;
+    selectedIndex = (int)indexPath.row;
 }
 
 //Checkout Alert for cart

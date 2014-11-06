@@ -10,7 +10,7 @@
 #import "iCarousel.h"
 #import <Parse/Parse.h>
 
-@interface ListViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, iCarouselDataSource, iCarouselDelegate>
+@interface ListViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, iCarouselDataSource, iCarouselDelegate, UISearchBarDelegate>
 {
     NSArray *itemsArray;
     NSArray *fontArray;
@@ -19,6 +19,8 @@
     IBOutlet UICollectionView *itemsCollection;
     IBOutlet iCarousel *itemCaro;
     IBOutlet UISearchBar *itemSearch;
+    BOOL searchMode;
+    NSMutableArray *searchedArray;
 }
 @property (nonatomic, strong)NSString *catString;
 

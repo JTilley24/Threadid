@@ -420,12 +420,15 @@
                                 <rect key="frame" x="0.0" y="424" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="RlS-P0-DmD" id="N5J-An-XWo"/>
+                                </connections>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="gIE-ch-QcU">
-                        <barButtonItem key="rightBarButtonItem" image="search-icon.png" id="aET-gV-vWo">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="aET-gV-vWo">
                             <connections>
                                 <action selector="onClick:" destination="RlS-P0-DmD" id="r89-fY-AON"/>
                             </connections>
@@ -481,13 +484,13 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="d48-1R-qgu">
                                     <size key="itemSize" width="200" height="200"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="headerReferenceSize" width="50" height="44"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="StoresCell" id="bQ0-uB-LNZ" customClass="StoresViewCell">
-                                        <rect key="frame" x="20" y="0.0" width="200" height="200"/>
+                                        <rect key="frame" x="20" y="44" width="200" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
@@ -514,6 +517,10 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="StoresHeader" id="wUk-Rl-XFA">
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="62a-0I-hoc" id="UcE-UX-nWu"/>
                                     <outlet property="delegate" destination="62a-0I-hoc" id="Hqk-8l-Bqo"/>
@@ -523,12 +530,15 @@
                                 <rect key="frame" x="0.0" y="65" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="62a-0I-hoc" id="z4J-3i-IBu"/>
+                                </connections>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="9HR-gL-fiV">
-                        <barButtonItem key="rightBarButtonItem" image="search-icon.png" id="9eb-bz-hD2">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="9eb-bz-hD2">
                             <connections>
                                 <action selector="onClick:" destination="62a-0I-hoc" id="GIF-kY-wPy"/>
                             </connections>
@@ -557,18 +567,18 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Hqt-FK-VJg">
-                                <rect key="frame" x="0.0" y="66" width="768" height="904"/>
+                                <rect key="frame" x="0.0" y="64" width="768" height="916"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="A2I-j5-wx8">
                                     <size key="itemSize" width="225" height="250"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="headerReferenceSize" width="50" height="44"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="StoreCollectionCell" id="6nh-A0-5fK" customClass="StoreCollectionCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="225" height="250"/>
+                                        <rect key="frame" x="0.0" y="44" width="225" height="250"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="225" height="250"/>
@@ -603,24 +613,39 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ItemsHeader" id="CCt-dn-ynk">
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="jNN-79-46w" id="n49-PM-OTU"/>
                                     <outlet property="delegate" destination="jNN-79-46w" id="WK7-oh-rTD"/>
                                 </connections>
                             </collectionView>
+                            <searchBar hidden="YES" contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eIy-Yo-Tso">
+                                <rect key="frame" x="0.0" y="64" width="768" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="jNN-79-46w" id="JTN-L5-l66"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="4FI-CU-2jV">
-                        <barButtonItem key="rightBarButtonItem" image="star-icon.png" id="eWr-E3-Vrp">
+                        <barButtonItem key="rightBarButtonItem" tag="1" image="star-icon.png" id="eWr-E3-Vrp">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="onClick:" destination="jNN-79-46w" id="34p-Hk-ePk"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="favButton" destination="eWr-E3-Vrp" id="sh8-3F-tfV"/>
+                        <outlet property="itemSearch" destination="eIy-Yo-Tso" id="5nk-qt-PcM"/>
                         <outlet property="itemsCollections" destination="Hqt-FK-VJg" id="bSZ-Br-jgh"/>
                         <segue destination="dpo-Kg-3zG" kind="push" identifier="StoreSelectSegue" id="2NW-O8-d1d"/>
                     </connections>
@@ -1265,7 +1290,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CartCell" rowHeight="100" id="Jlo-xi-kzp" customClass="CartCell">
-                                        <rect key="frame" x="0.0" y="22" width="768" height="100"/>
+                                        <rect key="frame" x="0.0" y="86" width="768" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jlo-xi-kzp" id="HAl-en-BoP">
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="99"/>
@@ -1451,26 +1476,26 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JvH-jQ-2fa">
-                                <rect key="frame" x="20" y="106" width="200" height="120"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JvH-jQ-2fa">
+                                <rect key="frame" x="64" y="125" width="170" height="95"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.93516820789999999" green="0.46953499040000002" blue="0.48281651310000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Sales History">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="titleEdgeInsets" minX="-55" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="51" minY="0.0" maxX="0.0" maxY="24"/>
+                                <state key="normal" title="Sales History" image="history.png">
+                                    <color key="titleColor" red="0.0" green="0.58622262773722633" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="onClick:" destination="zAn-4o-jtC" eventType="touchUpInside" id="KYy-73-7Uw"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BgP-BH-hSW">
-                                <rect key="frame" x="548" y="106" width="200" height="120"/>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BgP-BH-hSW">
+                                <rect key="frame" x="539" y="125" width="170" height="95"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.93516820789999999" green="0.46953499040000002" blue="0.48281651310000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Sales &amp; Discount">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="titleEdgeInsets" minX="-55" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="55" minY="0.0" maxX="0.0" maxY="25"/>
+                                <state key="normal" title="Sales &amp; Discount" image="sales.png">
+                                    <color key="titleColor" red="0.0" green="0.5862226277" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1742,8 +1767,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="camera-icon.png" width="32" height="32"/>
         <image name="cart-icon.png" width="32" height="32"/>
         <image name="check-icon.png" width="32" height="32"/>
+        <image name="history.png" width="64" height="64"/>
         <image name="home-icon.png" width="32" height="32"/>
-        <image name="search-icon.png" width="32" height="32"/>
+        <image name="sales.png" width="64" height="64"/>
         <image name="star-icon.png" width="32" height="32"/>
         <image name="store-icon.png" width="32" height="32"/>
         <image name="threadid-login.png" width="633" height="305"/>
@@ -1755,9 +1781,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="bMB-DW-It7"/>
+        <segue reference="3Ue-CT-bqE"/>
         <segue reference="4vi-1P-kCn"/>
-        <segue reference="4CU-DU-OXM"/>
-        <segue reference="2NW-O8-d1d"/>
         <segue reference="LJV-Df-MOT"/>
+        <segue reference="DPB-LW-DhI"/>
     </inferredMetricsTieBreakers>
 </document>

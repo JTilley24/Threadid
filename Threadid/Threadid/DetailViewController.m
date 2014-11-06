@@ -30,7 +30,7 @@
     // Do any additional setup after loading the view.
     
     //Set Fonts and Colors
-    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana Bold"];
+    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
     colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -135,6 +135,12 @@
                     int quantity = [[object objectForKey:@"Quantity"] intValue];
                     quantity++;
                     [object setObject:[NSString stringWithFormat:@"%d", quantity] forKey:@"Quantity"];
+                    if(item[@"Sale"] != nil){
+                        PFObject *saleObject = [item[@"Sale"] fetchIfNeeded];
+                        [object setObject:saleObject[@"Price"] forKey:@"Price"];
+                    }else{
+                        [object setObject:item[@"Price"] forKey:@"Price"];
+                    }
                     [cartArray setObject:object atIndexedSubscript:i];
                     current[@"Cart"] = cartArray;
                     [current saveInBackground];
@@ -143,7 +149,17 @@
             if(duplicateItem == false){
                 NSMutableDictionary *object = [[NSMutableDictionary alloc] init];
                 [object setObject:itemObj forKey:@"Item"];
-                [object setObject:@"1" forKey:@"Quantity"];
+                int quantity = 1;
+                if(itemObj[@"Sale"] != nil){
+                    PFObject *saleObject = [itemObj[@"Sale"] fetchIfNeeded];
+                    [object setObject:saleObject[@"Price"] forKey:@"Price"];
+                    if([saleObject[@"Type"] isEqualToString:@"2"]){
+                        quantity++;
+                    }
+                }else{
+                    [object setObject:itemObj[@"Price"] forKey:@"Price"];
+                }
+                [object setObject:[NSString stringWithFormat:@"%d", quantity] forKey:@"Quantity"];
                 [cartArray addObject:object];
                 current[@"Cart"] = cartArray;
                 [current saveInBackground];
@@ -152,7 +168,17 @@
             cartArray = [[NSMutableArray alloc] init];
             NSMutableDictionary *object = [[NSMutableDictionary alloc] init];
             [object setObject:itemObj forKey:@"Item"];
-            [object setObject:@"1" forKey:@"Quantity"];
+            int quantity = 1;
+            if(itemObj[@"Sale"] != nil){
+                PFObject *saleObject = [itemObj[@"Sale"] fetchIfNeeded];
+                [object setObject:saleObject[@"Price"] forKey:@"Price"];
+                if([saleObject[@"Type"] isEqualToString:@"2"]){
+                    quantity++;
+                }
+            }else{
+                [object setObject:itemObj[@"Price"] forKey:@"Price"];
+            }
+            [object setObject:[NSString stringWithFormat:@"%d", quantity] forKey:@"Quantity"];
             [cartArray addObject:object];
             current[@"Cart"] = cartArray;
             [current saveInBackground];

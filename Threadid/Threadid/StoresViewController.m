@@ -31,9 +31,9 @@
     // Do any additional setup after loading the view.
     //Set Navigation Bar attributes
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
+    searchMode = NO;
     //Set Fonts and Colors
-    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana Bold"];
+    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
     colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
 }
 
@@ -51,6 +51,10 @@
                 }
             }
             [storesCollection reloadData];
+            //Check if Current Search
+            if(searchMode){
+                [self searchStores];
+            }
         }
     }];
     
@@ -64,6 +68,30 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
+//Search for keyword with Items of Stores
+-(void)searchStores
+{
+    NSString *searchString = storeSearch.text;
+    searchedArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [storesArray count]; i++) {
+        PFObject *tempStore = [[storesArray objectAtIndex:i] fetchIfNeeded];
+        NSArray *tempArray = tempStore[@"Items"];
+        for (int j = 0; j < [tempArray count]; j++) {
+            PFObject *tempItem = [[tempArray objectAtIndex:j] fetchIfNeeded];
+            NSString *nameString = tempItem[@"Name"];
+            NSString *descriptString = tempItem[@"Description"];
+            NSString *catString = tempItem[@"Category"];
+            NSUInteger nameLoc = [nameString rangeOfString:searchString options:NSCaseInsensitiveSearch].location;
+            NSUInteger descriptLoc = [descriptString rangeOfString:searchString options:NSCaseInsensitiveSearch].location;
+            NSUInteger catLoc = [catString rangeOfString:searchString options:NSCaseInsensitiveSearch].location;
+            if(nameLoc != NSNotFound || descriptLoc != NSNotFound || catLoc != NSNotFound){
+                [searchedArray addObject:tempStore];
+                break;
+            }
+        }
+    }
+    [storesCollection reloadData];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -71,12 +99,33 @@
     // Dispose of any resources that can be recreated.
 }
 
+//Trigger search function
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    searchMode = YES;
+    [self searchStores];
+    [storeSearch resignFirstResponder];
+}
+
+//Reload with all data if searchbar is cleared
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if([searchText length] == 0)
+    {
+        searchMode = NO;
+        [storesCollection reloadData];
+    }
+}
+
 //Number of items in Collection
 -(NSInteger)collectionView:(UICollectionView *)collectionView
     numberOfItemsInSection:(NSInteger)section
 {
-    
-    return [storesArray count];
+    NSArray *collectionArray = storesArray;
+    if(searchMode){
+        collectionArray = searchedArray;
+    }
+    return [collectionArray count];
 }
 
 //Add image and name for each store to Collection
@@ -84,7 +133,11 @@
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     StoresViewCell *cell = [storesCollection dequeueReusableCellWithReuseIdentifier:@"StoresCell" forIndexPath:indexPath];
-    PFObject *object = [storesArray objectAtIndex:indexPath.row];
+    NSArray *collectionArray = storesArray;
+    if(searchMode){
+        collectionArray = searchedArray;
+    }
+    PFObject *object = [collectionArray objectAtIndex:indexPath.row];
     NSArray *itemArray = object[@"Items"];
     PFObject *itemObj = [[itemArray objectAtIndex:0] fetchIfNeeded];
     PFFile *imageFile = [itemObj[@"Photos"] objectAtIndex:0];
@@ -94,7 +147,14 @@
     cell.storeNameLabel.text = object[@"Name"];
     cell.storeNameLabel.backgroundColor = [colorArray objectAtIndex:[object[@"BGColor"] intValue]];
     cell.storeNameLabel.textColor = [colorArray objectAtIndex:[object[@"FontColor"] intValue]];
-    cell.storeNameLabel.font = [UIFont fontWithName:object[@"Font"] size:15.0f];
+    float fontsize;
+    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
+    {
+        fontsize = 12.0f;
+    }else{
+        fontsize = 15.0f;
+    }
+    cell.storeNameLabel.font = [UIFont fontWithName:object[@"Font"] size:fontsize];
     return cell;
 }
 
@@ -102,7 +162,12 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     StoreViewController *storeView = [self.storyboard instantiateViewControllerWithIdentifier:@"StoreView"];
-    [storeView setStoreObj:[storesArray objectAtIndex:indexPath.row]];
+    NSArray *collectionArray = storesArray;
+    if(searchMode){
+        collectionArray = searchedArray;
+        [storeView setSearchedString:storeSearch.text];
+    }
+    [storeView setStoreObj:[collectionArray objectAtIndex:indexPath.row]];
     [self.navigationController pushViewController:storeView animated:YES];
 }
 
@@ -111,8 +176,12 @@
 {
     if(storeSearch.hidden == YES){
         storeSearch.hidden = NO;
+        searchMode = YES;
     }else{
         storeSearch.hidden = YES;
+        searchMode = NO;
+        [storesCollection reloadData];
+        [storeSearch resignFirstResponder];
     }
 }
 

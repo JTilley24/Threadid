@@ -87,7 +87,15 @@
     cell.storeNameLabel.text = object[@"Name"];
     cell.storeNameLabel.backgroundColor = [colorArray objectAtIndex:[object[@"BGColor"] intValue]];
     cell.storeNameLabel.textColor = [colorArray objectAtIndex:[object[@"FontColor"] intValue]];
-    cell.storeNameLabel.font = [UIFont fontWithName:object[@"Font"] size:15.0f];
+    float fontsize;
+    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
+    {
+        fontsize = 12.0f;
+    }else{
+        fontsize = 15.0f;
+    }
+
+    cell.storeNameLabel.font = [UIFont fontWithName:object[@"Font"] size:fontsize];
     
     return cell;
 }
@@ -137,7 +145,6 @@
                             [favsCollection reloadData];
                         }
                     }];
-                    
                 }
             }
         }

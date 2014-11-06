@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface StoreViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface StoreViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate>
 {
     IBOutlet UICollectionView *itemsCollections;
     PFUser *current;
@@ -19,11 +19,16 @@
     UIColor *fontColor;
     UIColor *bgColor;
     IBOutlet UIBarButtonItem *favButton;
+    UIBarButtonItem *searchButton;
+    IBOutlet UISearchBar *itemSearch;
     int fontSize;
     BOOL fav;
     NSMutableArray *favsArray;
+    BOOL searchMode;
+    NSMutableArray *searchedArray;
 }
 @property (nonatomic, strong) PFObject *storeObj;
+@property (nonatomic, strong) NSString *searchedString;
 
 -(IBAction)onClick:(id)sender;
 

@@ -31,9 +31,10 @@
     // Do any additional setup after loading the view.
    
     //Set Fonts and Colors
-    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana Bold"];
+    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
     colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
-
+    searchMode = NO;
+    
     //Change font size by iPhone or iPad
     if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
     {
@@ -46,6 +47,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
     //Get Items in Category
     PFQuery *query = [PFQuery queryWithClassName:@"Item"];
     [query whereKey:@"Category" equalTo:catString];
@@ -68,6 +70,7 @@
      [NSDictionary dictionaryWithObjectsAndKeys:
       [UIFont fontWithName:@"Helvetica" size:21],
       NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
+   
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -81,12 +84,36 @@
     // Dispose of any resources that can be recreated.
 }
 
+//Search keyword of Items
+-(void)searchItems
+{
+    NSString *searchString = itemSearch.text;
+    searchedArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [itemsArray count]; i++) {
+        PFObject *tempItem = [[itemsArray objectAtIndex:i] fetchIfNeeded];
+        NSString *nameString = tempItem[@"Name"];
+        NSString *descriptString = tempItem[@"Description"];
+        NSUInteger nameLoc = [nameString rangeOfString:searchString options:NSCaseInsensitiveSearch].location;
+        NSUInteger descriptLoc = [descriptString rangeOfString:searchString options:NSCaseInsensitiveSearch].location;
+        if(nameString )
+            if(nameLoc != NSNotFound || descriptLoc != NSNotFound){
+                [searchedArray addObject:tempItem];
+            }
+    }
+    [itemsCollection reloadData];
+    [itemCaro reloadData];
+}
+
 //Number of items in Collection
 -(NSInteger)collectionView:(UICollectionView *)collectionView
     numberOfItemsInSection:(NSInteger)section
 {
-    
-    return [itemsArray count];
+    NSArray *collectionArray = itemsArray;
+    if(searchMode){
+        collectionArray = searchedArray;
+    }
+    return [collectionArray count];
+
 }
 
 //Add image, name, and price for each item in Collection
@@ -94,7 +121,11 @@
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ListCollectionCell *cell = [itemsCollection dequeueReusableCellWithReuseIdentifier:@"ListCell" forIndexPath:indexPath];
-    PFObject *item = [[itemsArray objectAtIndex:indexPath.row] fetchIfNeeded];
+    NSArray *collectionArray = itemsArray;
+    if(searchMode){
+        collectionArray = searchedArray;
+    }
+    PFObject *item = [[collectionArray objectAtIndex:indexPath.row] fetchIfNeeded];
     PFObject *storeObj = [item[@"Store"] fetchIfNeeded];
     UIColor *fontColor = [colorArray objectAtIndex:[storeObj[@"FontColor"] intValue]];
     UIColor *bgColor = [colorArray objectAtIndex:[storeObj[@"BGColor"] intValue]];
@@ -119,14 +150,22 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
-    [detailView setItemObj:[itemsArray objectAtIndex:indexPath.row]];
+    NSArray *collectionArray = itemsArray;
+    if(searchMode){
+        collectionArray = searchedArray;
+    }
+    [detailView setItemObj:[collectionArray objectAtIndex:indexPath.row]];
     [self.navigationController pushViewController:detailView animated:YES];
 }
 
 //Number of items in Carousel
 -(NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
-    return [itemsArray count];
+    NSArray *collectionArray = itemsArray;
+    if(searchMode){
+        collectionArray = searchedArray;
+    }
+    return [collectionArray count];
 }
 
 //Add image, name, and price to each item in Carousel
@@ -168,8 +207,12 @@
         [priceLabel setFont:[UIFont systemFontOfSize:17]];
         [priceLabel setBackgroundColor:[UIColor whiteColor]];
     }
-    
-    PFObject *item = [[itemsArray objectAtIndex:index] fetchIfNeeded];
+    NSArray *collectionArray = itemsArray;
+    if(searchMode){
+        collectionArray = searchedArray;
+    }
+
+    PFObject *item = [[collectionArray objectAtIndex:index] fetchIfNeeded];
     PFFile *imageFile = [item[@"Photos"] objectAtIndex:0];
     NSData *imageData = [imageFile getData];
     UIImage *image = [UIImage imageWithData:imageData];
@@ -193,9 +236,32 @@
 	if (index == itemCaro.currentItemIndex)
 	{
         DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
-        [detailView setItemObj:[itemsArray objectAtIndex:index]];
+        NSArray *collectionArray = itemsArray;
+        if(searchMode){
+            collectionArray = searchedArray;
+        }
+        [detailView setItemObj:[collectionArray objectAtIndex:index]];
         [self.navigationController pushViewController:detailView animated:YES];
 	}
+}
+
+//Trigger search function
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    searchMode = YES;
+    [self searchItems];
+    [searchBar resignFirstResponder];
+}
+
+//Reload all data when searchbar is cleared
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if([searchText length] == 0)
+    {
+        searchMode = NO;
+        [itemsCollection reloadData];
+        [itemCaro reloadData];
+    }
 }
 
 //Toggle Search Bar
@@ -203,8 +269,13 @@
 {
     if(itemSearch.hidden == YES){
         itemSearch.hidden = NO;
+        searchMode = YES;
     }else{
         itemSearch.hidden = YES;
+        searchMode = NO;
+        [itemsCollection reloadData];
+        [itemCaro reloadData];
+        [itemSearch resignFirstResponder];
     }
 }
 

@@ -18,7 +18,14 @@
     //Check if current user logged in
     PFUser *current = [PFUser currentUser];
     if(current != nil){
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+        NSString *deviceString;
+        if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
+        {
+            deviceString = @"Main_iPhone";
+        }else{
+            deviceString = @"Main_iPad";
+        }
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:deviceString bundle:nil];
         UIViewController *tabview = [storyboard instantiateViewControllerWithIdentifier:@"TabCont"];
         [self.window makeKeyAndVisible];
         [self.window.rootViewController presentViewController:tabview animated:NO completion:nil];

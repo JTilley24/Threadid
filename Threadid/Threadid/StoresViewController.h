@@ -9,13 +9,15 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface StoresViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface StoresViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate>
 {
     NSMutableArray *storesArray;
     NSArray *fontArray;
     NSArray *colorArray;
     IBOutlet UICollectionView *storesCollection;
     IBOutlet UISearchBar *storeSearch;
+    BOOL searchMode;
+    NSMutableArray *searchedArray;
 }
 
 -(IBAction)onClick:(id)sender;
