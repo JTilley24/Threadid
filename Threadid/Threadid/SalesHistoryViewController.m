@@ -30,9 +30,18 @@
     // Do any additional setup after loading the view.
     
     self.title = @"Sales History";
+    
+   
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
     current = [PFUser currentUser];
-    storeObj = [current[@"Store"] fetchIfNeeded];
-    historyArray = storeObj[@"History"];
+    storeObj = current[@"Store"];
+    [storeObj fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        historyArray = storeObj[@"History"];
+        [historyTable reloadData];
+    }];
 }
 
 - (void)didReceiveMemoryWarning
