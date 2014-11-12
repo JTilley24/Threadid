@@ -52,7 +52,7 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(error == nil){
             for (int i = 0; i < [objects count]; i++) {
-                PFObject *store = [objects objectAtIndex:i];
+                PFObject *store = [[objects objectAtIndex:i] fetchIfNeeded];
                 if([store[@"Items"] count] != 0){
                     [storeArray addObject:store];
                 }
@@ -138,7 +138,7 @@
         [caroLabel setFont:[UIFont systemFontOfSize:25]];
     }
     
-    PFObject *store = [[storeArray objectAtIndex:index] fetchIfNeeded];
+    PFObject *store = [storeArray objectAtIndex:index];
     caroLabel.text = store[@"Name"];
     PFObject *item = [[store[@"Items"] objectAtIndex:0] fetchIfNeeded];
     PFFile *imageFile = [item[@"Photos"] objectAtIndex:0];

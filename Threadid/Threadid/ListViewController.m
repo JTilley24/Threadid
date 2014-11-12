@@ -93,12 +93,17 @@
         PFObject *tempItem = [[itemsArray objectAtIndex:i] fetchIfNeeded];
         NSString *nameString = tempItem[@"Name"];
         NSString *descriptString = tempItem[@"Description"];
-        NSUInteger nameLoc = [nameString rangeOfString:searchString options:NSCaseInsensitiveSearch].location;
-        NSUInteger descriptLoc = [descriptString rangeOfString:searchString options:NSCaseInsensitiveSearch].location;
-        if(nameString )
+        NSArray *searchArray = [searchString componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        searchArray = [searchArray filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]];
+        for (int k = 0; k < [searchArray count]; k++) {
+            NSString *tempString = [searchArray objectAtIndex:k];
+            NSUInteger nameLoc = [nameString rangeOfString:tempString options:NSCaseInsensitiveSearch].location;
+            NSUInteger descriptLoc = [descriptString rangeOfString:tempString options:NSCaseInsensitiveSearch].location;
             if(nameLoc != NSNotFound || descriptLoc != NSNotFound){
                 [searchedArray addObject:tempItem];
+                break;
             }
+        }
     }
     [itemsCollection reloadData];
     [itemCaro reloadData];

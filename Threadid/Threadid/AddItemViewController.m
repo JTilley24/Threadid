@@ -113,7 +113,9 @@
 
 - (void)carousel:(iCarousel *)_carousel didSelectItemAtIndex:(NSInteger)index
 {
-    
+    selectedIndex = (int)index;
+    UIAlertView *caroAlert = [[UIAlertView alloc] initWithTitle:@"Delete" message:@"Are You Sure?" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Yes", @"No", nil];
+    [caroAlert show];
 }
 
 //Components in Picker
@@ -246,6 +248,28 @@
     [loadingView show: YES];
 }
 
+-(BOOL)validateForm
+{
+    BOOL validate = YES;
+    if([itemNameInput.text isEqualToString:@""]){
+        validate = NO;
+    }
+    if([itemPriceInput.text isEqualToString:@""]){
+       validate = NO;
+    }
+    if(catString == nil){
+        validate = NO;
+    }
+    
+    if([quantityLabel.text isEqualToString:@"0"]){
+        validate = NO;
+    }
+    if([picsArray count] == 0){
+        validate = NO;
+    }
+    return validate;
+}
+
 //Add Item to Store
 -(void)addToStore: (PFObject *)object
 {
@@ -283,16 +307,8 @@
 {
     UIButton *button = sender;
     if(button.tag == 0){
-        UIImagePickerController  *imagePicker = [[UIImagePickerController alloc] init];
-        imagePicker.delegate = self;
-        
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
-        imagePicker.cameraDevice= UIImagePickerControllerCameraDeviceRear;
-        imagePicker.showsCameraControls = YES;
-        imagePicker.navigationBarHidden = NO;
-        
-        [self presentViewController:imagePicker animated:YES completion:nil];
+        UIAlertView *imageAlert = [[UIAlertView alloc] initWithTitle:@"Which do you choose?" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"Use Gallery", @"Use Camera", nil];
+        [imageAlert show];
     }else if (button.tag == 1){
         catPicker.hidden = NO;
         catPickerToolBar.hidden = NO;
@@ -301,7 +317,12 @@
         catPickerToolBar.hidden = YES;
         [descriptView endEditing:YES];
     }else if(button.tag == 3){
-        [self saveToParse];
+        if([self validateForm]){
+            [self saveToParse];
+        }else{
+            UIAlertView *validateAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please enter all information and try again." delegate:nil cancelButtonTitle:@"Close" otherButtonTitles: nil];
+            [validateAlert show];
+        }
     }
 }
 
@@ -310,6 +331,44 @@
 {
     quantityLabel.text = [NSString stringWithFormat:@"%.f", quantityStep.value];
 }
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    if([title isEqualToString:@"Use Gallery"]){
+        UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
+        if ([UIImagePickerController isSourceTypeAvailable:
+                  UIImagePickerControllerSourceTypeSavedPhotosAlbum] == YES){
+            pickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+            
+            pickerController.delegate = self;
+            
+            pickerController.allowsEditing = false;
+            
+            pickerController.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeImage, nil];;
+            
+            [self presentViewController:pickerController animated:true completion:nil];
+        }
+    }else if([title isEqualToString:@"Use Camera"]){
+        UIImagePickerController  *imagePicker = [[UIImagePickerController alloc] init];
+        if([UIImagePickerController isSourceTypeAvailable:
+            UIImagePickerControllerSourceTypeCamera] == YES){
+            imagePicker.delegate = self;
+            
+            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
+            imagePicker.cameraDevice= UIImagePickerControllerCameraDeviceRear;
+            imagePicker.showsCameraControls = YES;
+            imagePicker.navigationBarHidden = NO;
+            
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        }
+    }else if ([title isEqualToString:@"Yes"]){
+        [picsArray removeObjectAtIndex:selectedIndex];
+        [picsCaro reloadData];
+    }
+}
+
 /*
 #pragma mark - Navigation
 

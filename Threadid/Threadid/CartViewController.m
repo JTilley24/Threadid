@@ -28,6 +28,13 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+   
+    //Add Long Press to Table
+    UILongPressGestureRecognizer *cartPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(deleteCartItem:)];
+    cartPress.minimumPressDuration = .5;
+    cartPress.delegate = self;
+    cartPress.delaysTouchesBegan = YES;
+    [cartTable addGestureRecognizer:cartPress];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -145,9 +152,15 @@
 //Delete Alert for selected item
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIAlertView *cartAlert = [[UIAlertView alloc] initWithTitle:@"Delete" message:@"Are You Sure?" delegate:self cancelButtonTitle:nil otherButtonTitles:@"YES", @"NO", nil];
-    [cartAlert show];
     selectedIndex = (int)indexPath.row;
+    NSMutableDictionary *object = [[cartArray objectAtIndex:selectedIndex] mutableCopy];
+    NSString *quantityString = [object objectForKey:@"Quantity"];
+    UIAlertView *quantityAlert = [[UIAlertView alloc] initWithTitle:@"Quantity" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    quantityAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [quantityAlert textFieldAtIndex:0].keyboardType = UIKeyboardTypeNumberPad;
+    [quantityAlert textFieldAtIndex:0].text = quantityString;
+    [quantityAlert show];
+    
 }
 
 //Checkout Alert for cart
@@ -159,6 +172,23 @@
     [self saveCheckoutData];
 }
 
+-(void)deleteCartItem:(UILongPressGestureRecognizer *)gesture
+{
+    if(gesture.state != UIGestureRecognizerStateEnded){
+        return;
+    }
+    CGPoint point = [gesture locationInView:cartTable];
+    
+    NSIndexPath *index = [cartTable indexPathForRowAtPoint:point];
+    if(index == nil){
+        
+    }else{
+        selectedIndex = (int)index.row;
+        UIAlertView *cartAlert = [[UIAlertView alloc] initWithTitle:@"Delete" message:@"Are You Sure?" delegate:self cancelButtonTitle:nil otherButtonTitles:@"YES", @"NO", nil];
+        [cartAlert show];
+    }
+}
+
 //Button click for Alert
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -167,6 +197,18 @@
     if ([title isEqualToString:@"YES"])
     {
         [cartArray removeObjectAtIndex:selectedIndex];
+        current[@"Cart"] = cartArray;
+        [current saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if(succeeded){
+                [cartTable reloadData];
+                [self getPriceData];
+            }
+        }];
+    }else if([title isEqualToString:@"OK"]){
+        NSMutableDictionary *object = [[cartArray objectAtIndex:selectedIndex] mutableCopy];
+        NSString *quantityString = [alertView textFieldAtIndex:0].text;
+        [object setValue:quantityString forKey:@"Quantity"];
+        [cartArray replaceObjectAtIndex:selectedIndex withObject:object];
         current[@"Cart"] = cartArray;
         [current saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if(succeeded){

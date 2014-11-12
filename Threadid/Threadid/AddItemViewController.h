@@ -11,7 +11,7 @@
 #import <Parse/Parse.h>
 #import "MBProgressHUD.h"
 
-@interface AddItemViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, iCarouselDelegate, iCarouselDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIScrollViewDelegate, UITextViewDelegate>
+@interface AddItemViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, iCarouselDelegate, iCarouselDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIScrollViewDelegate, UITextViewDelegate, UIAlertViewDelegate>
 {
     IBOutlet UIPickerView *catPicker;
     IBOutlet UITextField *itemNameInput;
@@ -28,6 +28,7 @@
     NSString *catString;
     PFObject *storeObject;
     MBProgressHUD *loadingView;
+    int selectedIndex;
 }
 @property (nonatomic, strong)PFObject *storeObj;
 @property (nonatomic, strong)PFObject *editObject;
