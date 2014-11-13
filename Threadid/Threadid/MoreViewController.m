@@ -28,6 +28,14 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //Change font size by iPhone or iPad
+    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
+    {
+        fontSize = 12;
+    }else
+    {
+        fontSize = 15;
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -48,9 +56,10 @@
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
     [self.navigationController.navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIFont fontWithName:@"Helvetica" size:21],
+      [UIFont fontWithName:@"Helvetica" size:fontSize + 4],
       NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
 }
 
 - (void)didReceiveMemoryWarning

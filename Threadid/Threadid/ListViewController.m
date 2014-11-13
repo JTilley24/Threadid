@@ -31,7 +31,7 @@
     // Do any additional setup after loading the view.
    
     //Set Fonts and Colors
-    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
+    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard SE", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
     colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
     searchMode = NO;
     
@@ -42,7 +42,7 @@
     }else
     {
         fontSize = 15;
-    }    
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -68,8 +68,9 @@
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
     [self.navigationController.navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIFont fontWithName:@"Helvetica" size:21],
+      [UIFont fontWithName:@"Helvetica" size:fontSize + 4],
       NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
    
 }
 
@@ -200,7 +201,7 @@
         [nameLabel setFont:[UIFont systemFontOfSize:12]];
         [nameLabel setNumberOfLines:2];
         priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.frame.size.width - 40, view.frame.size.height - 20, 40, 20)];
-        [priceLabel setFont:[UIFont systemFontOfSize:12]];
+        [priceLabel setFont:[UIFont systemFontOfSize:fontSize]];
         [priceLabel setBackgroundColor:[UIColor whiteColor]];
         
     }else
@@ -209,7 +210,7 @@
         nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, view.frame.size.height, 300, 50)];
         [nameLabel setFont:[UIFont systemFontOfSize:25]];
         priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.frame.size.width - 55, view.frame.size.height - 40, 55, 40)];
-        [priceLabel setFont:[UIFont systemFontOfSize:17]];
+        [priceLabel setFont:[UIFont systemFontOfSize:fontSize]];
         [priceLabel setBackgroundColor:[UIColor whiteColor]];
     }
     NSArray *collectionArray = itemsArray;

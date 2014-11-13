@@ -30,8 +30,16 @@
     // Do any additional setup after loading the view.
     
     //Set Fonts and Colors
-    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
+    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard SE", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
     colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
+    //Change font size by iPhone or iPad
+    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
+    {
+        fontSize = 12;
+    }else
+    {
+        fontSize = 15;
+    }
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -50,9 +58,12 @@
     UIColor *bgColor = [colorArray objectAtIndex:[storeObj[@"BGColor"] intValue]];
     [self.navigationController.navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIFont fontWithName:storeObj[@"Font"] size:21],
+      [UIFont fontWithName:storeObj[@"Font"] size:fontSize + 4],
       NSFontAttributeName,fontColor,NSForegroundColorAttributeName, nil]];
     [self.navigationController.navigationBar setBarTintColor:bgColor];
+    [self.navigationController.navigationBar setTintColor:fontColor];
+    UIBarButtonItem *cartButton = [self.navigationItem rightBarButtonItem];
+    [cartButton setTintColor:fontColor];
 }
 
 - (void)didReceiveMemoryWarning

@@ -46,7 +46,7 @@
      [NSDictionary dictionaryWithObjectsAndKeys:
       [UIFont fontWithName:@"Helvetica" size:21],
       NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
-    
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     
     current = [PFUser currentUser];
     cartArray = current[@"Cart"];

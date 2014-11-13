@@ -13,6 +13,7 @@
 {
     PFUser *current;
     PFObject *storeObj;
+    int fontSize;
     IBOutlet UIButton *myStoreButton;
     IBOutlet UIButton *historyButton;
     IBOutlet UIButton *viewStoreButton;

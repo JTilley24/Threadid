@@ -18,6 +18,7 @@
     IBOutlet UISearchBar *storeSearch;
     BOOL searchMode;
     NSMutableArray *searchedArray;
+    int fontSize;
 }
 
 -(IBAction)onClick:(id)sender;

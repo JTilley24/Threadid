@@ -23,6 +23,7 @@
     NSArray *colorArray;
     PFObject *storeObj;
     PFUser *current;
+    int fontSize;
 }
 
 @property (nonatomic, strong)PFObject *itemObj;

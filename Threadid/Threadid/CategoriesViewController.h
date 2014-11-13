@@ -15,5 +15,6 @@
     NSArray *catsArray;
     IBOutlet iCarousel *featureCaro;
     NSMutableArray *storeArray;
+    int fontSize;
 }
 @end

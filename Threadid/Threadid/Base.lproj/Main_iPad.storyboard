@@ -636,7 +636,6 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="4FI-CU-2jV">
                         <barButtonItem key="rightBarButtonItem" tag="1" image="star-icon.png" id="eWr-E3-Vrp">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="onClick:" destination="jNN-79-46w" id="34p-Hk-ePk"/>
                             </connections>
@@ -1252,6 +1251,16 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <outlet property="delegate" destination="mKm-kV-6iD" id="PW1-81-9yX"/>
                                 </connections>
                             </pickerView>
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMN-uZ-1Oh">
+                                <rect key="frame" x="116" y="278" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onClick:" destination="mKm-kV-6iD" eventType="touchUpInside" id="zW7-ux-Ps8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.93516820789999999" green="0.46953499040000002" blue="0.48281651310000001" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -1290,7 +1299,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CartCell" rowHeight="100" id="Jlo-xi-kzp" customClass="CartCell">
-                                        <rect key="frame" x="0.0" y="86" width="768" height="100"/>
+                                        <rect key="frame" x="0.0" y="22" width="768" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jlo-xi-kzp" id="HAl-en-BoP">
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="99"/>
@@ -1780,10 +1789,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="4CU-DU-OXM"/>
+        <segue reference="2NW-O8-d1d"/>
+        <segue reference="LJV-Df-MOT"/>
         <segue reference="4vi-1P-kCn"/>
         <segue reference="bMB-DW-It7"/>
-        <segue reference="qIy-9j-ID1"/>
-        <segue reference="4CU-DU-OXM"/>
-        <segue reference="LJV-Df-MOT"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -30,7 +30,7 @@
     // Do any additional setup after loading the view.
     
     //Set Fonts and Colors
-    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
+    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard SE", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
     colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
     
     //Determine if iPhone or iPad
@@ -278,6 +278,9 @@
         if(selectedBGColor != nil){
             [storePicker selectRow:[selectedBGColor intValue] inComponent:0 animated:YES];
         }
+    }else if (button.tag == 3){
+        UIAlertView *artisanInfo = [[UIAlertView alloc] initWithTitle:@"Artisan" message:@"Artisan is a premuim membership program where subscribers will be listed in the featured sections and listed before other stores in the results of a search." delegate:self cancelButtonTitle:@"Close" otherButtonTitles: nil];
+        [artisanInfo show];
     }
 }
 

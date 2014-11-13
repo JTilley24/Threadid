@@ -33,8 +33,17 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     searchMode = NO;
     //Set Fonts and Colors
-    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
+    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard SE", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
     colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
+    
+    //Change font size by iPhone or iPad
+    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
+    {
+        fontSize = 12;
+    }else
+    {
+        fontSize = 15;
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -63,7 +72,7 @@
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
     [self.navigationController.navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIFont fontWithName:@"Helvetica" size:21],
+      [UIFont fontWithName:@"Helvetica" size:fontSize + 4],
       NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
@@ -152,14 +161,7 @@
     cell.storeNameLabel.text = object[@"Name"];
     cell.storeNameLabel.backgroundColor = [colorArray objectAtIndex:[object[@"BGColor"] intValue]];
     cell.storeNameLabel.textColor = [colorArray objectAtIndex:[object[@"FontColor"] intValue]];
-    float fontsize;
-    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
-    {
-        fontsize = 12.0f;
-    }else{
-        fontsize = 15.0f;
-    }
-    cell.storeNameLabel.font = [UIFont fontWithName:object[@"Font"] size:fontsize];
+    cell.storeNameLabel.font = [UIFont fontWithName:object[@"Font"] size:fontSize];
     return cell;
 }
 

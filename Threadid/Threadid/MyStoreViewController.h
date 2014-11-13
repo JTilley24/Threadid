@@ -15,6 +15,7 @@
     PFObject *storeObject;
     NSMutableArray *itemsArray;
     int selectedItem;
+    int fontSize;
 }
 
 -(IBAction)onClick:(id)sender;

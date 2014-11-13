@@ -33,7 +33,7 @@
     fav = false;
     searchMode = NO;
     //Set Fonts and Colors
-    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
+    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard SE", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
     colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
     
     //Change font size by iPhone or iPad
@@ -48,6 +48,10 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    //Add Search Button to NavigationBar
+    searchButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(onClick:)];
+    self.navigationItem.rightBarButtonItems = @[searchButton, favButton];
+    
     itemsArray = storeObj[@"Items"];
     fontColor = [colorArray objectAtIndex:[storeObj[@"FontColor"] intValue]];
     bgColor = [colorArray objectAtIndex:[storeObj[@"BGColor"] intValue]];
@@ -70,14 +74,11 @@
     self.title = storeObj[@"Name"];
     [self.navigationController.navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIFont fontWithName:storeObj[@"Font"] size:21],
+      [UIFont fontWithName:storeObj[@"Font"] size:fontSize + 4],
       NSFontAttributeName,fontColor,NSForegroundColorAttributeName, nil]];
     [self.navigationController.navigationBar setBarTintColor:bgColor];
-    
-    //Add Search Button to NavigationBar
-    searchButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(onClick:)];
-    self.navigationItem.rightBarButtonItems = @[searchButton, favButton];
-    
+    [self.navigationController.navigationBar setTintColor:fontColor];
+    [favButton setTintColor:fontColor];
     //Check if search carried over from StoresView
     if(searchedString != nil){
         itemSearch.hidden = NO;
@@ -200,7 +201,7 @@
             current[@"Favorites"] = favsArray;
             [current saveInBackground];
         }else{
-            favButton.image = [UIImage imageNamed:@"star-icon.png"];
+            favButton.image = [UIImage imageNamed:@"star-icon-dark.png"];
             fav = false;
             favsArray = current[@"Favorites"];
             if([favsArray count] != 0){

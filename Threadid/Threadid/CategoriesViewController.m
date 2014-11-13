@@ -31,6 +31,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    //Change font size by iPhone or iPad
+    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
+    {
+        fontSize = 12;
+    }else
+    {
+        fontSize = 15;
+    }
+    
     //Set Categories and Carousel
     catsArray = @[@"Jewelry", @"Knitted", @"Home Decor", @"Supplies", @"Sales"];
     featureCaro.type = iCarouselTypeCoverFlow2;
@@ -43,8 +52,9 @@
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
     [self.navigationController.navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIFont fontWithName:@"Helvetica" size:21],
+      [UIFont fontWithName:@"Helvetica" size:fontSize + 4],
       NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     self.title = @"Threadid";
     //Get Data from Parse
     storeArray = [[NSMutableArray alloc] init];
@@ -131,6 +141,7 @@
     {
         iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 150, 100)];
         caroLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, view.frame.size.height, 150, 30)];
+        [caroLabel setFont:[UIFont systemFontOfSize:15]];
     }else
     {
         iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, 250)];

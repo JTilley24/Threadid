@@ -17,5 +17,6 @@
     PFObject *selectedObj;
     NSArray *storeNameArray;
     NSArray *storeImgArray;
+    int fontSize;
 }
 @end
