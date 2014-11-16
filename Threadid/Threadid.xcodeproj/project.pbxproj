@@ -69,6 +69,7 @@
 		CBA1A4AD19FB591300925DB1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA1A4A519FB591300925DB1 /* Security.framework */; };
 		CBA1A4AE19FB591300925DB1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA1A4A619FB591300925DB1 /* StoreKit.framework */; };
 		CBA1A4AF19FB591300925DB1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA1A4A719FB591300925DB1 /* SystemConfiguration.framework */; };
+		CBAAE79B1A15B49000CCC10D /* StoreAtrributes.m in Sources */ = {isa = PBXBuildFile; fileRef = CBAAE79A1A15B49000CCC10D /* StoreAtrributes.m */; };
 		CBAFE25719F7364400764737 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBAFE25619F7364400764737 /* CartViewController.m */; };
 		CBAFE25D19F736A600764737 /* CartCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CBAFE25C19F736A600764737 /* CartCell.m */; };
 		CBAFE26019F73DD500764737 /* HistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CBAFE25F19F73DD500764737 /* HistoryCell.m */; };
@@ -177,6 +178,8 @@
 		CBA1A4A519FB591300925DB1 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		CBA1A4A619FB591300925DB1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CBA1A4A719FB591300925DB1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		CBAAE7991A15B49000CCC10D /* StoreAtrributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreAtrributes.h; sourceTree = "<group>"; };
+		CBAAE79A1A15B49000CCC10D /* StoreAtrributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreAtrributes.m; sourceTree = "<group>"; };
 		CBAFE25519F7364400764737 /* CartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
 		CBAFE25619F7364400764737 /* CartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
 		CBAFE25B19F736A600764737 /* CartCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartCell.h; sourceTree = "<group>"; };
@@ -333,6 +336,8 @@
 				CB7D66E919F75BF800AFE94F /* SalesCell.m */,
 				CB7D66EE19F767B600AFE94F /* FavsCell.h */,
 				CB7D66EF19F767B600AFE94F /* FavsCell.m */,
+				CBAAE7991A15B49000CCC10D /* StoreAtrributes.h */,
+				CBAAE79A1A15B49000CCC10D /* StoreAtrributes.m */,
 			);
 			path = Threadid;
 			sourceTree = "<group>";
@@ -526,6 +531,7 @@
 				CB67ACA019F2107C00F9613D /* MyStoreCell.m in Sources */,
 				CBAFE26019F73DD500764737 /* HistoryCell.m in Sources */,
 				CB92E74119EF79B6006292CC /* StoresViewController.m in Sources */,
+				CBAAE79B1A15B49000CCC10D /* StoreAtrributes.m in Sources */,
 				CB99145C19F0CE5D00E663A8 /* DetailViewController.m in Sources */,
 				CB4E7FEB19EF68AA00CF53E4 /* main.m in Sources */,
 				CB7D66E419F751E100AFE94F /* StoreViewController.m in Sources */,

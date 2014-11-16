@@ -9,6 +9,7 @@
 #import "ListViewController.h"
 #import "ListCollectionCell.h"
 #import "DetailViewController.h"
+#import "StoreAtrributes.h"
 
 @interface ListViewController ()
 
@@ -29,20 +30,14 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-   
+   searchMode = NO;
     //Set Fonts and Colors
-    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard SE", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
-    colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
-    searchMode = NO;
+    StoreAtrributes *attributes = [StoreAtrributes alloc];
+    fontArray = [attributes getFonts];
+    colorArray = [attributes getColors];
+    fontSize = [attributes getFontSize];
     
-    //Change font size by iPhone or iPad
-    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
-    {
-        fontSize = 12;
-    }else
-    {
-        fontSize = 15;
-    }
+    self.navigationItem.backBarButtonItem.title = @"";
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -115,7 +110,7 @@
     numberOfItemsInSection:(NSInteger)section
 {
     NSArray *collectionArray = itemsArray;
-    if(searchMode){
+    if([searchedArray count] != 0){
         collectionArray = searchedArray;
     }
     return [collectionArray count];
@@ -128,7 +123,7 @@
 {
     ListCollectionCell *cell = [itemsCollection dequeueReusableCellWithReuseIdentifier:@"ListCell" forIndexPath:indexPath];
     NSArray *collectionArray = itemsArray;
-    if(searchMode){
+    if([searchedArray count] != 0){
         collectionArray = searchedArray;
     }
     PFObject *item = [[collectionArray objectAtIndex:indexPath.row] fetchIfNeeded];
@@ -157,7 +152,7 @@
 {
     DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
     NSArray *collectionArray = itemsArray;
-    if(searchMode){
+    if([searchedArray count] != 0){
         collectionArray = searchedArray;
     }
     [detailView setItemObj:[collectionArray objectAtIndex:indexPath.row]];
@@ -198,20 +193,22 @@
     {
         iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 150, 100)];
         nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, view.frame.size.height, 150, 30)];
-        [nameLabel setFont:[UIFont systemFontOfSize:12]];
+        [nameLabel setFont:[UIFont systemFontOfSize:fontSize]];
         [nameLabel setNumberOfLines:2];
         priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.frame.size.width - 40, view.frame.size.height - 20, 40, 20)];
         [priceLabel setFont:[UIFont systemFontOfSize:fontSize]];
         [priceLabel setBackgroundColor:[UIColor whiteColor]];
+        [priceLabel setTextAlignment:NSTextAlignmentRight];
         
     }else
     {
         iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, 250)];
         nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, view.frame.size.height, 300, 50)];
-        [nameLabel setFont:[UIFont systemFontOfSize:25]];
+        [nameLabel setFont:[UIFont systemFontOfSize:fontSize]];
         priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.frame.size.width - 55, view.frame.size.height - 40, 55, 40)];
         [priceLabel setFont:[UIFont systemFontOfSize:fontSize]];
         [priceLabel setBackgroundColor:[UIColor whiteColor]];
+        [priceLabel setTextAlignment:NSTextAlignmentRight];
     }
     NSArray *collectionArray = itemsArray;
     if(searchMode){
@@ -243,7 +240,7 @@
 	{
         DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
         NSArray *collectionArray = itemsArray;
-        if(searchMode){
+        if([searchedArray count] != 0){
             collectionArray = searchedArray;
         }
         [detailView setItemObj:[collectionArray objectAtIndex:index]];
@@ -265,6 +262,7 @@
     if([searchText length] == 0)
     {
         searchMode = NO;
+        searchedArray = nil;
         [itemsCollection reloadData];
         [itemCaro reloadData];
     }
@@ -279,6 +277,7 @@
     }else{
         itemSearch.hidden = YES;
         searchMode = NO;
+        searchedArray = nil;
         [itemsCollection reloadData];
         [itemCaro reloadData];
         [itemSearch resignFirstResponder];

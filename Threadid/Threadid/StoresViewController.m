@@ -9,6 +9,7 @@
 #import "StoresViewController.h"
 #import "StoresViewCell.h"
 #import "StoreViewController.h"
+#import "StoreAtrributes.h"
 
 @interface StoresViewController ()
 
@@ -29,21 +30,15 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    //Set Navigation Bar attributes
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     searchMode = NO;
-    //Set Fonts and Colors
-    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard SE", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
-    colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
     
-    //Change font size by iPhone or iPad
-    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
-    {
-        fontSize = 12;
-    }else
-    {
-        fontSize = 15;
-    }
+    //Set Fonts and Colors
+    StoreAtrributes *attributes = [StoreAtrributes alloc];
+    fontArray = [attributes getFonts];
+    colorArray = [attributes getColors];
+    fontSize = [attributes getFontSize];
+    
+    self.navigationItem.backBarButtonItem.title = @"";
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -127,6 +122,7 @@
     if([searchText length] == 0)
     {
         searchMode = NO;
+        searchedArray = nil;
         [storesCollection reloadData];
     }
 }
@@ -162,6 +158,7 @@
     cell.storeNameLabel.backgroundColor = [colorArray objectAtIndex:[object[@"BGColor"] intValue]];
     cell.storeNameLabel.textColor = [colorArray objectAtIndex:[object[@"FontColor"] intValue]];
     cell.storeNameLabel.font = [UIFont fontWithName:object[@"Font"] size:fontSize];
+    cell.backgroundColor = [colorArray objectAtIndex:[object[@"BGColor"] intValue]];
     return cell;
 }
 
@@ -170,7 +167,7 @@
 {
     StoreViewController *storeView = [self.storyboard instantiateViewControllerWithIdentifier:@"StoreView"];
     NSArray *collectionArray = storesArray;
-    if(searchMode){
+    if([searchedArray count] != 0){
         collectionArray = searchedArray;
         [storeView setSearchedString:storeSearch.text];
     }
@@ -187,6 +184,7 @@
     }else{
         storeSearch.hidden = YES;
         searchMode = NO;
+        searchedArray = nil;
         [storesCollection reloadData];
         [storeSearch resignFirstResponder];
     }

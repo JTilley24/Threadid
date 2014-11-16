@@ -58,6 +58,8 @@
     //Set Static Data and Images
     saleTypeArray = @[@"On Sale", @"Buy One, Get One", @"Clearence"];
     self.title = @"Sales and Discounts";
+    
+    self.navigationItem.backBarButtonItem.title = @"";
 }
 
 -(void)viewWillAppear:(BOOL)animated

@@ -10,6 +10,7 @@
 #import "CatCell.h"
 #import "ListViewController.h"
 #import "StoreViewController.h"
+#import "StoreAtrributes.h"
 
 @interface CategoriesViewController ()
 
@@ -31,22 +32,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    //Change font size by iPhone or iPad
-    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
-    {
-        fontSize = 12;
-    }else
-    {
-        fontSize = 15;
-    }
+    //Set Fonts and Colors
+    StoreAtrributes *attributes = [StoreAtrributes alloc];
+    fontSize = [attributes getFontSize];
     
     //Set Categories and Carousel
     catsArray = @[@"Jewelry", @"Knitted", @"Home Decor", @"Supplies", @"Sales"];
     featureCaro.type = iCarouselTypeCoverFlow2;
+    self.navigationItem.backBarButtonItem.title = @"";
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     //Set Navigation Bar attributes
+    self.title = @"Threadid";
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleBordered target:nil action:nil];
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:(238/255.0f) green:(120/255.0f) blue:(123/255.0f) alpha:1.0f]];
@@ -55,7 +53,7 @@
       [UIFont fontWithName:@"Helvetica" size:fontSize + 4],
       NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName, nil]];
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    self.title = @"Threadid";
+    
     //Get Data from Parse
     storeArray = [[NSMutableArray alloc] init];
     PFQuery *query = [PFQuery queryWithClassName:@"Store"];

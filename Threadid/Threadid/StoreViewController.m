@@ -9,6 +9,7 @@
 #import "StoreViewController.h"
 #import "StoreCollectionCell.h"
 #import "DetailViewController.h"
+#import "StoreAtrributes.h"
 
 @interface StoreViewController ()
 
@@ -33,18 +34,14 @@
     fav = false;
     searchMode = NO;
     //Set Fonts and Colors
-    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard SE", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
-    colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
+    StoreAtrributes *attributes = [StoreAtrributes alloc];
+    fontArray = [attributes getFonts];
+    colorArray = [attributes getColors];
+    fontSize = [attributes getFontSize];
     
-    //Change font size by iPhone or iPad
-    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
-    {
-        fontSize = 12;
-    }else
-    {
-        fontSize = 15;
-    }
+    self.navigationItem.backBarButtonItem.title = @"";
 }
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -165,7 +162,7 @@
 {
     DetailViewController *detailView = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
     NSArray *collectionArray = itemsArray;
-    if(searchMode){
+    if([searchedArray count] != 0){
         collectionArray = searchedArray;
     }
     [detailView setItemObj:[collectionArray objectAtIndex:indexPath.row]];
@@ -185,6 +182,7 @@
 {
     if([searchText length] == 0){
         searchMode = NO;
+        searchedArray = nil;
         [itemsCollections reloadData];
     }
 }
@@ -223,6 +221,7 @@
             itemSearch.hidden = YES;
             searchMode = NO;
             searchedString = nil;
+            searchedArray = nil;
             [itemsCollections reloadData];
             [itemSearch resignFirstResponder];
         }

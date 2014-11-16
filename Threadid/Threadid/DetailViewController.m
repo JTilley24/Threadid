@@ -8,6 +8,7 @@
 
 #import "DetailViewController.h"
 #import "StoreViewController.h"
+#import "StoreAtrributes.h"
 
 @interface DetailViewController ()
 
@@ -30,16 +31,12 @@
     // Do any additional setup after loading the view.
     
     //Set Fonts and Colors
-    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard SE", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
-    colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
-    //Change font size by iPhone or iPad
-    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
-    {
-        fontSize = 12;
-    }else
-    {
-        fontSize = 15;
-    }
+    StoreAtrributes *attributes = [StoreAtrributes alloc];
+    fontArray = [attributes getFonts];
+    colorArray = [attributes getColors];
+    fontSize = [attributes getFontSize];
+    
+    self.navigationItem.backBarButtonItem.title = @"";
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -91,7 +88,7 @@
     }else
     {
         rec.size.width = 300;
-        rec.size.height = 250;
+        rec.size.height = 300;
     }
     view.frame = rec;
     UIImageView *iv;
@@ -102,7 +99,7 @@
         
     }else
     {
-        iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, 250)];
+        iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, -40, 300, 300)];
             }
     
     PFFile *imageFile = [itemObj[@"Photos"] objectAtIndex:index];

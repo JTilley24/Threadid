@@ -7,7 +7,7 @@
 //
 
 #import "AddStoreViewController.h"
-
+#import "StoreAtrributes.h"
 @interface AddStoreViewController ()
 
 @end
@@ -30,15 +30,10 @@
     // Do any additional setup after loading the view.
     
     //Set Fonts and Colors
-    fontArray = @[@"Arial", @"Baskerville", @"Chalkboard SE", @"Courier", @"Futura", @"Gill Sans", @"Helvetica", @"Noteworthy", @"Optima", @"Snell Roundhand", @"Times New Roman", @"Verdana"];
-    colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
-    
-    //Determine if iPhone or iPad
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
-        fontSize = 20;
-    }else{
-        fontSize = 25;
-    }
+    StoreAtrributes *attributes = [StoreAtrributes alloc];
+    fontArray = [attributes getFonts];
+    colorArray = [attributes getColors];
+    fontSize = [attributes getFontSize] + 8;
 }
 
 -(void)viewDidAppear:(BOOL)animated

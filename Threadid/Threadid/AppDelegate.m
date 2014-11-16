@@ -16,25 +16,35 @@
     [Parse setApplicationId:@"K3uYwV1KDXtetQ6aIW7An1sLaw8CzqW0NcSvds3J"
                   clientKey:@"7QpIY1rtIMip90UTHeHmhbrg5U7ZKCxtDKCn5FdU"];
     //Check if current user logged in
+    NSString *deviceString;
+    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
+    {
+        deviceString = @"Main_iPhone";
+    }else{
+        deviceString = @"Main_iPad";
+    }
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:deviceString bundle:nil];
+    tabView = [storyboard instantiateViewControllerWithIdentifier:@"TabCont"];
+    tabView.delegate = self;
+    
     PFUser *current = [PFUser currentUser];
     if(current != nil){
-        NSString *deviceString;
-        if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
-        {
-            deviceString = @"Main_iPhone";
-        }else{
-            deviceString = @"Main_iPad";
-        }
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:deviceString bundle:nil];
-        UIViewController *tabview = [storyboard instantiateViewControllerWithIdentifier:@"TabCont"];
         [self.window makeKeyAndVisible];
-        [self.window.rootViewController presentViewController:tabview animated:NO completion:nil];
+        [self.window.rootViewController presentViewController:tabView animated:NO completion:nil];
     }
 
     // Override point for customization after application launch.
     return YES;
 }
-							
+
+//Send TabBar selection to Root View
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    if([viewController isKindOfClass:[UINavigationController class]]){
+        [(UINavigationController *)viewController popToRootViewControllerAnimated:NO];
+    }
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

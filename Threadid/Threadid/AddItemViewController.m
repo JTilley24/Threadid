@@ -248,6 +248,7 @@
     [loadingView show: YES];
 }
 
+//Validate Inputs
 -(BOOL)validateForm
 {
     BOOL validate = YES;
@@ -332,6 +333,7 @@
     quantityLabel.text = [NSString stringWithFormat:@"%.f", quantityStep.value];
 }
 
+//Selections for AlertViews
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
      NSString *title = [alertView buttonTitleAtIndex:buttonIndex];

@@ -9,6 +9,7 @@
 #import "FavoritesViewController.h"
 #import "FavsCell.h"
 #import "StoreViewController.h"
+#import "StoreAtrributes.h"
 
 @interface FavoritesViewController ()
 
@@ -30,16 +31,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    colorArray = @[[UIColor blackColor], [UIColor darkGrayColor], [UIColor lightGrayColor], [UIColor whiteColor], [UIColor grayColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor cyanColor], [UIColor yellowColor], [UIColor magentaColor], [UIColor orangeColor], [UIColor purpleColor], [UIColor brownColor]];
-    
-    //Change font size by iPhone or iPad
-    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
-    {
-        fontSize = 12;
-    }else
-    {
-        fontSize = 15;
-    }
+    //Set Fonts and Colors
+    StoreAtrributes *attributes = [StoreAtrributes alloc];
+    fontArray = [attributes getFonts];
+    colorArray = [attributes getColors];
+    fontSize = [attributes getFontSize];
     
     //Add Long Press to Collection
     UILongPressGestureRecognizer *favPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(deleteFavPress:)];
@@ -47,6 +43,8 @@
     favPress.delegate = self;
     favPress.delaysTouchesBegan = YES;
     [favsCollection addGestureRecognizer:favPress];
+    
+    self.navigationItem.backBarButtonItem.title = @"";
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -98,6 +96,7 @@
     cell.storeNameLabel.backgroundColor = [colorArray objectAtIndex:[object[@"BGColor"] intValue]];
     cell.storeNameLabel.textColor = [colorArray objectAtIndex:[object[@"FontColor"] intValue]];
     cell.storeNameLabel.font = [UIFont fontWithName:object[@"Font"] size:fontSize];
+    cell.backgroundColor = [colorArray objectAtIndex:[object[@"BGColor"] intValue]];
     
     return cell;
 }

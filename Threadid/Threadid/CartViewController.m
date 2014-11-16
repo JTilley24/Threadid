@@ -172,6 +172,7 @@
     [self saveCheckoutData];
 }
 
+//Delete Cart Item Gesture
 -(void)deleteCartItem:(UILongPressGestureRecognizer *)gesture
 {
     if(gesture.state != UIGestureRecognizerStateEnded){

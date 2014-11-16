@@ -12,6 +12,7 @@
 #import "DetailViewController.h"
 #import "AddItemViewController.h"
 #import "AddSaleViewController.h"
+#import "StoreAtrributes.h"
 
 @interface MyStoreViewController ()
 
@@ -41,14 +42,11 @@
     
     itemsArray = [[NSMutableArray alloc] init];
     
-    //Change font size by iPhone or iPad
-    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
-    {
-        fontSize = 12;
-    }else
-    {
-        fontSize = 15;
-    }
+    //Set Font Size
+    StoreAtrributes *attributes = [StoreAtrributes alloc];
+    fontSize = [attributes getFontSize];
+    
+    self.navigationItem.backBarButtonItem.title = @"";
 }
 
 -(void)viewWillAppear:(BOOL)animated

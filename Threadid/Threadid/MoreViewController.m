@@ -8,6 +8,7 @@
 
 #import "MoreViewController.h"
 #import "StoreViewController.h"
+#import "StoreAtrributes.h"
 
 @interface MoreViewController ()
 
@@ -29,13 +30,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //Change font size by iPhone or iPad
-    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
-    {
-        fontSize = 12;
-    }else
-    {
-        fontSize = 15;
-    }
+   
+    //Set Fonts and Colors
+    StoreAtrributes *attributes = [StoreAtrributes alloc];
+    fontSize = [attributes getFontSize];
+    
+    
+    self.navigationItem.backBarButtonItem.title = @"";
 }
 
 -(void)viewWillAppear:(BOOL)animated

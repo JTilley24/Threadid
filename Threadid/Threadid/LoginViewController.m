@@ -8,6 +8,8 @@
 
 #import "LoginViewController.h"
 #import "CategoriesViewController.h"
+#import "AppDelegate.h"
+
 @interface LoginViewController ()
 
 @end
@@ -56,7 +58,9 @@
             [PFUser logInWithUsernameInBackground:userName password:password block:
              ^(PFUser *user, NSError *error) {
                  if(user){
-                     [self performSegueWithIdentifier:@"login-segue" sender:self];
+                     UITabBarController *tabView = [self.storyboard instantiateViewControllerWithIdentifier:@"TabCont"];
+                     tabView.delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                     [self presentViewController:tabView animated:YES completion:nil];
                  }else{
                      UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Username and/or Password are incorrect. Please try again." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                      [loginAlert show];
@@ -95,7 +99,9 @@
                     user.email = email;
                     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                         if(!error){
-                            [self performSegueWithIdentifier:@"login-segue" sender:self];
+                            UITabBarController *tabView = [self.storyboard instantiateViewControllerWithIdentifier:@"TabCont"];
+                            tabView.delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                            [self presentViewController:tabView animated:YES completion:nil];
                         }else{
                             NSString *errorText = @"";
                             if(error.code == kPFErrorAccountAlreadyLinked){

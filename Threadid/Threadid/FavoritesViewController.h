@@ -14,6 +14,7 @@
     NSMutableArray *favsArray;
     PFUser *current;
     NSArray *colorArray;
+    NSArray *fontArray;
     PFObject *selectedObj;
     NSArray *storeNameArray;
     NSArray *storeImgArray;
