@@ -139,10 +139,10 @@
     cell.itemPriceLabel.text = item[@"Price"];
     cell.itemNameLabel.font = [UIFont fontWithName:storeObj[@"Font"] size:fontSize];
     [cell.itemNameLabel setTextColor:fontColor];
+    [cell.itemNameLabel setBackgroundColor:bgColor];
     cell.itemPriceLabel.font = [UIFont fontWithName:storeObj[@"Font"] size:fontSize];
     [cell.itemPriceLabel setTextColor:fontColor];
     [cell.itemPriceLabel setBackgroundColor:bgColor];
-    [cell setBackgroundColor:bgColor];
     
     return cell;
 }

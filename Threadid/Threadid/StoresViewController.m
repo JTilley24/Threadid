@@ -158,7 +158,6 @@
     cell.storeNameLabel.backgroundColor = [colorArray objectAtIndex:[object[@"BGColor"] intValue]];
     cell.storeNameLabel.textColor = [colorArray objectAtIndex:[object[@"FontColor"] intValue]];
     cell.storeNameLabel.font = [UIFont fontWithName:object[@"Font"] size:fontSize];
-    cell.backgroundColor = [colorArray objectAtIndex:[object[@"BGColor"] intValue]];
     return cell;
 }
 

@@ -166,7 +166,7 @@
 //Checkout Alert for cart
 -(IBAction)onClick:(id)sender
 {
-    UIAlertView *checkoutAlert = [[UIAlertView alloc] initWithTitle:@"Checkout" message:@"Checkout feature will be handled with third-party payment system. \n i.e PayPal" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    UIAlertView *checkoutAlert = [[UIAlertView alloc] initWithTitle:@"Checkout" message:@"Checkout feature will be handled with third-party payment system. \n i.e PayPal" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [checkoutAlert show];
     
     [self saveCheckoutData];
